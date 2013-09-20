@@ -1,4 +1,4 @@
-FuseAPI for Marmalade SDK 6.3
+FuseAPI for Marmalade SDK 6.3~
 ========================
 FuseAPI  Version v1.3
 
@@ -22,16 +22,14 @@ Installation
 1. Copy the FuseAPI directory into your extensions folder.
 
 2. Subproject the FuseAPI Extension in your Marmalade Project's MKB file
-```
-   subprojects
-    {
-        FuseAPI
-    }
-```
+subprojects
+{
+	FuseAPI
+}
 
 Getting Started
 -----------------
-1. Enable Push Notifications<br><br>
+1. Enable Push Notifications
 	Edit FuseAPI/source/ExtraAppManifests.txt
 		Replace com.fusepowered.marmaladesample with your application bundle ID in the two activities
 
@@ -43,35 +41,27 @@ Getting Started
 		notification_large.png is a 72x72 24-bit png
 		notification_small.png is a 36x26 24-bit png
 
-2. To use the FuseAPI extension in your project, first include the FuseAPI header:
-```
+2. To use the FuseAPI extension in your project, first include the FuseAPI header: 
     #include "FuseAPI.h"
-```
    
    Next, call 'FuseAPIStartSession' as soon as the app is initialized:
-```
-    FuseAPIStartSession("app_key"); 
-```
+	FuseAPIStartSession("app_key"); 
 
 
-3. Project Settings - Register for callbacks as needed<br>
+3. Project Settings - Register for callbacks as needed
 	eg)
-```
-    FuseAPIRegister(FUSEAPI_SESSION_STARTED, &GotSessionReceived, NULL);
-    FuseAPIRegister(FUSEAPI_SESSION_LOGIN_ERROR, &SessionLoginError, NULL);
-```
+	FuseAPIRegister(FUSEAPI_SESSION_STARTED, (s3eCallback)GotSessionReceived, NULL);
+	FuseAPIRegister(FUSEAPI_SESSION_LOGIN_ERROR, (s3eCallback)SessionLoginError, NULL);
 
 	See FuseAPI/docs/Callbacks.txt for information about callback functions available from the FuseAPI
 
-   The Fuse API key can be found in your dashboard view for the app your are trying to integrate by navigating to Admin->Integrate SDK in the [Fuseboxx](https://www.fuseboxx.com) dashboard.
+   The Fuse API key can be found in your dashboard view for the app your are trying to integrate by navigating to Admin->Integrate SDK in the (Fuseboxx)[https://www.fuseboxx.com] dashboard.
 
 
-5. UnRegister Callbacks when application terminates<br>
+5. UnRegister Callbacks when application terminates
 	eg)
-```
-    FuseAPIUnRegister(FUSEAPI_SESSION_STARTED, &GotSessionReceived);
-    FuseAPIUnRegister(FUSEAPI_SESSION_LOGIN_ERROR, &SessionLoginError);
-```
+	FuseAPIUnRegister(FUSEAPI_SESSION_STARTED, &GotSessionReceived);
+	FuseAPIUnRegister(FUSEAPI_SESSION_LOGIN_ERROR, &SessionLoginError);
 
 See the test project in FuseAPI/test for a very simple example of registering and unregistering callbacks, starting a session, and displaying an ad. 
 

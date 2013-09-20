@@ -1,0 +1,209 @@
+Fuse API Callback Documentation
+
+In order to receive callbacks from the FuseAPI extension, you must register for callbacks, using 
+s3eResult FuseAPIRegister(FuseAPICallback cbid, s3eCallback fn, void* userData);
+
+For example:
+FuseAPIRegister(FUSEAPI_ACCOUNT_LOGIN_COMPLETE, &LoginComplete, NULL);
+
+Note that userData is always NULL.
+
+To unregister callbacks, use:
+s3eResult FuseAPIUnRegister(FuseAPICallback cbid, s3eCallback fn);
+
+For example:
+FuseAPIUnRegister(FUSEAPI_ACCOUNT_LOGIN_COMPLETE, &LoginComplete);
+
+You can register or unregister callbacks at any time during the execution of your program, 
+but registration is commonly handled on application initialization and unregistering at termination.
+
+Callback functions are s3eCallbacks, so they have the following structure:
+int32 FunctionName(void* systemData, void* userData)
+
+Any extra data from the callback is stored in systemData.  These values are always stored as a struct, according to the definitions listed below.
+Here is an example of retrieving parameter info from a FUSEAPI_ACCOUNT_LOGIN_COMPLETE callback:
+int32 LoginComplete(void* systemData, void* userData)
+{
+	// param list as defined in FuseAPI/docs/Callbacks.txt
+	struct paramList
+	{
+		int accountType;
+		const char* accountID;
+	};
+	const paramList* params;
+	params = (paramList*)systemData;
+	
+	// handle results of login
+
+	return 1;
+}
+
+Below is the list of callback IDs, how they are triggered, and their parameters:
+
+//-------------------------------------
+FUSEAPI_SESSION_STARTED
+Response to: a successful FuseAPIStartSession
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_SESSION_LOGIN_ERROR
+Response to: a successful FuseAPIStartSession
+Params: 
+struct paramList
+{
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_AD_AVAILABILITY_RESPONSE
+Response to: FuseAPICheckAdAvailable
+Params:
+struct paramList
+{
+	int available;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_AD_WILL_CLOSE
+Response to: User pressing the 'X' close button on an ad
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_AD_DISPLAYED
+Response to: When the ad is fully loaded and shown to the user
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_AD_CLICKED
+Response to: User clicking on an ad
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_NOTIFICATION_ACTION
+Response to: Pressing a button on an action.  
+You can specify button names and their associated actions through the Dashboard and handle them in this callback.
+Params:
+struct paramList
+{
+	const char* action;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_ACCOUNT_LOGIN_COMPLETE
+Response to: Logging in to any account (Facebook, Twitter, etc.)
+Params: 
+struct paramList
+{
+	int accountType;
+	const char* accountID;
+};
+accountType maps to the AccountType enum in FuseAPI.h:
+enum AccountType
+{
+	NONE = 0,
+	GAMECENTER = 1,
+	FACEBOOK = 2,
+	TWITTER = 3,
+	OPENFEINT = 4,
+	USER = 5,
+	EMAIL = 6,
+	DEVICE_ID = 7,
+	GOOGLE_PLAY = 8,
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_TIME_UPDATED
+Response to: FuseAPITimeFromServer
+Params:
+struct paramList
+{
+	int timestamp;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_GAME_DATA_RECEIVED
+Response to: To be implemented
+Params:
+struct paramList
+{
+	int requestId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_GAME_DATA_ERROR
+Response to: Error in retrieving game data
+Params: 
+struct paramList
+{
+	int requestId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_GAME_DATASET_ACKNOWLEDGED
+Response to: Successfully sending a game data set (to be implemented)
+Params: 
+struct paramList
+{
+	int requestID;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_FRIENDSLIST_UPDATED
+Response to: To be implemented
+Params: 
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_FRIENDSLIST_ERROR
+Response to: To be implemented
+Params: 
+struct paramList
+{
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_MAILLIST_RECEIVED
+Response to: To be implemented
+Params: 
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_MAIL_ERROR
+Response to: To be implemented
+Params: 
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_MAILLIST_ERROR
+Response to: To be implemented
+Params: 
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_MAIL_ACKNOWLEDGED
+Response to: To be implemented
+Params: 
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_GAME_CONFIGURATION_RECEIVED
+Response to: Successful session start, once game configuration key-value pairs have been retrieved from the server
+Params: none
+//-------------------------------------

@@ -1,0 +1,825 @@
+Archive member included because of file (symbol)
+
+C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+                              release\FuseAPI_platform.os (s3eEdkThreadRunOnOS)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .bss           0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .note.GNU-stack
+                0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ _ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
+                0x00000000        0x0 release\FuseAPI_platform.os
+ _ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz
+                0x00000000        0x0 release\FuseAPI_platform.os
+ _ZN7_JNIEnv16CallObjectMethodEP8_jobjectP10_jmethodIDz
+                0x00000000        0x0 release\FuseAPI_platform.os
+ _ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz
+                0x00000000        0x0 release\FuseAPI_platform.os
+ _ZN7_JNIEnv17CallBooleanMethodEP8_jobjectP10_jmethodIDz
+                0x00000000        0x0 release\FuseAPI_platform.os
+ _ZN7_JNIEnv9NewObjectEP7_jclassP10_jmethodIDz
+                0x00000000        0x0 release\FuseAPI_platform.os
+ .text          0x00000000        0x0 release\FuseAPI_platform.os
+ .data          0x00000000        0x0 release\FuseAPI_platform.os
+ .text._Z28FuseAPIGameDataReceivedStartP7_JNIEnvP8_jstring
+                0x00000000        0x0 release\FuseAPI_platform.os
+ .text._Z26FuseAPIGameDataReceivedKVPP7_JNIEnvbP8_jstringS2_
+                0x00000000        0x0 release\FuseAPI_platform.os
+ .text._Z26FuseAPIGameDataReceivedEndP7_JNIEnvi
+                0x00000000        0x0 release\FuseAPI_platform.os
+ .note.GNU-stack
+                0x00000000        0x0 release\FuseAPI_platform.os
+ .text          0x00000000        0x0 release\FuseAPI.os
+ .data          0x00000000        0x0 release\FuseAPI.os
+ .bss           0x00000000        0x0 release\FuseAPI.os
+ .note.GNU-stack
+                0x00000000        0x0 release\FuseAPI.os
+ .text          0x00000000        0x0 release\FuseAPI_register.os
+ .data          0x00000000        0x0 release\FuseAPI_register.os
+ .bss           0x00000000        0x0 release\FuseAPI_register.os
+ .text._Z18FuseAPIRegisterExtv
+                0x00000000        0x0 release\FuseAPI_register.os
+ .note.GNU-stack
+                0x00000000        0x0 release\FuseAPI_register.os
+ .text          0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .data          0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .bss           0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .text.s3eEdkThreadRunOnOSAsync
+                0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .text.s3eEdkErrorSetString
+                0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .note.GNU-stack
+                0x00000000        0x0 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .text          0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ .data          0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ .bss           0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ .note.GNU-stack
+                0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+LOAD release\FuseAPI_platform.os
+LOAD release\FuseAPI.os
+LOAD release\FuseAPI_register.os
+LOAD C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a
+LOAD C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android/libplaceholderplaceholderplaceholderplaceholderplaceholder.so
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/liblog.so
+LOAD C:\android-ndk-r8d\sources\cxx-stl\gnu-libstdc++\4.4.3\libs\armeabi\libgnustl_static.a
+LOAD c:/android-ndk-r8d/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/bin/../lib/gcc/arm-linux-androideabi/4.4.3\libgcc.a
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/libstdc++.so
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/libm.so
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/libc.so
+LOAD c:/android-ndk-r8d/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/bin/../lib/gcc/arm-linux-androideabi/4.4.3\libgcc.a
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/libc.so
+LOAD C:\android-ndk-r8d\platforms\android-9\arch-arm\usr\lib/libdl.so
+LOAD c:/android-ndk-r8d/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/bin/../lib/gcc/arm-linux-androideabi/4.4.3\libgcc.a
+LOAD C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+                0x000000d4                . = (0x0 + SIZEOF_HEADERS)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash           0x000000d4       0xbc
+ *(.hash)
+ .hash          0x000000d4       0xbc C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym         0x00000190      0x1c0
+ *(.dynsym)
+ .dynsym        0x00000190      0x1c0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.dynstr         0x00000350      0x1b0
+ *(.dynstr)
+ .dynstr        0x00000350      0x1b0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.gnu.version    0x00000500        0x0
+ *(.gnu.version)
+ .gnu.version   0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.gnu.version_d  0x00000500        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.gnu.version_r  0x00000500        0x0
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.rel.dyn        0x00000500      0x2d0
+ *(.rel.init)
+ *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+ *(.rel.fini)
+ *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+ *(.rel.data.rel.ro* .rel.gnu.linkonce.d.rel.ro.*)
+ .rel.data.rel.ro
+                0x00000500      0x180 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+ *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+ *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+ *(.rel.ctors)
+ *(.rel.dtors)
+ *(.rel.got)
+ .rel.got       0x00000680      0x148 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+ .rel.fini_array
+                0x000007c8        0x8 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.rela.dyn
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+
+.rel.plt        0x000007d0       0x58
+ *(.rel.plt)
+ .rel.plt       0x000007d0       0x58 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.rela.plt
+ *(.rela.plt)
+
+.init
+ *(.init)
+
+.plt            0x00000828       0x98
+ *(.plt)
+ .plt           0x00000828       0x98 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+
+.text           0x000008c0     0x2a2c
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text.exit     0x000008c0       0x10 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x000008c0                __on_dlclose
+ .text._ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
+                0x000008d0       0x14 release\FuseAPI_platform.os
+                0x000008d0                _JNIEnv::GetMethodID(_jclass*, char const*, char const*)
+ .text._ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz
+                0x000008e4       0x34 release\FuseAPI_platform.os
+                0x000008e4                _JNIEnv::CallVoidMethod(_jobject*, _jmethodID*, ...)
+ .text._ZN7_JNIEnv16CallObjectMethodEP8_jobjectP10_jmethodIDz
+                0x00000918       0x34 release\FuseAPI_platform.os
+                0x00000918                _JNIEnv::CallObjectMethod(_jobject*, _jmethodID*, ...)
+ .text._ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz
+                0x0000094c       0x34 release\FuseAPI_platform.os
+                0x0000094c                _JNIEnv::CallIntMethod(_jobject*, _jmethodID*, ...)
+ .text._ZN7_JNIEnv17CallBooleanMethodEP8_jobjectP10_jmethodIDz
+                0x00000980       0x34 release\FuseAPI_platform.os
+                0x00000980                _JNIEnv::CallBooleanMethod(_jobject*, _jmethodID*, ...)
+ .text._ZN7_JNIEnv9NewObjectEP7_jclassP10_jmethodIDz
+                0x000009b4       0x34 release\FuseAPI_platform.os
+                0x000009b4                _JNIEnv::NewObject(_jclass*, _jmethodID*, ...)
+ .text._Z29FuseGameConfigurationReceivedP7_JNIEnvP8_jobject
+                0x000009e8       0x3c release\FuseAPI_platform.os
+                0x000009e8                FuseGameConfigurationReceived(_JNIEnv*, _jobject*)
+ .text._Z17FuseMailListErrorP7_JNIEnvP8_jobjecti
+                0x00000a24       0x44 release\FuseAPI_platform.os
+                0x00000a24                FuseMailListError(_JNIEnv*, _jobject*, int)
+ .text._Z13FuseMailErrorP7_JNIEnvP8_jobjecti
+                0x00000a68       0x44 release\FuseAPI_platform.os
+                0x00000a68                FuseMailError(_JNIEnv*, _jobject*, int)
+ .text._Z20FuseMailAcknowledgedP7_JNIEnvP8_jobjectiP8_jstringi
+                0x00000aac       0x54 release\FuseAPI_platform.os
+                0x00000aac                FuseMailAcknowledged(_JNIEnv*, _jobject*, int, _jstring*, int)
+ .text._Z20FuseFriendsListErrorP7_JNIEnvP8_jobjecti
+                0x00000b00       0x44 release\FuseAPI_platform.os
+                0x00000b00                FuseFriendsListError(_JNIEnv*, _jobject*, int)
+ .text._Z27FuseGameDataSetAcknowledgedP7_JNIEnvP8_jobjecti
+                0x00000b44       0x44 release\FuseAPI_platform.os
+                0x00000b44                FuseGameDataSetAcknowledged(_JNIEnv*, _jobject*, int)
+ .text._Z17FuseGameDataErrorP7_JNIEnvP8_jobjectii
+                0x00000b88       0x44 release\FuseAPI_platform.os
+                0x00000b88                FuseGameDataError(_JNIEnv*, _jobject*, int, int)
+ .text._Z18FuseAPITimeUpdatedP7_JNIEnvP8_jobjecti
+                0x00000bcc       0x44 release\FuseAPI_platform.os
+                0x00000bcc                FuseAPITimeUpdated(_JNIEnv*, _jobject*, int)
+ .text._Z27FuseAPIAccountLoginCompleteP7_JNIEnvP8_jobjectiP8_jstring
+                0x00000c10       0x4c release\FuseAPI_platform.os
+                0x00000c10                FuseAPIAccountLoginComplete(_JNIEnv*, _jobject*, int, _jstring*)
+ .text._Z25FuseAPINotificationActionP7_JNIEnvP8_jobjectP8_jstring
+                0x00000c5c       0x48 release\FuseAPI_platform.os
+                0x00000c5c                FuseAPINotificationAction(_JNIEnv*, _jobject*, _jstring*)
+ .text._Z16FuseAPIAdClickedP7_JNIEnvP8_jobject
+                0x00000ca4       0x3c release\FuseAPI_platform.os
+                0x00000ca4                FuseAPIAdClicked(_JNIEnv*, _jobject*)
+ .text._Z18FuseAPIAdDisplayedP7_JNIEnvP8_jobject
+                0x00000ce0       0x3c release\FuseAPI_platform.os
+                0x00000ce0                FuseAPIAdDisplayed(_JNIEnv*, _jobject*)
+ .text._Z18FuseAPIAdWillCloseP7_JNIEnvP8_jobject
+                0x00000d1c       0x3c release\FuseAPI_platform.os
+                0x00000d1c                FuseAPIAdWillClose(_JNIEnv*, _jobject*)
+ .text._Z29FuseAPIAdAvailabilityResponseP7_JNIEnvP8_jobjectii
+                0x00000d58       0x44 release\FuseAPI_platform.os
+                0x00000d58                FuseAPIAdAvailabilityResponse(_JNIEnv*, _jobject*, int, int)
+ .text._Z17FuseAPILoginErrorP7_JNIEnvP8_jobjecti
+                0x00000d9c       0x44 release\FuseAPI_platform.os
+                0x00000d9c                FuseAPILoginError(_JNIEnv*, _jobject*, int)
+ .text._Z27FuseAPISessionStartReceivedP7_JNIEnvP8_jobject
+                0x00000de0       0x3c release\FuseAPI_platform.os
+                0x00000de0                FuseAPISessionStartReceived(_JNIEnv*, _jobject*)
+ .text._Z9FusePausePvS_
+                0x00000e1c       0x50 release\FuseAPI_platform.os
+                0x00000e1c                FusePause(void*, void*)
+ .text._Z10FuseResumePvS_
+                0x00000e6c       0x54 release\FuseAPI_platform.os
+                0x00000e6c                FuseResume(void*, void*)
+ .text._Z29FuseAPIRegisterLevel_platformi
+                0x00000ec0       0x58 release\FuseAPI_platform.os
+                0x00000ec0                FuseAPIRegisterLevel_platform(int)
+ .text._Z37FuseAPIGetMailListFromServer_platformv
+                0x00000f18       0x50 release\FuseAPI_platform.os
+                0x00000f18                FuseAPIGetMailListFromServer_platform()
+ .text._Z33FuseAPISetMailAsReceived_platformi
+                0x00000f68       0x58 release\FuseAPI_platform.os
+                0x00000f68                FuseAPISetMailAsReceived_platform(int)
+ .text._Z30FuseAPIRegisterGender_platformi
+                0x00000fc0       0x58 release\FuseAPI_platform.os
+                0x00000fc0                FuseAPIRegisterGender_platform(int)
+ .text._Z32FuseAPIDisplayMoreGames_platformv
+                0x00001018       0x50 release\FuseAPI_platform.os
+                0x00001018                FuseAPIDisplayMoreGames_platform()
+ .text._Z36FuseAPIDisplayNotifications_platformv
+                0x00001068       0x50 release\FuseAPI_platform.os
+                0x00001068                FuseAPIDisplayNotifications_platform()
+ .text._Z22FuseAPIShowAd_platformv
+                0x000010b8       0x50 release\FuseAPI_platform.os
+                0x000010b8                FuseAPIShowAd_platform()
+ .text._Z43FuseAPIUpdateFriendsListFromServer_platformv
+                0x00001108       0x50 release\FuseAPI_platform.os
+                0x00001108                FuseAPIUpdateFriendsListFromServer_platform()
+ .text._Z30FuseAPITimeFromServer_platformv
+                0x00001158       0x50 release\FuseAPI_platform.os
+                0x00001158                FuseAPITimeFromServer_platform()
+ .text._Z26FuseAPIEnableData_platformb
+                0x000011a8       0x58 release\FuseAPI_platform.os
+                0x000011a8                FuseAPIEnableData_platform(bool)
+ .text._Z36FuseAPIRegisterTapjoyReward_platformi
+                0x00001200       0x58 release\FuseAPI_platform.os
+                0x00001200                FuseAPIRegisterTapjoyReward_platform(int)
+ .text._Z35FuseAPIRegisterFlurryClick_platformv
+                0x00001258       0x50 release\FuseAPI_platform.os
+                0x00001258                FuseAPIRegisterFlurryClick_platform()
+ .text._Z34FuseAPIRegisterFlurryView_platformv
+                0x000012a8       0x50 release\FuseAPI_platform.os
+                0x000012a8                FuseAPIRegisterFlurryView_platform()
+ .text._Z32FuseAPIRegisterCurrency_platformii
+                0x000012f8       0x60 release\FuseAPI_platform.os
+                0x000012f8                FuseAPIRegisterCurrency_platform(int, int)
+ .text._Z32FuseAPICheckAdAvailable_platformv
+                0x00001358       0x50 release\FuseAPI_platform.os
+                0x00001358                FuseAPICheckAdAvailable_platform()
+ .text._Z32FuseAPITerminateSession_platformv
+                0x000013a8       0x50 release\FuseAPI_platform.os
+                0x000013a8                FuseAPITerminateSession_platform()
+ .text._Z28FuseAPIPauseSession_platformv
+                0x000013f8       0x4c release\FuseAPI_platform.os
+                0x000013f8                FuseAPIPauseSession_platform()
+ .text._Z29FuseAPIResumeSession_platformv
+                0x00001444       0x50 release\FuseAPI_platform.os
+                0x00001444                FuseAPIResumeSession_platform()
+ .text._Z27FuseAPIgamesPlayed_platformv
+                0x00001494       0x50 release\FuseAPI_platform.os
+                0x00001494                FuseAPIgamesPlayed_platform()
+ .text._Z38FuseAPIGetOriginalAccountType_platformv
+                0x000014e4       0x50 release\FuseAPI_platform.os
+                0x000014e4                FuseAPIGetOriginalAccountType_platform()
+ .text._Z25FuseAPITerminate_platformv
+                0x00001534       0x50 release\FuseAPI_platform.os
+                0x00001534                FuseAPITerminate_platform()
+ .text._Z25FuseAPIConnected_platformv
+                0x00001584       0x58 release\FuseAPI_platform.os
+                0x00001584                FuseAPIConnected_platform()
+ .text._Z30FuseAPILibraryVersion_platformv
+                0x000015dc       0x54 release\FuseAPI_platform.os
+                0x000015dc                FuseAPILibraryVersion_platform()
+ .text._Z25FuseAPIGetFuseID_platformv
+                0x00001630       0x54 release\FuseAPI_platform.os
+                0x00001630                FuseAPIGetFuseID_platform()
+ .text._Z39FuseAPIGetOriginalAccountAlias_platformv
+                0x00001684       0x54 release\FuseAPI_platform.os
+                0x00001684                FuseAPIGetOriginalAccountAlias_platform()
+ .text._Z36FuseAPIGetOriginalAccountId_platformv
+                0x000016d8       0x54 release\FuseAPI_platform.os
+                0x000016d8                FuseAPIGetOriginalAccountId_platform()
+ .text._Z28FuseAPITwitterLogin_platformPKc
+                0x0000172c       0x70 release\FuseAPI_platform.os
+                0x0000172c                FuseAPITwitterLogin_platform(char const*)
+ .text._Z29FuseAPIRegisterEvent_platformPKc
+                0x0000179c       0x70 release\FuseAPI_platform.os
+                0x0000179c                FuseAPIRegisterEvent_platform(char const*)
+ .text._Z44FuseAPIRegisterForPushNotifications_platformPKc
+                0x0000180c       0x70 release\FuseAPI_platform.os
+                0x0000180c                FuseAPIRegisterForPushNotifications_platform(char const*)
+ .text._Z43FuseAPIGetMailListFriendFromServer_platformPKc
+                0x0000187c       0x70 release\FuseAPI_platform.os
+                0x0000187c                FuseAPIGetMailListFriendFromServer_platform(char const*)
+ .text._Z27FuseAPIDeviceLogin_platformPKc
+                0x000018ec       0x70 release\FuseAPI_platform.os
+                0x000018ec                FuseAPIDeviceLogin_platform(char const*)
+ .text._Z28FuseAPIStartSession_platformPKc
+                0x0000195c       0x70 release\FuseAPI_platform.os
+                0x0000195c                FuseAPIStartSession_platform(char const*)
+ .text._Z41FuseAPIGetGameConfigurationValue_platformPKc
+                0x000019cc       0x74 release\FuseAPI_platform.os
+                0x000019cc                FuseAPIGetGameConfigurationValue_platform(char const*)
+ .text._Z24FuseAPISendMail_platformPKcS0_
+                0x00001a40       0x90 release\FuseAPI_platform.os
+                0x00001a40                FuseAPISendMail_platform(char const*, char const*)
+ .text._Z31FuseAPIGooglePlayLogin_platformPKcS0_
+                0x00001ad0       0x90 release\FuseAPI_platform.os
+                0x00001ad0                FuseAPIGooglePlayLogin_platform(char const*, char const*)
+ .text._Z25FuseAPIFuseLogin_platformPKcS0_
+                0x00001b60       0x90 release\FuseAPI_platform.os
+                0x00001b60                FuseAPIFuseLogin_platform(char const*, char const*)
+ .text._Z32FuseAPISendMailWithGift_platformPKcS0_ii
+                0x00001bf0       0xa0 release\FuseAPI_platform.os
+                0x00001bf0                FuseAPISendMailWithGift_platform(char const*, char const*, int, int)
+ .text._Z29FuseAPIFacebookLogin_platformPKcS0_S0_
+                0x00001c90       0xb0 release\FuseAPI_platform.os
+                0x00001c90                FuseAPIFacebookLogin_platform(char const*, char const*, char const*)
+ .text._Z38FuseAPIRegisterEventWithParam_platformPKcS0_S0_S0_PKd
+                0x00001d40       0xe0 release\FuseAPI_platform.os
+                0x00001d40                FuseAPIRegisterEventWithParam_platform(char const*, char const*, char const*, char const*, double const*)
+ .text._ZL27s3eEdkAndroidFindClass_realPKc
+                0x00001e20       0xb8 release\FuseAPI_platform.os
+ .text._Z37FuseAPIRegisterInAppPurchase_platform13PurchaseStatePKcS1_S1_lS1_PKdS1_
+                0x00001ed8      0x104 release\FuseAPI_platform.os
+                0x00001ed8                FuseAPIRegisterInAppPurchase_platform(PurchaseState, char const*, char const*, char const*, long, char const*, double const*, char const*)
+ .text._Z20FuseAPIInit_platformv
+                0x00001fdc      0x8e0 release\FuseAPI_platform.os
+                0x00001fdc                FuseAPIInit_platform()
+ .text.FuseAPIRegisterTapjoyReward
+                0x000028bc        0x4 release\FuseAPI.os
+                0x000028bc                FuseAPIRegisterTapjoyReward
+ .text.FuseAPIRegisterFlurryClick
+                0x000028c0        0x4 release\FuseAPI.os
+                0x000028c0                FuseAPIRegisterFlurryClick
+ .text.FuseAPIRegisterFlurryView
+                0x000028c4        0x4 release\FuseAPI.os
+                0x000028c4                FuseAPIRegisterFlurryView
+ .text.FuseAPIRegisterCurrency
+                0x000028c8        0x4 release\FuseAPI.os
+                0x000028c8                FuseAPIRegisterCurrency
+ .text.FuseAPIRegisterLevel
+                0x000028cc        0x4 release\FuseAPI.os
+                0x000028cc                FuseAPIRegisterLevel
+ .text.FuseAPIGetGameConfigurationValue
+                0x000028d0        0x4 release\FuseAPI.os
+                0x000028d0                FuseAPIGetGameConfigurationValue
+ .text.FuseAPISendMail
+                0x000028d4        0x4 release\FuseAPI.os
+                0x000028d4                FuseAPISendMail
+ .text.FuseAPISendMailWithGift
+                0x000028d8        0x4 release\FuseAPI.os
+                0x000028d8                FuseAPISendMailWithGift
+ .text.FuseAPISetMailAsReceived
+                0x000028dc        0x4 release\FuseAPI.os
+                0x000028dc                FuseAPISetMailAsReceived
+ .text.FuseAPIGetMailListFriendFromServer
+                0x000028e0        0x4 release\FuseAPI.os
+                0x000028e0                FuseAPIGetMailListFriendFromServer
+ .text.FuseAPIGetMailListFromServer
+                0x000028e4        0x4 release\FuseAPI.os
+                0x000028e4                FuseAPIGetMailListFromServer
+ .text.FuseAPIUpdateFriendsListFromServer
+                0x000028e8        0x4 release\FuseAPI.os
+                0x000028e8                FuseAPIUpdateFriendsListFromServer
+ .text.FuseAPIEnableData
+                0x000028ec        0x4 release\FuseAPI.os
+                0x000028ec                FuseAPIEnableData
+ .text.FuseAPITimeFromServer
+                0x000028f0        0x4 release\FuseAPI.os
+                0x000028f0                FuseAPITimeFromServer
+ .text.FuseAPIConnected
+                0x000028f4        0x4 release\FuseAPI.os
+                0x000028f4                FuseAPIConnected
+ .text.FuseAPILibraryVersion
+                0x000028f8        0x4 release\FuseAPI.os
+                0x000028f8                FuseAPILibraryVersion
+ .text.FuseAPIgamesPlayed
+                0x000028fc        0x4 release\FuseAPI.os
+                0x000028fc                FuseAPIgamesPlayed
+ .text.FuseAPIGetFuseID
+                0x00002900        0x4 release\FuseAPI.os
+                0x00002900                FuseAPIGetFuseID
+ .text.FuseAPIGetOriginalAccountType
+                0x00002904        0x4 release\FuseAPI.os
+                0x00002904                FuseAPIGetOriginalAccountType
+ .text.FuseAPIGetOriginalAccountAlias
+                0x00002908        0x4 release\FuseAPI.os
+                0x00002908                FuseAPIGetOriginalAccountAlias
+ .text.FuseAPIGetOriginalAccountId
+                0x0000290c        0x4 release\FuseAPI.os
+                0x0000290c                FuseAPIGetOriginalAccountId
+ .text.FuseAPIGooglePlayLogin
+                0x00002910        0x4 release\FuseAPI.os
+                0x00002910                FuseAPIGooglePlayLogin
+ .text.FuseAPIFuseLogin
+                0x00002914        0x4 release\FuseAPI.os
+                0x00002914                FuseAPIFuseLogin
+ .text.FuseAPIDeviceLogin
+                0x00002918        0x4 release\FuseAPI.os
+                0x00002918                FuseAPIDeviceLogin
+ .text.FuseAPITwitterLogin
+                0x0000291c        0x4 release\FuseAPI.os
+                0x0000291c                FuseAPITwitterLogin
+ .text.FuseAPIFacebookLogin
+                0x00002920        0x4 release\FuseAPI.os
+                0x00002920                FuseAPIFacebookLogin
+ .text.FuseAPIRegisterGender
+                0x00002924        0x4 release\FuseAPI.os
+                0x00002924                FuseAPIRegisterGender
+ .text.FuseAPIDisplayMoreGames
+                0x00002928        0x4 release\FuseAPI.os
+                0x00002928                FuseAPIDisplayMoreGames
+ .text.FuseAPIDisplayNotifications
+                0x0000292c        0x4 release\FuseAPI.os
+                0x0000292c                FuseAPIDisplayNotifications
+ .text.FuseAPIShowAd
+                0x00002930        0x4 release\FuseAPI.os
+                0x00002930                FuseAPIShowAd
+ .text.FuseAPICheckAdAvailable
+                0x00002934        0x4 release\FuseAPI.os
+                0x00002934                FuseAPICheckAdAvailable
+ .text.FuseAPIRegisterInAppPurchase
+                0x00002938        0x4 release\FuseAPI.os
+                0x00002938                FuseAPIRegisterInAppPurchase
+ .text.FuseAPIRegisterEventWithParam
+                0x0000293c        0x4 release\FuseAPI.os
+                0x0000293c                FuseAPIRegisterEventWithParam
+ .text.FuseAPIRegisterEvent
+                0x00002940        0x4 release\FuseAPI.os
+                0x00002940                FuseAPIRegisterEvent
+ .text.FuseAPIRegisterForPushNotifications
+                0x00002944        0x4 release\FuseAPI.os
+                0x00002944                FuseAPIRegisterForPushNotifications
+ .text.FuseAPITerminateSession
+                0x00002948        0x4 release\FuseAPI.os
+                0x00002948                FuseAPITerminateSession
+ .text.FuseAPIResumeSession
+                0x0000294c        0x4 release\FuseAPI.os
+                0x0000294c                FuseAPIResumeSession
+ .text.FuseAPIPauseSession
+                0x00002950        0x4 release\FuseAPI.os
+                0x00002950                FuseAPIPauseSession
+ .text.FuseAPIStartSession
+                0x00002954        0x4 release\FuseAPI.os
+                0x00002954                FuseAPIStartSession
+ .text._Z16FuseAPITerminatev
+                0x00002958        0x4 release\FuseAPI.os
+                0x00002958                FuseAPITerminate()
+ .text._Z11FuseAPIInitv
+                0x0000295c        0x4 release\FuseAPI.os
+                0x0000295c                FuseAPIInit()
+ .text._ZL32FuseAPIRegisterTapjoyReward_wrapi
+                0x00002960       0x18 release\FuseAPI_register.os
+ .text._ZL31FuseAPIRegisterFlurryClick_wrapv
+                0x00002978       0x14 release\FuseAPI_register.os
+ .text._ZL30FuseAPIRegisterFlurryView_wrapv
+                0x0000298c       0x14 release\FuseAPI_register.os
+ .text._ZL28FuseAPIRegisterCurrency_wrapii
+                0x000029a0       0x1c release\FuseAPI_register.os
+ .text._ZL25FuseAPIRegisterLevel_wrapi
+                0x000029bc       0x18 release\FuseAPI_register.os
+ .text._ZL37FuseAPIGetGameConfigurationValue_wrapPKc
+                0x000029d4       0x18 release\FuseAPI_register.os
+ .text._ZL20FuseAPISendMail_wrapPKcS0_
+                0x000029ec       0x1c release\FuseAPI_register.os
+ .text._ZL28FuseAPISendMailWithGift_wrapPKcS0_ii
+                0x00002a08       0x38 release\FuseAPI_register.os
+ .text._ZL29FuseAPISetMailAsReceived_wrapi
+                0x00002a40       0x18 release\FuseAPI_register.os
+ .text._ZL39FuseAPIGetMailListFriendFromServer_wrapPKc
+                0x00002a58       0x18 release\FuseAPI_register.os
+ .text._ZL33FuseAPIGetMailListFromServer_wrapv
+                0x00002a70       0x14 release\FuseAPI_register.os
+ .text._ZL39FuseAPIUpdateFriendsListFromServer_wrapv
+                0x00002a84       0x14 release\FuseAPI_register.os
+ .text._ZL22FuseAPIEnableData_wrapb
+                0x00002a98       0x18 release\FuseAPI_register.os
+ .text._ZL26FuseAPITimeFromServer_wrapv
+                0x00002ab0       0x14 release\FuseAPI_register.os
+ .text._ZL21FuseAPIConnected_wrapv
+                0x00002ac4       0x24 release\FuseAPI_register.os
+ .text._ZL26FuseAPILibraryVersion_wrapv
+                0x00002ae8       0x14 release\FuseAPI_register.os
+ .text._ZL23FuseAPIgamesPlayed_wrapv
+                0x00002afc       0x14 release\FuseAPI_register.os
+ .text._ZL21FuseAPIGetFuseID_wrapv
+                0x00002b10       0x14 release\FuseAPI_register.os
+ .text._ZL34FuseAPIGetOriginalAccountType_wrapv
+                0x00002b24       0x14 release\FuseAPI_register.os
+ .text._ZL35FuseAPIGetOriginalAccountAlias_wrapv
+                0x00002b38       0x14 release\FuseAPI_register.os
+ .text._ZL32FuseAPIGetOriginalAccountId_wrapv
+                0x00002b4c       0x14 release\FuseAPI_register.os
+ .text._ZL27FuseAPIGooglePlayLogin_wrapPKcS0_
+                0x00002b60       0x1c release\FuseAPI_register.os
+ .text._ZL21FuseAPIFuseLogin_wrapPKcS0_
+                0x00002b7c       0x1c release\FuseAPI_register.os
+ .text._ZL23FuseAPIDeviceLogin_wrapPKc
+                0x00002b98       0x18 release\FuseAPI_register.os
+ .text._ZL24FuseAPITwitterLogin_wrapPKc
+                0x00002bb0       0x18 release\FuseAPI_register.os
+ .text._ZL25FuseAPIFacebookLogin_wrapPKcS0_S0_
+                0x00002bc8       0x34 release\FuseAPI_register.os
+ .text._ZL26FuseAPIRegisterGender_wrapi
+                0x00002bfc       0x18 release\FuseAPI_register.os
+ .text._ZL28FuseAPIDisplayMoreGames_wrapv
+                0x00002c14       0x14 release\FuseAPI_register.os
+ .text._ZL32FuseAPIDisplayNotifications_wrapv
+                0x00002c28       0x14 release\FuseAPI_register.os
+ .text._ZL18FuseAPIShowAd_wrapv
+                0x00002c3c       0x14 release\FuseAPI_register.os
+ .text._ZL28FuseAPICheckAdAvailable_wrapv
+                0x00002c50       0x14 release\FuseAPI_register.os
+ .text._ZL33FuseAPIRegisterInAppPurchase_wrap13PurchaseStatePKcS1_S1_lS1_PKdS1_
+                0x00002c64       0x54 release\FuseAPI_register.os
+ .text._ZL34FuseAPIRegisterEventWithParam_wrapPKcS0_S0_S0_PKd
+                0x00002cb8       0x40 release\FuseAPI_register.os
+ .text._ZL25FuseAPIRegisterEvent_wrapPKc
+                0x00002cf8       0x18 release\FuseAPI_register.os
+ .text._ZL40FuseAPIRegisterForPushNotifications_wrapPKc
+                0x00002d10       0x18 release\FuseAPI_register.os
+ .text._ZL28FuseAPITerminateSession_wrapv
+                0x00002d28       0x14 release\FuseAPI_register.os
+ .text._ZL25FuseAPIResumeSession_wrapv
+                0x00002d3c       0x14 release\FuseAPI_register.os
+ .text._ZL24FuseAPIPauseSession_wrapv
+                0x00002d50       0x14 release\FuseAPI_register.os
+ .text._ZL24FuseAPIStartSession_wrapPKc
+                0x00002d64       0x18 release\FuseAPI_register.os
+ .text.FuseAPIUnRegister
+                0x00002d7c       0x30 release\FuseAPI_register.os
+                0x00002d7c                FuseAPIUnRegister
+ .text.FuseAPIRegister
+                0x00002dac       0x34 release\FuseAPI_register.os
+                0x00002dac                FuseAPIRegister
+ .text.RegisterExt
+                0x00002de0      0x4dc release\FuseAPI_register.os
+                0x00002de0                RegisterExt
+ .text.s3eEdkThreadRunOnOS
+                0x000032bc       0x30 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+                0x000032bc                s3eEdkThreadRunOnOS
+ *(.gnu.warning)
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+ *(.v4_bx)
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.fini
+ *(.fini)
+                0x000032ec                PROVIDE (__etext, .)
+                0x000032ec                PROVIDE (_etext, .)
+                0x000032ec                PROVIDE (etext, .)
+
+.rodata         0x000032ec      0x790
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.str1.4
+                0x000032ec      0x786 release\FuseAPI_platform.os
+                                0x788 (size before relaxing)
+ *fill*         0x00003a72        0x2 00
+ .rodata.str1.4
+                0x00003a74        0x8 release\FuseAPI_register.os
+
+.rodata1
+ *(.rodata1)
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00003a7c                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00003a7c                __exidx_end = .
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+                0x00003a7c                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
+                0x00004d80                . = (0x1000 DATA_SEGMENT_ALIGN 0x1000)
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array
+ *(.preinit_array)
+
+.init_array     0x00004d80        0x4
+ *(SORT(.init_array.*))
+ *(.init_array)
+ .init_array    0x00004d80        0x4 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+
+.fini_array     0x00004d84        0x8
+ *(.fini_array)
+ .fini_array    0x00004d84        0x4 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .fini_array    0x00004d88        0x4 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ *(SORT(.fini_array.*))
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro    0x00004d8c       0xc0
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*)
+ .data.rel.ro   0x00004d8c       0xc0 release\FuseAPI_platform.os
+
+.dynamic        0x00004e4c       0xd8
+ *(.dynamic)
+ .dynamic       0x00004e4c       0xd8 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00004e4c                _DYNAMIC
+
+.got            0x00004f24       0xdc
+ *(.got.plt)
+ .got.plt       0x00004f24       0x38 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00004f24                _GLOBAL_OFFSET_TABLE_
+ *(.got)
+ .got           0x00004f5c       0xa4 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00005000                . = (. DATA_SEGMENT_RELRO_END 0x0)
+
+.data           0x00005000        0x4
+                0x00005000                __data_start = .
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x00005000        0x4 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00005000                __dso_handle
+
+.data1
+ *(.data1)
+                0x00005004                _edata = .
+                0x00005004                PROVIDE (edata, .)
+                0x00005004                __bss_start = .
+                0x00005004                __bss_start__ = .
+
+.bss            0x00005004       0xa0
+ *(.dynbss)
+ .dynbss        0x00000000        0x0 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x00005004       0xa0 release\FuseAPI_platform.os
+ *(COMMON)
+                0x000050a4                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x000050a4                _bss_end__ = .
+                0x000050a4                __bss_end__ = .
+                0x000050a4                . = ALIGN (0x4)
+                0x000050a4                . = ALIGN (0x4)
+                0x000050a4                __end__ = .
+                0x000050a4                _end = .
+                0x000050a4                PROVIDE (end, .)
+                0x000050a4                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x6d
+ *(.comment)
+ .comment       0x00000000       0x25 C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                                 0x26 (size before relaxing)
+ .comment       0x00000025       0x12 release\FuseAPI_platform.os
+ .comment       0x00000037       0x12 release\FuseAPI.os
+ .comment       0x00000049       0x12 release\FuseAPI_register.os
+ .comment       0x0000005b       0x12 C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+.note.gnu.arm.ident
+ *(.note.gnu.arm.ident)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+OUTPUT(C:\depot\Projects\Marmalade\6.3\extensions\FuseAPI\lib\android\libFuseAPI.so elf32-littlearm)
+
+.ARM.attributes
+                0x00000000       0x31
+ .ARM.attributes
+                0x00000000       0x2d C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .ARM.attributes
+                0x0000002d       0x2d release\FuseAPI_platform.os
+ .ARM.attributes
+                0x0000005a       0x2b release\FuseAPI.os
+ .ARM.attributes
+                0x00000085       0x2b release\FuseAPI_register.os
+ .ARM.attributes
+                0x000000b0       0x2b C:\depot\Projects\Marmalade\6.3\s3e\edk\lib\android\libedk.a(edk_helpers.o)
+ .ARM.attributes
+                0x000000db       0x1f C:/android-ndk-r8d/platforms/android-9/arch-arm/usr/lib/crtend_so.o
