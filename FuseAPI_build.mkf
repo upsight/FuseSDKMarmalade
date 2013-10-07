@@ -3,6 +3,7 @@
 # be overwritten (unless --force is specified) and is intended to be modified.
 display_name "Extensions/FuseAPI"
 
+includepath source/libcfu/include
 includepath source/h
 includepath h
 
@@ -30,9 +31,17 @@ if {{defined I3D_OS_IPHONE}}
 {
     files
     {
+        ["lib"]
+        (lib/iphone)
+        libFuseAPI.a
         ["source"]
-        (use_first_found, source/iphone, source/generic)
+        (h)
+        FuseAPI.h
+        (use_first_found, source/iphone, source/generic)        
+        FuseAPI-iOS.h
         FuseAPI_platform.mm
+        "NSData+Base64.h"
+        "NSData+Base64.m"
         #Add any iphone-specific files here
     }
 }
@@ -90,10 +99,34 @@ files
     FuseAPI_register.cpp
     FuseAPI.cpp
 
+	["libcfu"]
+	(source/libcfu/include)
+	cfu.h
+	cfu.h.in
+	cfuconf.h
+	cfuhash.h
+	cfulist.h
+	cfuopt.h
+	cfustring.h
+	cfuthread_queue.h
+	cfutime.h
+	cfutypes.h
+	cfutypes.h.in
+	(source/libcfu/src)
+	cfu.c
+	cfuconf.c
+	cfuhash.c
+	cfulist.c
+	cfuopt.c
+	cfustring.c
+	cfuthread_queue.c
+	cfutime.c
+	libcfu-config.c
+
     ["h"]
     (source/h)
     FuseAPI_internal.h
-    FuseAPI_autodefs.h
+    FuseAPI_autodefs.h	
 
     ["docs"]
     (interface)

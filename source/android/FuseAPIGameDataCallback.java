@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fusepowered.fuseapi.*;
 import com.fusepowered.util.FuseAttackErrors;
 import com.fusepowered.util.FuseEnemiesListError;
 import com.fusepowered.util.FuseFriendsListError;
@@ -111,7 +112,7 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 	{
 		Log.d(_logTag, "gameDataReceived(" + accountId + ",[data]," + requestId + ")");
 	
-		_wrapper.FuseAPIGameDataReceivedStart(accountId);
+		_wrapper.FuseAPIGameDataReceivedStart();
 		HashMap<String,GameValue> hashMap = gameKeyValuePairs.getMap();
 		for (Map.Entry<String,GameValue> entry : hashMap.entrySet())
 		{
@@ -123,7 +124,7 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 			_wrapper.FuseAPIGameDataReceivedKVP(isBinary, key, value);
 		}
 
-		_wrapper.FuseAPIGameDataReceivedEnd(requestId);
+		_wrapper.FuseAPIGameDataReceivedEnd(accountId, requestId);
 	}
 
 	public void gameDataError(FuseGameDataError fuseGameDataError)
@@ -151,19 +152,13 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 	public void friendsListUpdated(ArrayList<Player> friendsList)
 	{
 		Log.d(_logTag, "friendsListUpdated([data])");
-
-		//TODO: pass friends list data to wrapper
-		//FuseUnityAPI.SendMessage("FuseAPI_Android", "_ClearArgumentList", "");
-
+				
+		_wrapper.FuseAPIFriendsListUpdateStart(friendsList.size());
 		for (Player friend : friendsList)
 		{
-			//FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", friend.getFuseId());
-			//FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", friend.getAccountId()); 
-			//FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", friend.getAlias());
-			//FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", Integer.toString(friend.getPending()));
+			_wrapper.FuseAPIFriendsListUpdatePlayer(friend.getFuseId(), friend.getAlias(), friend.getType(), friend.getAccountId(), friend.getLevel(), friend.getPending(), friend.getCanAttack());
 		}
-
-		//FuseUnityAPI.SendMessage("FuseAPI_Android", "_FriendsListUpdated", "");
+		_wrapper.FuseAPIFriendsListUpdateEnd();
 	}
 
 	public void friendsListError(FuseFriendsListError fuseFriendsListError)
@@ -180,37 +175,25 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 	public void mailListReceived(ArrayList<Mail> mailList, String fuseId)
 	{
 		Log.d(_logTag, "mailListReceived([data]," + fuseId + ")");
-
-		//TODO: send mail list data to wrapper
-
-		/*
-		FuseUnityAPI.SendMessage("FuseAPI_Android", "_ClearArgumentList", "");
+		
+		_wrapper.FuseAPIMailListUpdateStart(mailList.size());
 		if (mailList != null)
 		{
 			for (Mail mail : mailList)
 			{
-				FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", Integer.toString(mail.getId()));
-				FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", mail.getDate());
-				FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", mail.getAlias());
-				FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", mail.getMessage());
+				_wrapper.FuseAPIMailListUpdate(mail.getId(), mail.getAlias(), mail.getFuseId(), mail.getMessage(), mail.getDate());				
 				if( mail.getGift() != null )
 				{
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", Integer.toString(mail.getGift().getId()));
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", mail.getGift().getName());
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", Integer.toString(mail.getGift().getAmount()));
+					_wrapper.FuseAPIMailListUpdateGift(mail.getGift().getId(), mail.getGift().getName(), mail.getGift().getUrl(), mail.getGift().getAmount());
 				}
 				else
 				{
 					// No Gift
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", "0");
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", "");
-					FuseUnityAPI.SendMessage("FuseAPI_Android", "_AddArgument", "0");
+					_wrapper.FuseAPIMailListUpdateGift(0, "", "", 0);
 				}
 			}
 		}
-
-		FuseUnityAPI.SendMessage("FuseAPI_Android", "_MailListReceived", fuseId);
-		*/
+		_wrapper.FuseMailListReceived(fuseId);		
 	}
 
 	public void mailListError(FuseMailError fuseMailError)
@@ -228,7 +211,9 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 	public void mailError(FuseMailError fuseMailError)
 	{
 		Log.d(_logTag, "mailError(" + fuseMailError + ")");
-		//FuseUnityAPI.SendMessage("FuseAPI_Android", "_MailError", Integer.toString(fuseMailError.ordinal()));
+
+		//FIXME: is the requestID correct?
+		_wrapper.FuseMailError(fuseMailError.ordinal(), getRequestId());
 	}
 
 
@@ -239,10 +224,16 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 	public void gameConfigurationReceived()
 	{
 		Log.d(_logTag, "gameConfigurationReceived()");
+
+		HashMap<String, String> gameConfig = FuseAPI.getGameConfiguration();
+		_wrapper.FuseGameConfigurationStart(gameConfig.size());
+		for (Map.Entry<String, String> entry : gameConfig.entrySet())
+		{
+			_wrapper.FuseGameConfigurationKeyValue(entry.getKey(), entry.getValue());
+		}
+
 		_wrapper.FuseGameConfigurationReceived();
 	}
-
-
 
 	//TODO: enemies list
 	public void enemiesListError(FuseEnemiesListError a)

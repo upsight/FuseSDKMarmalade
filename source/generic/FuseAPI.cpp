@@ -14,7 +14,8 @@ This file should perform any platform-indepedentent functionality
 s3eResult FuseAPIInit()
 {
     //Add any generic initialisation code here
-    return FuseAPIInit_platform();
+    s3eResult rtn = FuseAPIInit_platform();
+    return rtn;
 }
 
 void FuseAPITerminate()
@@ -58,7 +59,17 @@ int FuseAPIRegisterEventWithParam(const char* name, const char* param_name, cons
 	return FuseAPIRegisterEventWithParam_platform(name, param_name, param_value, variable_name, variable_value);
 }
 
-void FuseAPIRegisterInAppPurchase(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+int FuseAPIRegisterEventWithEventData(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData)
+{
+	return FuseAPIRegisterEventWithEventData_platform(name, paramName, paramValue, eventData);
+}
+
+void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* eventData)
+{
+	FuseAPIRegisterEventWithDictionary_platform(message, eventData);
+}
+
+void FuseAPIRegisterInAppPurchase(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
 	FuseAPIRegisterInAppPurchase_platform(purchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload, price, currency);
 }
@@ -96,6 +107,11 @@ void FuseAPIFacebookLogin(const char* facebookId, const char* name, const char* 
 void FuseAPITwitterLogin(const char* twitterId)
 {
 	FuseAPITwitterLogin_platform(twitterId);
+}
+
+void FuseAPIGameCenterLogin()
+{
+	FuseAPIGameCenterLogin_platform();
 }
 
 void FuseAPIDeviceLogin(const char* alias)
@@ -158,9 +174,24 @@ void FuseAPIEnableData(bool enable)
 	FuseAPIEnableData_platform(enable);
 }
 
+int FuseAPISetGameData(const char* key, const char* fuseId, cfuhash_table_t* gameData)
+{
+	return FuseAPISetGameData_platform(key, fuseId, gameData);
+}
+
+int FuseAPIGetGameData(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys)
+{
+	return FuseAPIGetGameData_platform(key, fuseId, gameDataKeys, numKeys);
+}
+
 void FuseAPIUpdateFriendsListFromServer()
 {
 	FuseAPIUpdateFriendsListFromServer_platform();
+}
+
+FusePlayer* FuseAPIGetFriendsList(int* numPlayers)
+{
+	return FuseAPIGetFriendsList_platform(numPlayers);
 }
 
 void FuseAPIGetMailListFromServer()
@@ -186,6 +217,11 @@ int FuseAPISendMailWithGift(const char* fuseId, const char* message, int giftId,
 int FuseAPISendMail(const char* fuseId, const char* message)
 {
 	return FuseAPISendMail_platform(fuseId, message);
+}
+
+FuseMail* FuseAPIGetMailList(int* numEntries)
+{
+	return FuseAPIGetMailList_platform(numEntries);
 }
 
 const char* FuseAPIGetGameConfigurationValue(const char* key)

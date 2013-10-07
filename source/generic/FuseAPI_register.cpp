@@ -66,7 +66,19 @@ static int FuseAPIRegisterEventWithParam_wrap(const char* name, const char* para
     return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterEventWithParam, 5, name, param_name, param_value, variable_name, variable_value);
 }
 
-static void FuseAPIRegisterInAppPurchase_wrap(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+static int FuseAPIRegisterEventWithEventData_wrap(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRegisterEventWithEventData"));
+    return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterEventWithEventData, 4, name, paramName, paramValue, eventData);
+}
+
+static void FuseAPIRegisterEventWithDictionary_wrap(const char* message, cfuhash_table_t* eventData)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRegisterEventWithDictionary"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterEventWithDictionary, 2, message, eventData);
+}
+
+static void FuseAPIRegisterInAppPurchase_wrap(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRegisterInAppPurchase"));
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterInAppPurchase, 8, purchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload, price, currency);
@@ -124,6 +136,12 @@ static void FuseAPIFuseLogin_wrap(const char* fuseId, const char* alias)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIFuseLogin"));
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIFuseLogin, 2, fuseId, alias);
+}
+
+static void FuseAPIGameCenterLogin_wrap()
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIGameCenterLogin"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGameCenterLogin, 0);
 }
 
 static void FuseAPIGooglePlayLogin_wrap(const char* alias, const char* token)
@@ -186,10 +204,28 @@ static void FuseAPIEnableData_wrap(bool enable)
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIEnableData, 1, enable);
 }
 
+static int FuseAPISetGameData_wrap(const char* key, const char* fuseId, cfuhash_table_t* gameData)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPISetGameData"));
+    return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPISetGameData, 3, key, fuseId, gameData);
+}
+
+static int FuseAPIGetGameData_wrap(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIGetGameData"));
+    return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGetGameData, 4, key, fuseId, gameDataKeys, numKeys);
+}
+
 static void FuseAPIUpdateFriendsListFromServer_wrap()
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIUpdateFriendsListFromServer"));
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIUpdateFriendsListFromServer, 0);
+}
+
+static FusePlayer* FuseAPIGetFriendsList_wrap(int* numPlayers)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIGetFriendsList"));
+    return (FusePlayer*)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGetFriendsList, 1, numPlayers);
 }
 
 static void FuseAPIGetMailListFromServer_wrap()
@@ -220,6 +256,12 @@ static int FuseAPISendMail_wrap(const char* fuseId, const char* message)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPISendMail"));
     return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPISendMail, 2, fuseId, message);
+}
+
+static FuseMail* FuseAPIGetMailList_wrap(int* numEntries)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIGetMailList"));
+    return (FuseMail*)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGetMailList, 1, numEntries);
 }
 
 static const char* FuseAPIGetGameConfigurationValue_wrap(const char* key)
@@ -265,6 +307,8 @@ static void FuseAPIRegisterTapjoyReward_wrap(int amount)
 #define FuseAPIRegisterForPushNotifications FuseAPIRegisterForPushNotifications_wrap
 #define FuseAPIRegisterEvent FuseAPIRegisterEvent_wrap
 #define FuseAPIRegisterEventWithParam FuseAPIRegisterEventWithParam_wrap
+#define FuseAPIRegisterEventWithEventData FuseAPIRegisterEventWithEventData_wrap
+#define FuseAPIRegisterEventWithDictionary FuseAPIRegisterEventWithDictionary_wrap
 #define FuseAPIRegisterInAppPurchase FuseAPIRegisterInAppPurchase_wrap
 #define FuseAPICheckAdAvailable FuseAPICheckAdAvailable_wrap
 #define FuseAPIShowAd FuseAPIShowAd_wrap
@@ -275,6 +319,7 @@ static void FuseAPIRegisterTapjoyReward_wrap(int amount)
 #define FuseAPITwitterLogin FuseAPITwitterLogin_wrap
 #define FuseAPIDeviceLogin FuseAPIDeviceLogin_wrap
 #define FuseAPIFuseLogin FuseAPIFuseLogin_wrap
+#define FuseAPIGameCenterLogin FuseAPIGameCenterLogin_wrap
 #define FuseAPIGooglePlayLogin FuseAPIGooglePlayLogin_wrap
 #define FuseAPIGetOriginalAccountId FuseAPIGetOriginalAccountId_wrap
 #define FuseAPIGetOriginalAccountAlias FuseAPIGetOriginalAccountAlias_wrap
@@ -285,12 +330,16 @@ static void FuseAPIRegisterTapjoyReward_wrap(int amount)
 #define FuseAPIConnected FuseAPIConnected_wrap
 #define FuseAPITimeFromServer FuseAPITimeFromServer_wrap
 #define FuseAPIEnableData FuseAPIEnableData_wrap
+#define FuseAPISetGameData FuseAPISetGameData_wrap
+#define FuseAPIGetGameData FuseAPIGetGameData_wrap
 #define FuseAPIUpdateFriendsListFromServer FuseAPIUpdateFriendsListFromServer_wrap
+#define FuseAPIGetFriendsList FuseAPIGetFriendsList_wrap
 #define FuseAPIGetMailListFromServer FuseAPIGetMailListFromServer_wrap
 #define FuseAPIGetMailListFriendFromServer FuseAPIGetMailListFriendFromServer_wrap
 #define FuseAPISetMailAsReceived FuseAPISetMailAsReceived_wrap
 #define FuseAPISendMailWithGift FuseAPISendMailWithGift_wrap
 #define FuseAPISendMail FuseAPISendMail_wrap
+#define FuseAPIGetMailList FuseAPIGetMailList_wrap
 #define FuseAPIGetGameConfigurationValue FuseAPIGetGameConfigurationValue_wrap
 #define FuseAPIRegisterLevel FuseAPIRegisterLevel_wrap
 #define FuseAPIRegisterCurrency FuseAPIRegisterCurrency_wrap
@@ -313,7 +362,7 @@ s3eResult FuseAPIUnRegister(FuseAPICallback cbid, s3eCallback fn)
 void FuseAPIRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[41];
+    void* funcPtrs[48];
     funcPtrs[0] = (void*)FuseAPIRegister;
     funcPtrs[1] = (void*)FuseAPIUnRegister;
     funcPtrs[2] = (void*)FuseAPIStartSession;
@@ -323,43 +372,50 @@ void FuseAPIRegisterExt()
     funcPtrs[6] = (void*)FuseAPIRegisterForPushNotifications;
     funcPtrs[7] = (void*)FuseAPIRegisterEvent;
     funcPtrs[8] = (void*)FuseAPIRegisterEventWithParam;
-    funcPtrs[9] = (void*)FuseAPIRegisterInAppPurchase;
-    funcPtrs[10] = (void*)FuseAPICheckAdAvailable;
-    funcPtrs[11] = (void*)FuseAPIShowAd;
-    funcPtrs[12] = (void*)FuseAPIDisplayNotifications;
-    funcPtrs[13] = (void*)FuseAPIDisplayMoreGames;
-    funcPtrs[14] = (void*)FuseAPIRegisterGender;
-    funcPtrs[15] = (void*)FuseAPIFacebookLogin;
-    funcPtrs[16] = (void*)FuseAPITwitterLogin;
-    funcPtrs[17] = (void*)FuseAPIDeviceLogin;
-    funcPtrs[18] = (void*)FuseAPIFuseLogin;
-    funcPtrs[19] = (void*)FuseAPIGooglePlayLogin;
-    funcPtrs[20] = (void*)FuseAPIGetOriginalAccountId;
-    funcPtrs[21] = (void*)FuseAPIGetOriginalAccountAlias;
-    funcPtrs[22] = (void*)FuseAPIGetOriginalAccountType;
-    funcPtrs[23] = (void*)FuseAPIGetFuseID;
-    funcPtrs[24] = (void*)FuseAPIgamesPlayed;
-    funcPtrs[25] = (void*)FuseAPILibraryVersion;
-    funcPtrs[26] = (void*)FuseAPIConnected;
-    funcPtrs[27] = (void*)FuseAPITimeFromServer;
-    funcPtrs[28] = (void*)FuseAPIEnableData;
-    funcPtrs[29] = (void*)FuseAPIUpdateFriendsListFromServer;
-    funcPtrs[30] = (void*)FuseAPIGetMailListFromServer;
-    funcPtrs[31] = (void*)FuseAPIGetMailListFriendFromServer;
-    funcPtrs[32] = (void*)FuseAPISetMailAsReceived;
-    funcPtrs[33] = (void*)FuseAPISendMailWithGift;
-    funcPtrs[34] = (void*)FuseAPISendMail;
-    funcPtrs[35] = (void*)FuseAPIGetGameConfigurationValue;
-    funcPtrs[36] = (void*)FuseAPIRegisterLevel;
-    funcPtrs[37] = (void*)FuseAPIRegisterCurrency;
-    funcPtrs[38] = (void*)FuseAPIRegisterFlurryView;
-    funcPtrs[39] = (void*)FuseAPIRegisterFlurryClick;
-    funcPtrs[40] = (void*)FuseAPIRegisterTapjoyReward;
+    funcPtrs[9] = (void*)FuseAPIRegisterEventWithEventData;
+    funcPtrs[10] = (void*)FuseAPIRegisterEventWithDictionary;
+    funcPtrs[11] = (void*)FuseAPIRegisterInAppPurchase;
+    funcPtrs[12] = (void*)FuseAPICheckAdAvailable;
+    funcPtrs[13] = (void*)FuseAPIShowAd;
+    funcPtrs[14] = (void*)FuseAPIDisplayNotifications;
+    funcPtrs[15] = (void*)FuseAPIDisplayMoreGames;
+    funcPtrs[16] = (void*)FuseAPIRegisterGender;
+    funcPtrs[17] = (void*)FuseAPIFacebookLogin;
+    funcPtrs[18] = (void*)FuseAPITwitterLogin;
+    funcPtrs[19] = (void*)FuseAPIDeviceLogin;
+    funcPtrs[20] = (void*)FuseAPIFuseLogin;
+    funcPtrs[21] = (void*)FuseAPIGameCenterLogin;
+    funcPtrs[22] = (void*)FuseAPIGooglePlayLogin;
+    funcPtrs[23] = (void*)FuseAPIGetOriginalAccountId;
+    funcPtrs[24] = (void*)FuseAPIGetOriginalAccountAlias;
+    funcPtrs[25] = (void*)FuseAPIGetOriginalAccountType;
+    funcPtrs[26] = (void*)FuseAPIGetFuseID;
+    funcPtrs[27] = (void*)FuseAPIgamesPlayed;
+    funcPtrs[28] = (void*)FuseAPILibraryVersion;
+    funcPtrs[29] = (void*)FuseAPIConnected;
+    funcPtrs[30] = (void*)FuseAPITimeFromServer;
+    funcPtrs[31] = (void*)FuseAPIEnableData;
+    funcPtrs[32] = (void*)FuseAPISetGameData;
+    funcPtrs[33] = (void*)FuseAPIGetGameData;
+    funcPtrs[34] = (void*)FuseAPIUpdateFriendsListFromServer;
+    funcPtrs[35] = (void*)FuseAPIGetFriendsList;
+    funcPtrs[36] = (void*)FuseAPIGetMailListFromServer;
+    funcPtrs[37] = (void*)FuseAPIGetMailListFriendFromServer;
+    funcPtrs[38] = (void*)FuseAPISetMailAsReceived;
+    funcPtrs[39] = (void*)FuseAPISendMailWithGift;
+    funcPtrs[40] = (void*)FuseAPISendMail;
+    funcPtrs[41] = (void*)FuseAPIGetMailList;
+    funcPtrs[42] = (void*)FuseAPIGetGameConfigurationValue;
+    funcPtrs[43] = (void*)FuseAPIRegisterLevel;
+    funcPtrs[44] = (void*)FuseAPIRegisterCurrency;
+    funcPtrs[45] = (void*)FuseAPIRegisterFlurryView;
+    funcPtrs[46] = (void*)FuseAPIRegisterFlurryClick;
+    funcPtrs[47] = (void*)FuseAPIRegisterTapjoyReward;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[41] = { 0 };
+    int flags[48] = { 0 };
 
     /*
      * Register the extension

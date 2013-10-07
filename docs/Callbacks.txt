@@ -48,7 +48,7 @@ Params: none
 
 //-------------------------------------
 FUSEAPI_SESSION_LOGIN_ERROR
-Response to: a successful FuseAPIStartSession
+Response to: a successful FuseAPIStartSession.  See FuseLoginError in FuseAPI.h for error code values.
 Params: 
 struct paramList
 {
@@ -58,7 +58,7 @@ struct paramList
 
 //-------------------------------------
 FUSEAPI_AD_AVAILABILITY_RESPONSE
-Response to: FuseAPICheckAdAvailable
+Response to: FuseAPICheckAdAvailable. See FuseAdErrors in FuseAPI.h for error code values.
 Params:
 struct paramList
 {
@@ -75,16 +75,21 @@ Params: none
 
 //-------------------------------------
 FUSEAPI_AD_DISPLAYED
-Response to: When the ad is fully loaded and shown to the user
+Response to: When the ad is fully loaded and shown to the user. Only on Android
 Params: none
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_AD_CLICKED
-Response to: User clicking on an ad
+Response to: User clicking on an ad. Only on Android
 Params: none
 //-------------------------------------
 
+//-------------------------------------
+FUSEAPI_OVERLAY_WILL_CLOSE
+Response to: More games overlay closing. Only on iOS
+Params: none
+//-------------------------------------
 //-------------------------------------
 FUSEAPI_NOTIFICATION_ACTION
 Response to: Pressing a button on an action.  
@@ -98,25 +103,12 @@ struct paramList
 
 //-------------------------------------
 FUSEAPI_ACCOUNT_LOGIN_COMPLETE
-Response to: Logging in to any account (Facebook, Twitter, etc.)
+Response to: Logging in to any account (Facebook, Twitter, etc.).  See FuseAccountType in FuseAPI.h for the enumeration of account types
 Params: 
 struct paramList
 {
 	int accountType;
 	const char* accountID;
-};
-accountType maps to the AccountType enum in FuseAPI.h:
-enum AccountType
-{
-	NONE = 0,
-	GAMECENTER = 1,
-	FACEBOOK = 2,
-	TWITTER = 3,
-	OPENFEINT = 4,
-	USER = 5,
-	EMAIL = 6,
-	DEVICE_ID = 7,
-	GOOGLE_PLAY = 8,
 };
 //-------------------------------------
 
@@ -132,18 +124,19 @@ struct paramList
 
 //-------------------------------------
 FUSEAPI_GAME_DATA_RECEIVED
-Response to: To be implemented
+Response to: FuseAPIGetGameData
 Params:
 struct paramList
 {
-	int requestId;
-	int error;
+	cfuhash_table_t* gameData;
+	const char* accountID;
+	int requestID;
 };
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_GAME_DATA_ERROR
-Response to: Error in retrieving game data
+Response to: Error in retrieving game data.  See FuseGameDataError in FuseAPI.h for error code values.
 Params: 
 struct paramList
 {
@@ -164,13 +157,14 @@ struct paramList
 
 //-------------------------------------
 FUSEAPI_FRIENDSLIST_UPDATED
-Response to: To be implemented
-Params: 
+Response to: This callback is sent when a local copy of the player's friends list is stored after calling FuseAPIUpdateFriendsListFromServer
+At this point, you can call FuseAPIGetFriendsList to get the friends list in the form of an array of FusePlayers
+Params: none
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_FRIENDSLIST_ERROR
-Response to: To be implemented
+Response to: Returns a FuseFriendsListError if there was a problem retrieving the friends list from the server. See FuseFriendsListError in FuseAPI.h for error code values.
 Params: 
 struct paramList
 {
@@ -180,30 +174,56 @@ struct paramList
 
 //-------------------------------------
 FUSEAPI_MAILLIST_RECEIVED
-Response to: To be implemented
+Response to: This callback is sent when a local copy of a mail list is stored after calling FuseAPIGetMailListFromServer or FuseAPIGetMailListFriendFromServer.
+Once this callback is received, you can call FuseAPIGetMailList.
 Params: 
-//-------------------------------------
-
-//-------------------------------------
-FUSEAPI_MAIL_ERROR
-Response to: To be implemented
-Params: 
+struct paramList
+{
+	const char* fuseId;
+};
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_MAILLIST_ERROR
-Response to: To be implemented
+Response to: Called when there is an error in retrieving a mail list after calling FuseAPIGetMailListFromServer or FuseAPIGetMailListFriendFromServer.
+See FuseMailError in FuseAPI.h for error code values.
 Params: 
+struct paramList
+{
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_MAIL_ERROR
+Response to:  Called when there is an error when FuseAPISendMail or FuseAPISendMailWithGift is called.
+See FuseMailError in FuseAPI.h for error code values.
+Params: 
+struct paramList
+{
+	int error;
+	int requestId;
+};
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_MAIL_ACKNOWLEDGED
-Response to: To be implemented
+Response to: Successfully completed FuseAPISendMail or FuseAPISendMailWithGift
 Params: 
+struct paramList
+{
+	int messageId;
+	const char* fuseID;
+	int requestID;
+};
 //-------------------------------------
 
 //-------------------------------------
 FUSEAPI_GAME_CONFIGURATION_RECEIVED
 Response to: Successful session start, once game configuration key-value pairs have been retrieved from the server
-Params: none
+Params: 
+struct paramList
+{
+	cfuhash_table_t* gameConfig;
+};
 //-------------------------------------

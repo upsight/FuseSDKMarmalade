@@ -1,6 +1,7 @@
 FuseAPI Function Documentation
 
 Below is a list of calls you can make to the FuseAPI extension.
+Note: All this documentation can also be found in FuseAPI.h
 --------------------------------------------------------------------------------------------------------------
 
 /**+------------------+
@@ -23,14 +24,15 @@ Below is a list of calls you can make to the FuseAPI extension.
 */
 void FuseAPIStartSession(const char* key);
 
-
 /*
-* @brief This function is used to Setup Google Cloud Messaging service for this app.  
+* @brief This function is used to Setup Google Cloud Messaging service or iOS push notifications for this app.  
 * @details To use this function you must have registered for GCM through Google's API portal: https://code.google.com/apis/console.  A good explanation of GCM can be found here:
-* http://developer.android.com/google/gcm/gs.html.
+* http://developer.android.com/google/gcm/gs.html
 * Please see FuseAPI/docs/README.txt for how to set up the Android manifests and change notification icons
 *
-* @param GCM_Project_Number [String] This is the Project Number obtained after registering for GCM through Google's portal.
+* NOTE: the projectID paramter is ignored on iOS
+*
+* @param GCM_Project_Number [String] This is the Project Number obtained after registering for GCM through Google's portal. This parameter is not used for iOSs
 */
 void FuseAPIRegisterForPushNotifications(const char* projectID);
 
@@ -59,6 +61,94 @@ void FuseAPIRegisterForPushNotifications(const char* projectID);
 */
 void FuseAPIRegisterEvent(const char* message);
 
+/*
+* @brief This function will send a named event (with values) to the Fuse system for tracking
+* @details This function only allows one variable name and value to be sent.
+*
+* @code
+        
+// with variables
+rtn = FuseAPIRegisterEventWithParam("Levels", "Level", "1", "Coins", 68);
+     
+// with no variables
+rtn = FuseAPIRegisterEventWithParam("Levels", "Level", "3", null, null);
+     
+// with no parameters (You can also just use FuseAPIRegisterEvent(const char* message) in this case
+rtn = FuseAPIRegisterEventWithParam("Session Pause", null, null, null, null);
+     
+* @endcode
+*
+* @param name [const char*] The event group name (i.e. "Levels")
+* @param param_name [const char*] The event parameter name (i.e. "Level")
+* @param param_value [const char*] The event parameter value (i.e. "1")
+* @param variable_name [const char*] The name of the variable being logged (i.e. "Coins")
+* @param variable_value [const double*] A reference to the value of the event being logged (i.e. 10)
+* @retval FuseEvent Indicates whether the event information is valid.  Corresponds to FuseEvent enumeration.
+*/
+int FuseAPIRegisterEventWithParam(const char* name, const char* param_name, const char* param_value, const char* variable_name, const double* variable_value);
+
+/*
+* @brief This function will send a named event (with values) to the Fuse system for tracking
+* @details To log a named event in the fuse system, you can make the following function calls.  Note that any variable value sent will be summed in the Fuse system, while the other parameters will be counted.
+*
+* @code
+      
+// with a HashMap
+cfuhash_table_t* toAdd = cfuhash_new_with_initial_size(3);
+
+//Note: The value must be a number in string format
+cfuhash_put(toAdd, "XP", "45");
+cfuhash_put(toAdd, "Coins", "155");
+cfuhash_put(toAdd, "Frame Rate", "20.5");
+     
+rtn = FuseAPIRegisterEventWithEventData("Levels", "Level", "1", toAdd);
+     
+// with no dictionary
+rtn = FuseAPIRegisterEventWithEventData("Completed", "Section", "8", NULL);
+     
+// with no parameters
+rtn = FuseAPIRegisterEventWithEventData("Session Start", NULL, NULL, NULL);
+     
+* @endcode
+*
+* @param name [const char*] The event group name (i.e. "Levels")
+* @param param_name [const char*] The event parameter name (i.e. "Level")
+* @param param_value [const char*] The event parameter value (i.e. "1")
+* @param data [cfuhash_table_t*] A list of key value pairs of variable names and values - see the libcfu code in FuseAPI/source/libcfu for more details on this implementation of a hash table
+* @retval FuseEvent Indicates whether the event information is valid.  Corresponds to FuseEvent enumeration.
+*/
+int FuseAPIRegisterEventWithEventData(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData);
+
+/*
+* @brief This function is used to register a named event in the Fuse system.
+* @details This function logs the time and frequency of an event within a given game session.  The input string can be anything that is relevant to the 
+* design of the game but should be easily understandable when read by users in the Fuse system.
+* 
+* It is advisable to avoid recording events at a high rate as this could negatively impact both application and server performance.  For example, a good 
+* practice would be to issue an event at the start of a level (i.e. 'Level 1') or when a purchase is made.  It is not advised to issue any event in each draw 
+* loop as this would create a tremendous amount of overhead and server traffic.
+* 
+* The maximum length of a registered event is 256 characters, and each application is limited to a maximum 256 separate named events.
+* 
+* An example call would be:
+ 
+* @code
+    cfuhash_table_t* data = cfuhash_new_with_initial_size(2);
+    
+	//Note: both the key and the value should be strings
+	cfuhash_put(data, "points", "5");
+	cfuhash_put(data, "status", "value3");
+     
+    FuseAPIRegisterEventWithDictionary("Level 1 Started", data);
+* @endcode
+ 
+* @param event [const char*] The event name to be logged
+* @param data [cfuhash_table_t*] A dictionary of values associated with the event - see the libcfu code in FuseAPI/source/libcfu for more details on this implementation of a hash table
+* @see FuseAPI.registerEvent(name, param_name, param_value, <HASH>) for more information on registering events
+* 
+*/
+void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* eventData);
+
 
 /**+-------------------------+
 // | In-App Purchase Logging |
@@ -67,7 +157,7 @@ void FuseAPIRegisterEvent(const char* message);
 * @brief This function records in-app purchases in the Fuse system.
 * @details Call this function directly after an in-app purchase is made once it has been confirmed that the transaction has occurred successfully.  
 * 
-* @param purchaseState [PurchaseState] An object set to the purchase details for easy parsing by the fuse system (PURCHASED=0, CANCELED=1, REFUNDED=2)
+* @param purchaseState [FusePurchaseState] An object set to the purchase details for easy parsing by the fuse system (PURCHASED=0, CANCELED=1, REFUNDED=2)
 * @param purchaseToken [const char*] The token from the purchase transaction
 * @param productId [const char*] The product identifier
 * @param productId [const char*] The product identifier
@@ -78,7 +168,7 @@ void FuseAPIRegisterEvent(const char* message);
 * @param currency [const char*] Currency code
 *
 */
-void FuseAPIRegisterInAppPurchase(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, double price, const char* currency);
+void FuseAPIRegisterInAppPurchase(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, double price, const char* currency);
 
 
 /**+-----------------------+
@@ -137,7 +227,7 @@ void FuseAPIDisplayMoreGames();
 *
 * The enumerated type definition is as follows:
 * @code
-public enum Gender 
+public enum FuseGender 
 {
     FUSE_GENDER_UNKNOWN(0),
     FUSE_GENDER_MALE(1),
@@ -290,7 +380,7 @@ const char* FuseAPIGetOriginalAccountAlias();
 int type = FuseAPIGetOriginalAccountType();
  
 // where type corresponds to the following enum:
-enum AccountType
+enum FuseAccountType
 {
 	NONE = 0,
 	GAMECENTER = 1,
@@ -378,6 +468,338 @@ void FuseAPITimeFromServer();
 * @param enable [bool] Indicates whether the user is opting out (true = data collection enabled, false = data collection disabled)
 */
 void FuseAPIEnableData(bool enable);
+
+
+/**+----------------+
+// | User Game Data |
+// +----------------*/
+/*
+* @brief This function is used to store per-user persistent game data on the Fuse servers while specifying a mater key value for the key->value pairs in the dictionary.
+* @details User information is stored in key->value pairs.  A dictionary is used to store the key value pairs that are passed in to the function.  Keys in the dictionary 
+* must be strings, while value data types fall in to two categories: the first being variables that can be cast to strings (int, boolean, float, string), while the second 
+* is binary data in the form of a Byte[] object.  There is currently no restriction on the length of the value passed to the server, however if requests become so large they 
+* could create problems and this policy will have to be changed.  To receive information on whether the call was made successfully, you can optionally register for the following 
+* callbacks: FUSEAPI_GAME_DATA_ERROR and FUSEAPI_GAME_DATASET_ACKNOWLEDGED.  See FuseAPI/docs/Callbacks.txt for more information about callback handlers
+* and the structs used to pass information from FuseAPI to callback handlers.
+*
+* An example of how to create a dictionary and send it to the Fuse system is as follows:
+* 
+* @code
+
+cfuhash_table_t* gameKeyValuePairs  = cfuhash_new_with_initial_size(2);
+
+FuseGameValue firstValue = {false, "value"};
+cfuhash_put(gameKeyValuePairs, "myawesomekey", (void*)&firstKey);
+
+FuseGameValue secondValue = {false, "good"};
+cfuhash_put(gameKeyValuePairs, "cat", (void*)&secondValue);
+
+const char* fuseID = FuseAPIGetFuseID();
+FuseAPISetGameData( "my data", fuseID, gameKeyValuePairs );
+ 
+* @endcode
+* 
+* Here are example callback handlers for FUSEAPI_GAME_DATA_ERROR and FUSEAPI_GAME_DATASET_ACKNOWLEDGED:
+* 
+* @code
+
+int32 GameDataSetAcknowledged(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int requestId;
+	};
+	paramList* params;
+	params = (paramList*)systemData;
+
+	// yah!
+
+	return 1;
+}
+
+int32 SetFuseGameDataError(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		FuseGameDataError error;
+		int requestId;
+	};
+	paramList* params;
+	params = (paramList*)systemData;
+
+	// An error has occurred in setting game data
+	// see FuseGameDataError for all error values
+
+	return 1;
+}
+ 
+* @endcode 
+* 
+* @param key [const char*] The master key for this data set. Can be NULL or an empty string
+* @param fuseId [const char*] This is the "Fuse ID" of the player for which the data is destine
+* @param gameData [cfuhash_table_t*] The data to be stored on the server.  The key is a string, and the value is a FuseGameValue struct.
+* @retval [int] Request number.  This is the request ID that can be correlated in gameDataSetAcknowledged to know whether the request was successful.
+* @see FuseGameDataError for all possible game data error values
+*/
+int FuseAPISetGameData(const char* key, const char* fuseId, cfuhash_table_t* gameData);
+
+/**
+* @brief This function is used to retrieve per-user persistent game data on the Fuse servers while specifying a master key value for the key->value pairs in the dictionary.
+* @details This function allows the specification of a master key to get grouped data.
+* 
+* @code
+
+const char* keys[2];
+
+keys[0] = "car1";
+keys[1] = "car2";
+        
+// With specifying a subset of information
+FuseAPIGetGameData("cars", keys, 2);
+ 
+// Getting all data
+FuseAPIGetGameData("cars", NULL, 0);
+ 
+* @endcode
+* 
+* @param key [const char*] This is the master key name.
+* @param keys [const char**] The subset of keys to request from the server.  If NULL all key->value pairs will be returned.
+* @param numKeys [int] The number of keys in the key array
+* @retval [int] This is the request ID.
+*/
+int FuseAPIGetGameData(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys);
+
+
+/**+-------------+
+// | Friend List |
+// +-------------*/
+/*
+* @brief Get a the user's friends list
+* @details Once a user has signed in with one of the supported account services (for instance, Facebook using facebookLogin), they will have a a friends list which is 
+* retrievable from the server.  This list is composed of any friends that they have invited.  This process is asynchronous in that it is required to go the the Fuse 
+* servers to retrieve the list.  Therefore, the result is returned in FuseAPIGetFriendsList once the FUSEAPI_FRIENDSLIST_UPDATED callback has been called.
+* 
+* To request the list:
+* 
+* @code
+ 
+FuseAPIUpdateFriendsListFromServer();
+ 
+* @endcode
+* 
+* The result is returned to the FUSEAPI_FRIENDSLIST_UPDATED or FUSEAPI_FRIENDSLIST_ERROR callback handlers.
+* eg)
+* 
+* @code
+
+int32 FriendsListUpdated(void* systemData, void* userData)
+{
+	int numFriends;
+	FusePlayer* playerList = FuseAPIGetFriendsList(&numFriends);
+
+	// Parse Player array
+}
+
+int32 FriendsListError(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int error;
+	};
+	paramList* params;
+	params = (paramList*)systemData;
+
+    // An error has occurred in getting the friends list
+    // See FuseFriendsListError for more information on all of the possible error codes
+}
+ 
+* @endcode
+* 
+* @see FuseAPIGetFriendsList for more information on getting the local version of the friends list
+* @see FuseAPI/docs/Callbacks.txt for more information on the FUSEAPI_FRIENDSLIST_UPDATED and FUSEAPI_FRIENDSLIST_ERROR callbacks
+*/
+void FuseAPIUpdateFriendsListFromServer();
+
+/*
+* @brief This function returns the local friends list of the logged in user
+* @details Similar to updateFriendsListFromServer, this function merely returns the local copy of the friends list.  
+* The local version of the list can differ from the server version in two ways.  Firstly, friends could accept an invite in another device, 
+* clearing both users to show up in each others list.  This server updated is not signaled to the client devices.  Secondly, given that there 
+* are propagation delays and HTTP request ordering issues, any "action" (adding a friend, accepting or deleting) will take a few seconds to 
+* reach the server. A request to get the server version very close to one of these actions could result in the list not being representative of the final list.
+* 
+* To get the local friends list:
+* 
+* @code
+	
+	// first, retrieve the friends list from the server	
+	FuseAPIUpdateFriendsListFromServer();
+	
+	// once you receive the FUSEAPI_FRIENDSLIST_UPDATED callback, you can query for the friend's list
+	int numFriends;
+	FusePlayer* local_friends_list = FuseAPIGetFriendsList(&numFriends);
+ 
+* @endcode
+* 
+* @param numPlayers [int*] Reference to an int variable that will contain the number of friends in the list
+* @retval [FusePlayer*] The local version of the user's friends list
+* @see FuseAPIUpdateFriendsListFromServer for more information on retrieving the list from the Fuse servers and the format of the friends list dictionary
+*/
+FusePlayer* FuseAPIGetFriendsList(int* numPlayers);
+
+
+/**+---------+
+// | Gifting |
+// +---------*/
+/*
+* @brief Get the the list of messages (and gifts) sent to the currently signed in user.
+* @details This function receives the server list of gifts granted to the user.  This function is asynchronous in that a list will not be returned to the user 
+* until it is received by the client from the server, and at that point the FUSEAPI_MAILLIST_RECEIVED is sent, and you can call FuseGetMailList. This function 
+* assumes the list being fetched is for a user already signed in using one of the available account services (Twitter, Facebook, etc.) in the Fuse API.
+*
+* @see FuseFacebookLogin: for more information on how to register a login with a Facebook account ID
+* @see FuseTwitterLogin: for more information on how to register a login with a Twitter account ID
+* @see FuseLogin: for more information on how to register a login with a Fuse ID
+*/
+void FuseAPIGetMailListFromServer();
+
+/*
+* @brief Get the list of messages (and gifts) sent to another user.
+* @details Similar to getMailListFromServer, this function will return the message list for another user (not the user currently signed in).
+*
+* @param fuseId [const char*] This is the "Fuse ID" of the player for which the list is requested
+* @see getMailListFromServer for more information on how to handle the callback for this function
+*/
+void FuseAPIGetMailListFriendFromServer(const char* fuseId);
+
+/*
+* @brief Mark a particular message (or gift) as received by the user
+* @details In order to facilitate the handshaking required, this function will mark a particular gift as "used". After this has been called, this message/gift will 
+* no longer appear in the list returned by the server. The function should only be called once it has been guaranteed by the client that the item has been credited to the user.
+* 
+*  This function can only be called for the user currently logged in (therefore the input "Fuse ID" is not able to be specified - assumed to be the same as getFuseID.
+*
+* @param mailId [int] The mail ID that has been consumed by the client
+* @see getFuseID for more information on retrieving the user's Fuse ID once signed in
+*/
+void FuseAPISetMailAsReceived(int messageId);
+
+/*
+* @brief Send a message to a user with a gift attached
+* @details This function facilitates gifting another user. A message can be specified along with the unique gift identifier as well as amount.  This function will return 
+* a callback if the gifting process was successful or whether an error occurred.  See FUSEAPI_MAIL_ACKNOWLEDGED and FUSEAPI_MAIL_ERROR in FuseAPI/docs/Callbacks.txt
+*
+* An example call to this function is as follows:
+*
+* @code
+        
+int requestID = FuseAPI.sendMailWithGift("123456789", "Meet me behind the school at recess with a gift", 7, 50);
+     
+* @endcode
+* 
+* An example of the callback is as follows:
+* 
+* @code
+
+int32 MailAcknowledged(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int messageId;
+		const char* fuseID;
+		int requestID;
+	};
+	paramList* params;
+	params = (paramList*)systemData;
+
+	// The message was received successfully
+}
+
+int32 MailError(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int error;
+		int requestId;
+	};
+	paramList* params;
+
+	// An error has occurred
+    // Refer to FuseMailError for information of the error cases possible    
+}
+ 
+* @endcode
+* 
+* @param fuseId [const char*] This is the "Fuse ID" of the player for which the gift is destined
+* @param message [const char*] The message to be sent along with the gift (optional)
+* @param giftId [int] The unique gift index that identifies the gift uniquely to the game (should this be an INT?)
+* @param giftAmount [int] The quantity of the gift to be awarded to the user (associated with giftId)
+* @retval requestID [int] The request ID for the send mail request
+* @see FUSEAPI_MAIL_ACKNOWLEDGED for more information on the send gift callback
+* @see FUSEAPI_MAIL_ERROR for more information on the error handling for this function
+*/
+int FuseAPISendMailWithGift(const char* fuseId, const char* message, int giftId, int giftAmount);
+
+/*
+* @brief Send a message to a user
+* @details This function facilitates messaging another user. This function will return a callback to the FuseCallback object to indicate 
+* if the messaging process was successful or whether an error occurred.
+*
+* An example call to this function is as follows:
+*
+* @code
+        
+FuseAPISendMail("123456789", "Meet me behind the school at recess");
+     
+* @endcode
+*
+* An example of the callback is as follows:
+* 
+* @code
+ 
+int32 MailAcknowledged(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int messageId;
+		const char* fuseID;
+		int requestID;
+	};
+	paramList* params;
+	params = (paramList*)systemData;
+
+	// The message was received successfully
+}
+
+int32 MailError(void* systemData, void* userData)
+{
+	struct paramList
+	{
+		int error;
+		int requestId;
+	};
+	paramList* params;
+
+	// An error has occurred
+    // Refer to FuseMailError for information of the error cases possible    
+}
+ 
+* @endcode
+*
+* @param fuseId [const char*] This is the "Fuse ID" of the player for which the gift is destined
+* @param message [const char*] The message to be sent along with the gift (optional)
+* @retval requestID [int] The request ID for the send mail request
+* @see FUSEAPI_MAIL_ACKNOWLEDGED for more information on the send gift callback
+* @see FUSEAPI_MAIL_ERROR for more information on the error handling for this function
+*/
+int FuseAPISendMail(const char* fuseId, const char* message);
+
+/*
+* @brief Get the mail list of a user that has already been retrieved from the server
+* @details This list is the local copy, of any user that has already been fetched
+* @see getMailListFromServer and getMailListFriendFromServer: for more information on retrieving the mail/gift list from the server
+*/
+FuseMail* FuseAPIGetMailList(int* numEntries);
 
 
 /**+-------------------------+

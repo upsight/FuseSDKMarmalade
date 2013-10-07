@@ -29,7 +29,9 @@ typedef       void(*FuseAPITerminateSession_t)();
 typedef       void(*FuseAPIRegisterForPushNotifications_t)(const char* projectID);
 typedef       void(*FuseAPIRegisterEvent_t)(const char* message);
 typedef        int(*FuseAPIRegisterEventWithParam_t)(const char* name, const char* param_name, const char* param_value, const char* variable_name, const double* variable_value);
-typedef       void(*FuseAPIRegisterInAppPurchase_t)(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+typedef        int(*FuseAPIRegisterEventWithEventData_t)(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData);
+typedef       void(*FuseAPIRegisterEventWithDictionary_t)(const char* message, cfuhash_table_t* eventData);
+typedef       void(*FuseAPIRegisterInAppPurchase_t)(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
 typedef       void(*FuseAPICheckAdAvailable_t)();
 typedef       void(*FuseAPIShowAd_t)();
 typedef       void(*FuseAPIDisplayNotifications_t)();
@@ -39,6 +41,7 @@ typedef       void(*FuseAPIFacebookLogin_t)(const char* facebookId, const char* 
 typedef       void(*FuseAPITwitterLogin_t)(const char* twitterId);
 typedef       void(*FuseAPIDeviceLogin_t)(const char* alias);
 typedef       void(*FuseAPIFuseLogin_t)(const char* fuseId, const char* alias);
+typedef       void(*FuseAPIGameCenterLogin_t)();
 typedef       void(*FuseAPIGooglePlayLogin_t)(const char* alias, const char* token);
 typedef const char*(*FuseAPIGetOriginalAccountId_t)();
 typedef const char*(*FuseAPIGetOriginalAccountAlias_t)();
@@ -49,12 +52,16 @@ typedef const char*(*FuseAPILibraryVersion_t)();
 typedef       bool(*FuseAPIConnected_t)();
 typedef       void(*FuseAPITimeFromServer_t)();
 typedef       void(*FuseAPIEnableData_t)(bool enable);
+typedef        int(*FuseAPISetGameData_t)(const char* key, const char* fuseId, cfuhash_table_t* gameData);
+typedef        int(*FuseAPIGetGameData_t)(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys);
 typedef       void(*FuseAPIUpdateFriendsListFromServer_t)();
+typedef FusePlayer*(*FuseAPIGetFriendsList_t)(int* numPlayers);
 typedef       void(*FuseAPIGetMailListFromServer_t)();
 typedef       void(*FuseAPIGetMailListFriendFromServer_t)(const char* fuseId);
 typedef       void(*FuseAPISetMailAsReceived_t)(int messageId);
 typedef        int(*FuseAPISendMailWithGift_t)(const char* fuseId, const char* message, int giftId, int giftAmount);
 typedef        int(*FuseAPISendMail_t)(const char* fuseId, const char* message);
+typedef  FuseMail*(*FuseAPIGetMailList_t)(int* numEntries);
 typedef const char*(*FuseAPIGetGameConfigurationValue_t)(const char* key);
 typedef       void(*FuseAPIRegisterLevel_t)(int level);
 typedef       void(*FuseAPIRegisterCurrency_t)(int type, int balance);
@@ -76,6 +83,8 @@ typedef struct FuseAPIFuncs
     FuseAPIRegisterForPushNotifications_t m_FuseAPIRegisterForPushNotifications;
     FuseAPIRegisterEvent_t m_FuseAPIRegisterEvent;
     FuseAPIRegisterEventWithParam_t m_FuseAPIRegisterEventWithParam;
+    FuseAPIRegisterEventWithEventData_t m_FuseAPIRegisterEventWithEventData;
+    FuseAPIRegisterEventWithDictionary_t m_FuseAPIRegisterEventWithDictionary;
     FuseAPIRegisterInAppPurchase_t m_FuseAPIRegisterInAppPurchase;
     FuseAPICheckAdAvailable_t m_FuseAPICheckAdAvailable;
     FuseAPIShowAd_t m_FuseAPIShowAd;
@@ -86,6 +95,7 @@ typedef struct FuseAPIFuncs
     FuseAPITwitterLogin_t m_FuseAPITwitterLogin;
     FuseAPIDeviceLogin_t m_FuseAPIDeviceLogin;
     FuseAPIFuseLogin_t m_FuseAPIFuseLogin;
+    FuseAPIGameCenterLogin_t m_FuseAPIGameCenterLogin;
     FuseAPIGooglePlayLogin_t m_FuseAPIGooglePlayLogin;
     FuseAPIGetOriginalAccountId_t m_FuseAPIGetOriginalAccountId;
     FuseAPIGetOriginalAccountAlias_t m_FuseAPIGetOriginalAccountAlias;
@@ -96,12 +106,16 @@ typedef struct FuseAPIFuncs
     FuseAPIConnected_t m_FuseAPIConnected;
     FuseAPITimeFromServer_t m_FuseAPITimeFromServer;
     FuseAPIEnableData_t m_FuseAPIEnableData;
+    FuseAPISetGameData_t m_FuseAPISetGameData;
+    FuseAPIGetGameData_t m_FuseAPIGetGameData;
     FuseAPIUpdateFriendsListFromServer_t m_FuseAPIUpdateFriendsListFromServer;
+    FuseAPIGetFriendsList_t m_FuseAPIGetFriendsList;
     FuseAPIGetMailListFromServer_t m_FuseAPIGetMailListFromServer;
     FuseAPIGetMailListFriendFromServer_t m_FuseAPIGetMailListFriendFromServer;
     FuseAPISetMailAsReceived_t m_FuseAPISetMailAsReceived;
     FuseAPISendMailWithGift_t m_FuseAPISendMailWithGift;
     FuseAPISendMail_t m_FuseAPISendMail;
+    FuseAPIGetMailList_t m_FuseAPIGetMailList;
     FuseAPIGetGameConfigurationValue_t m_FuseAPIGetGameConfigurationValue;
     FuseAPIRegisterLevel_t m_FuseAPIRegisterLevel;
     FuseAPIRegisterCurrency_t m_FuseAPIRegisterCurrency;
@@ -333,9 +347,49 @@ int FuseAPIRegisterEventWithParam(const char* name, const char* param_name, cons
     return ret;
 }
 
-void FuseAPIRegisterInAppPurchase(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+int FuseAPIRegisterEventWithEventData(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[9] func: FuseAPIRegisterInAppPurchase"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[9] func: FuseAPIRegisterEventWithEventData"));
+
+    if (!_extLoad())
+		return 0;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    int ret = g_Ext.m_FuseAPIRegisterEventWithEventData(name, paramName, paramValue, eventData);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return ret;
+}
+
+void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* eventData)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[10] func: FuseAPIRegisterEventWithDictionary"));
+
+    if (!_extLoad())
+        return;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    g_Ext.m_FuseAPIRegisterEventWithDictionary(message, eventData);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return;
+}
+
+void FuseAPIRegisterInAppPurchase(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[11] func: FuseAPIRegisterInAppPurchase"));
 
     if (!_extLoad())
         return;
@@ -355,7 +409,7 @@ void FuseAPIRegisterInAppPurchase(PurchaseState purchaseState, const char* purch
 
 void FuseAPICheckAdAvailable()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[10] func: FuseAPICheckAdAvailable"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[12] func: FuseAPICheckAdAvailable"));
 
     if (!_extLoad())
         return;
@@ -375,7 +429,7 @@ void FuseAPICheckAdAvailable()
 
 void FuseAPIShowAd()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[11] func: FuseAPIShowAd"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[13] func: FuseAPIShowAd"));
 
     if (!_extLoad())
         return;
@@ -395,7 +449,7 @@ void FuseAPIShowAd()
 
 void FuseAPIDisplayNotifications()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[12] func: FuseAPIDisplayNotifications"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[14] func: FuseAPIDisplayNotifications"));
 
     if (!_extLoad())
         return;
@@ -415,7 +469,7 @@ void FuseAPIDisplayNotifications()
 
 void FuseAPIDisplayMoreGames()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[13] func: FuseAPIDisplayMoreGames"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[15] func: FuseAPIDisplayMoreGames"));
 
     if (!_extLoad())
         return;
@@ -435,7 +489,7 @@ void FuseAPIDisplayMoreGames()
 
 void FuseAPIRegisterGender(int gender)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[14] func: FuseAPIRegisterGender"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[16] func: FuseAPIRegisterGender"));
 
     if (!_extLoad())
         return;
@@ -455,7 +509,7 @@ void FuseAPIRegisterGender(int gender)
 
 void FuseAPIFacebookLogin(const char* facebookId, const char* name, const char* accessToken)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[15] func: FuseAPIFacebookLogin"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[17] func: FuseAPIFacebookLogin"));
 
     if (!_extLoad())
         return;
@@ -475,7 +529,7 @@ void FuseAPIFacebookLogin(const char* facebookId, const char* name, const char* 
 
 void FuseAPITwitterLogin(const char* twitterId)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[16] func: FuseAPITwitterLogin"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[18] func: FuseAPITwitterLogin"));
 
     if (!_extLoad())
         return;
@@ -495,7 +549,7 @@ void FuseAPITwitterLogin(const char* twitterId)
 
 void FuseAPIDeviceLogin(const char* alias)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[17] func: FuseAPIDeviceLogin"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[19] func: FuseAPIDeviceLogin"));
 
     if (!_extLoad())
         return;
@@ -515,7 +569,7 @@ void FuseAPIDeviceLogin(const char* alias)
 
 void FuseAPIFuseLogin(const char* fuseId, const char* alias)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[18] func: FuseAPIFuseLogin"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[20] func: FuseAPIFuseLogin"));
 
     if (!_extLoad())
         return;
@@ -533,9 +587,29 @@ void FuseAPIFuseLogin(const char* fuseId, const char* alias)
     return;
 }
 
+void FuseAPIGameCenterLogin()
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[21] func: FuseAPIGameCenterLogin"));
+
+    if (!_extLoad())
+        return;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    g_Ext.m_FuseAPIGameCenterLogin();
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return;
+}
+
 void FuseAPIGooglePlayLogin(const char* alias, const char* token)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[19] func: FuseAPIGooglePlayLogin"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[22] func: FuseAPIGooglePlayLogin"));
 
     if (!_extLoad())
         return;
@@ -555,7 +629,7 @@ void FuseAPIGooglePlayLogin(const char* alias, const char* token)
 
 const char* FuseAPIGetOriginalAccountId()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[20] func: FuseAPIGetOriginalAccountId"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[23] func: FuseAPIGetOriginalAccountId"));
 
     if (!_extLoad())
 		return NULL;
@@ -575,7 +649,7 @@ const char* FuseAPIGetOriginalAccountId()
 
 const char* FuseAPIGetOriginalAccountAlias()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[21] func: FuseAPIGetOriginalAccountAlias"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[24] func: FuseAPIGetOriginalAccountAlias"));
 
     if (!_extLoad())
 		return NULL;
@@ -595,7 +669,7 @@ const char* FuseAPIGetOriginalAccountAlias()
 
 int FuseAPIGetOriginalAccountType()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[22] func: FuseAPIGetOriginalAccountType"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[25] func: FuseAPIGetOriginalAccountType"));
 
     if (!_extLoad())
 		return 0;
@@ -615,7 +689,7 @@ int FuseAPIGetOriginalAccountType()
 
 const char* FuseAPIGetFuseID()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[23] func: FuseAPIGetFuseID"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[26] func: FuseAPIGetFuseID"));
 
     if (!_extLoad())
 		return NULL;
@@ -635,7 +709,7 @@ const char* FuseAPIGetFuseID()
 
 int FuseAPIgamesPlayed()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[24] func: FuseAPIgamesPlayed"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[27] func: FuseAPIgamesPlayed"));
 
     if (!_extLoad())
 		return 0;
@@ -655,7 +729,7 @@ int FuseAPIgamesPlayed()
 
 const char* FuseAPILibraryVersion()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[25] func: FuseAPILibraryVersion"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[28] func: FuseAPILibraryVersion"));
 
     if (!_extLoad())
 		return NULL;
@@ -675,7 +749,7 @@ const char* FuseAPILibraryVersion()
 
 bool FuseAPIConnected()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[26] func: FuseAPIConnected"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[29] func: FuseAPIConnected"));
 
     if (!_extLoad())
 		return false;
@@ -695,7 +769,7 @@ bool FuseAPIConnected()
 
 void FuseAPITimeFromServer()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[27] func: FuseAPITimeFromServer"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[30] func: FuseAPITimeFromServer"));
 
     if (!_extLoad())
         return;
@@ -715,7 +789,7 @@ void FuseAPITimeFromServer()
 
 void FuseAPIEnableData(bool enable)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[28] func: FuseAPIEnableData"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[31] func: FuseAPIEnableData"));
 
     if (!_extLoad())
         return;
@@ -733,9 +807,49 @@ void FuseAPIEnableData(bool enable)
     return;
 }
 
+int FuseAPISetGameData(const char* key, const char* fuseId, cfuhash_table_t* gameData)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[32] func: FuseAPISetGameData"));
+
+    if (!_extLoad())
+		return 0;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    int ret = g_Ext.m_FuseAPISetGameData(key, fuseId, gameData);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return ret;
+}
+
+int FuseAPIGetGameData(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[33] func: FuseAPIGetGameData"));
+
+    if (!_extLoad())
+		return 0;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    int ret = g_Ext.m_FuseAPIGetGameData(key, fuseId, gameDataKeys, numKeys);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return ret;
+}
+
 void FuseAPIUpdateFriendsListFromServer()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[29] func: FuseAPIUpdateFriendsListFromServer"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[34] func: FuseAPIUpdateFriendsListFromServer"));
 
     if (!_extLoad())
         return;
@@ -753,9 +867,29 @@ void FuseAPIUpdateFriendsListFromServer()
     return;
 }
 
+FusePlayer* FuseAPIGetFriendsList(int* numPlayers)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[35] func: FuseAPIGetFriendsList"));
+
+    if (!_extLoad())
+		return NULL;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    FusePlayer* ret = g_Ext.m_FuseAPIGetFriendsList(numPlayers);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return ret;
+}
+
 void FuseAPIGetMailListFromServer()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[30] func: FuseAPIGetMailListFromServer"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[36] func: FuseAPIGetMailListFromServer"));
 
     if (!_extLoad())
         return;
@@ -775,7 +909,7 @@ void FuseAPIGetMailListFromServer()
 
 void FuseAPIGetMailListFriendFromServer(const char* fuseId)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[31] func: FuseAPIGetMailListFriendFromServer"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[37] func: FuseAPIGetMailListFriendFromServer"));
 
     if (!_extLoad())
         return;
@@ -795,7 +929,7 @@ void FuseAPIGetMailListFriendFromServer(const char* fuseId)
 
 void FuseAPISetMailAsReceived(int messageId)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[32] func: FuseAPISetMailAsReceived"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[38] func: FuseAPISetMailAsReceived"));
 
     if (!_extLoad())
         return;
@@ -815,7 +949,7 @@ void FuseAPISetMailAsReceived(int messageId)
 
 int FuseAPISendMailWithGift(const char* fuseId, const char* message, int giftId, int giftAmount)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[33] func: FuseAPISendMailWithGift"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[39] func: FuseAPISendMailWithGift"));
 
     if (!_extLoad())
 		return 0;
@@ -835,7 +969,7 @@ int FuseAPISendMailWithGift(const char* fuseId, const char* message, int giftId,
 
 int FuseAPISendMail(const char* fuseId, const char* message)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[34] func: FuseAPISendMail"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[40] func: FuseAPISendMail"));
 
     if (!_extLoad())
 		return 0;
@@ -853,9 +987,29 @@ int FuseAPISendMail(const char* fuseId, const char* message)
     return ret;
 }
 
+FuseMail* FuseAPIGetMailList(int* numEntries)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[41] func: FuseAPIGetMailList"));
+
+    if (!_extLoad())
+		return NULL;
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    FuseMail* ret = g_Ext.m_FuseAPIGetMailList(numEntries);
+
+#ifdef LOADER_CALL
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return ret;
+}
+
 const char* FuseAPIGetGameConfigurationValue(const char* key)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[35] func: FuseAPIGetGameConfigurationValue"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[42] func: FuseAPIGetGameConfigurationValue"));
 
     if (!_extLoad())
 		return NULL;
@@ -875,7 +1029,7 @@ const char* FuseAPIGetGameConfigurationValue(const char* key)
 
 void FuseAPIRegisterLevel(int level)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[36] func: FuseAPIRegisterLevel"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[43] func: FuseAPIRegisterLevel"));
 
     if (!_extLoad())
         return;
@@ -895,7 +1049,7 @@ void FuseAPIRegisterLevel(int level)
 
 void FuseAPIRegisterCurrency(int type, int balance)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[37] func: FuseAPIRegisterCurrency"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[44] func: FuseAPIRegisterCurrency"));
 
     if (!_extLoad())
         return;
@@ -915,7 +1069,7 @@ void FuseAPIRegisterCurrency(int type, int balance)
 
 void FuseAPIRegisterFlurryView()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[38] func: FuseAPIRegisterFlurryView"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[45] func: FuseAPIRegisterFlurryView"));
 
     if (!_extLoad())
         return;
@@ -935,7 +1089,7 @@ void FuseAPIRegisterFlurryView()
 
 void FuseAPIRegisterFlurryClick()
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[39] func: FuseAPIRegisterFlurryClick"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[46] func: FuseAPIRegisterFlurryClick"));
 
     if (!_extLoad())
         return;
@@ -955,7 +1109,7 @@ void FuseAPIRegisterFlurryClick()
 
 void FuseAPIRegisterTapjoyReward(int amount)
 {
-    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[40] func: FuseAPIRegisterTapjoyReward"));
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[47] func: FuseAPIRegisterTapjoyReward"));
 
     if (!_extLoad())
         return;

@@ -13,6 +13,8 @@
 #include <jni.h>
 #include "IwDebug.h"
 
+#include "cfuhash.h"
+
 static jobject g_Obj;
 static jmethodID g_FuseAPIStartSession;
 static jmethodID g_FuseAPIPauseSession;
@@ -21,6 +23,12 @@ static jmethodID g_FuseAPITerminateSession;
 static jmethodID g_FuseAPIRegisterForPushNotifications;
 static jmethodID g_FuseAPIRegisterEvent;
 static jmethodID g_FuseAPIRegisterEventWithParam;
+static jmethodID g_FuseAPIRegisterEventStart;
+static jmethodID g_FuseAPIRegisterEventKeyValue;
+static jmethodID g_FuseAPIRegisterEventEnd;
+static jmethodID g_FuseAPIRegisterEventWithDictionaryStart;
+static jmethodID g_FuseAPIRegisterEventWithDictionaryKeyValue;
+static jmethodID g_FuseAPIRegisterEventWithDictionaryEnd;
 static jmethodID g_FuseAPIRegisterInAppPurchase;
 static jmethodID g_FuseAPICheckAdAvailable;
 static jmethodID g_FuseAPIShowAd;
@@ -41,6 +49,12 @@ static jmethodID g_FuseAPILibraryVersion;
 static jmethodID g_FuseAPIConnected;
 static jmethodID g_FuseAPITimeFromServer;
 static jmethodID g_FuseAPIEnableData;
+static jmethodID g_FuseAPISetGameDataStart;
+static jmethodID g_FuseAPISetGameDataKeyValue;
+static jmethodID g_FuseAPISetGameDataEnd;
+static jmethodID g_FuseAPIGetGameDataStart;
+static jmethodID g_FuseAPIGetGameDataKey;
+static jmethodID g_FuseAPIGetGameDataEnd;
 static jmethodID g_FuseAPIUpdateFriendsListFromServer;
 static jmethodID g_FuseAPIGetMailListFromServer;
 static jmethodID g_FuseAPIGetMailListFriendFromServer;
@@ -169,7 +183,7 @@ void FuseAPINotificationAction(JNIEnv* env, jobject obj, jstring action)
 //-------------------------------------
 // FuseAPIAccountLoginComplete
 // Params: int accountType, string accountID
-// Note: accountType is an enum defined in FuseAPI.h
+// Note: accountType is defined in FuseAPI.h as FuseAccountType
 //-------------------------------------
 void FuseAPIAccountLoginComplete(JNIEnv* env, jobject obj, int accountType, jstring accountID)
 {
@@ -236,6 +250,42 @@ void FuseGameDataSetAcknowledged(JNIEnv* env, jobject obj, jint requestID)
 }
 
 //-------------------------------------
+// FuseAPIFriendsListUpdated
+// Params: none
+//-------------------------------------
+FusePlayer* g_playerList = NULL;
+int g_playerIndex = 0;
+void FuseAPIFriendsListUpdateStart(JNIEnv* env, jobject obj, jint numPlayers)
+{
+	IwTrace(FuseAPI, ("FuseAPIFriendsListUpdateStart()"));
+	if( g_playerList != NULL )
+	{
+		delete(g_playerList);
+	}
+	g_playerList = (FusePlayer*)malloc(sizeof(FusePlayer)*numPlayers);
+	g_playerIndex = 0;
+}
+ 
+void FuseAPIFriendsListUpdatePlayer(JNIEnv* env, jobject obj, jstring fuseId, jstring alias, jstring type, jstring accountId, jint level, jint pending, bool canAttack)
+{
+	IwTrace(FuseAPI, ("FuseAPIFriendsListUpdatePlayer()"));
+	g_playerList[g_playerIndex].fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+	g_playerList[g_playerIndex].alias = s3eEdkGetStringUTF8Chars(alias);
+	g_playerList[g_playerIndex].type = s3eEdkGetStringUTF8Chars(type);
+	g_playerList[g_playerIndex].accountId = s3eEdkGetStringUTF8Chars(accountId);
+	g_playerList[g_playerIndex].level = level;
+	g_playerList[g_playerIndex].pending = pending;
+	g_playerList[g_playerIndex].canAttack = canAttack;
+	g_playerIndex++;
+}
+
+void FuseAPIFriendsListUpdateEnd(JNIEnv* env, jobject obj)
+{
+	IwTrace(FuseAPI, ("FuseAPIFriendsListUpdateEnd()"));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIENDSLIST_UPDATED, 0, 0);
+}
+
+//-------------------------------------
 // FuseFriendsListError
 // Params: int error
 //-------------------------------------
@@ -269,6 +319,51 @@ void FuseMailAcknowledged(JNIEnv* env, jobject obj, jint messageId, jstring fuse
 	params.requestID = requestID;
     IwTrace(FuseAPI, ("FuseMailAcknowledged(%i, %s, %i)", params.messageId, params.fuseID, params.requestID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_MAIL_ACKNOWLEDGED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseMailListReceived
+// Params: string fuseId
+//-------------------------------------
+FuseMail* g_mailList = NULL;
+int g_numMailEntries = 0;
+void FuseAPIMailListUpdateStart(JNIEnv* env, jobject obj, jint numEntries)
+{
+	IwTrace(FuseAPI, ("FuseAPIMailListUpdateStart()"));
+	if( g_mailList != NULL )
+	{
+		delete(g_mailList);
+	}
+	g_mailList = (FuseMail*)malloc(sizeof(FuseMail)*numEntries);
+	g_numMailEntries = 0;
+}
+
+void FuseAPIMailListUpdate(JNIEnv* env, jobject obj, jint id, jstring alias, jstring fuseId, jstring message, jstring date)
+{
+	g_mailList[g_numMailEntries].id = id;
+	g_mailList[g_numMailEntries].alias = s3eEdkGetStringUTF8Chars(alias);
+	g_mailList[g_numMailEntries].fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+	g_mailList[g_numMailEntries].message = s3eEdkGetStringUTF8Chars(message);
+	g_mailList[g_numMailEntries].date = s3eEdkGetStringUTF8Chars(date);	
+}
+void FuseAPIMailListUpdateGift(JNIEnv* env, jobject obj, jint id, jstring name, jstring url, jint amount)
+{
+	g_mailList[g_numMailEntries].gift.id = id;
+	g_mailList[g_numMailEntries].gift.name = s3eEdkGetStringUTF8Chars(name);
+	g_mailList[g_numMailEntries].gift.url = s3eEdkGetStringUTF8Chars(url);
+	g_mailList[g_numMailEntries].gift.amount = amount;
+	g_numMailEntries++;
+}
+void FuseMailListReceived(JNIEnv* env, jobject obj, jstring fuseId)
+{
+	struct paramList
+	{
+		const char* fuseId;
+	};
+	paramList params;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+    IwTrace(FuseAPI, ("FuseMailListReceived( %s )", params.fuseId));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_MAILLIST_RECEIVED, &params, sizeof(paramList));
 }
 
 //-------------------------------------
@@ -307,40 +402,77 @@ void FuseMailListError(JNIEnv* env, jobject obj, jint error)
 // FuseGameConfigurationReceived
 // Params: none
 //-------------------------------------
+cfuhash_table_t *gameConfig = NULL;
+void FuseGameConfigurationStart(JNIEnv* env, jobject obj, jint numKeys)
+{
+	IwTrace(FuseAPI, ("FuseGameConfigurationStart()"));
+	if( gameConfig == NULL )
+	{
+		gameConfig = cfuhash_new_with_initial_size(numKeys);
+	}
+	cfuhash_clear(gameConfig);	
+}
+void FuseGameConfigurationKeyValue(JNIEnv* env, jobject obj, jstring key, jstring value)
+{
+	IwTrace(FuseAPI, ("FuseGameConfigurationKeyValue(%s, %s)", s3eEdkGetStringUTF8Chars(key), s3eEdkGetStringUTF8Chars(value)));
+	cfuhash_put(gameConfig, (const char*)s3eEdkGetStringUTF8Chars(key), (void*)s3eEdkGetStringUTF8Chars(value));
+}
 void FuseGameConfigurationReceived(JNIEnv* env, jobject obj)
 {
 	IwTrace(FuseAPI, ("FuseGameConfigurationReceived()"));
-    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_CONFIGURATION_RECEIVED, 0, 0);
+
+	struct paramList
+	{
+		cfuhash_table_t* gameConfig;
+	};
+	paramList params;
+	params.gameConfig = gameConfig;
+
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_CONFIGURATION_RECEIVED, &params, sizeof(paramList));
 }
 
 //-------------------------------------
 // FuseAPIGameDataReceived
 // Params: string accountId, hash_map gameData, int requestId
-// TODO: implement some sort of hash set
 //-------------------------------------
-void FuseAPIGameDataReceivedStart(JNIEnv* env, jstring accountId)
+cfuhash_table_t* gameData = cfuhash_new_with_initial_size(10);
+void FuseAPIGameDataReceivedStart(JNIEnv* env, jobject obj)
 {
-	//IwTrace(FuseAPI, ("FuseAPIGameDataReceivedStart(%s)", s3eEdkGetStringUTF8Chars(accountId)));
+	IwTrace(FuseAPI, ("FuseAPIGameDataReceivedStart()"));
+	cfuhash_clear(gameData);
 }
-void FuseAPIGameDataReceivedKVP(JNIEnv* env, bool isBinary, jstring key, jstring value)
+void FuseAPIGameDataReceivedKVP(JNIEnv* env, jobject obj, bool isBinary, jstring key, jstring value)
 {
-	//IwTrace(FuseAPI, ("FuseAPIGameDataReceivedKVP(%s, %s, %s)", isBinary ? "true" : "false", s3eEdkGetStringUTF8Chars(key), s3eEdkGetStringUTF8Chars(value)));
+	IwTrace(FuseAPI, ("FuseAPIGameDataReceivedKVP(%s, %s, %s)", isBinary ? "true" : "false", s3eEdkGetStringUTF8Chars(key), s3eEdkGetStringUTF8Chars(value)));
+	cfuhash_put(gameData, (const char*)s3eEdkGetStringUTF8Chars(key), (void*)s3eEdkGetStringUTF8Chars(value));
 }
-void FuseAPIGameDataReceivedEnd(JNIEnv* env, int requestId)
+void FuseAPIGameDataReceivedEnd(JNIEnv* env, jobject obj, jstring accountID, int requestID)
 {
-	//IwTrace(FuseAPI, ("FuseAPIGameDataReceivedEnd(%s)", requestId));
-}
+	IwTrace(FuseAPI, ("FuseAPIGameDataReceivedEnd(%s, %i)", s3eEdkGetStringUTF8Chars(accountID), requestID));
 
-//TODO: implement a List or ArrayList
-//public native void FuseMailListReceived(ArrayList<Mail> mailList, String fuseId); //TODO: array of mail
-//public native void FuseFriendsListUpdated(ArrayList<Player> friendsList); //TODO: array of Player
+	struct paramList
+	{
+		cfuhash_table_t* gameData;
+		const char* accountID;
+		int requestID;
+	};
+	paramList params;
+	params.gameData = gameData;
+	params.accountID = s3eEdkGetStringUTF8Chars(accountID);
+	params.requestID = requestID;
+
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_DATA_RECEIVED, &params, sizeof(paramList));
+}
 //----------------------------------------------------------------------------------------
 
-//-------------------------------------
-// FuseAPIGameDataReceived
-//-------------------------------------
 int32 FusePause(void* systemData, void* userData)
 {
+	if( gameConfig != NULL )
+	{
+		cfuhash_destroy(gameConfig);
+		gameConfig = NULL;
+	}
+
     FuseAPIPauseSession_platform();
 
     return 1;
@@ -376,9 +508,21 @@ s3eResult FuseAPIInit_platform()
 		{ "FuseGameDataSetAcknowledged",				"(I)V",			(void*)&FuseGameDataSetAcknowledged },
 		{ "FuseFriendsListError",						"(I)V",			(void*)&FuseFriendsListError },
 		{ "FuseMailAcknowledged",	 "(ILjava/lang/String;I)V",			(void*)&FuseMailAcknowledged },
-		{ "FuseMailError",								"(I)V",			(void*)&FuseMailError },
+		{ "FuseMailError",								"(II)V",		(void*)&FuseMailError },
 		{ "FuseMailListError",							"(I)V",			(void*)&FuseMailListError },
+		{ "FuseGameConfigurationStart",					"(I)V",			(void*)&FuseGameConfigurationStart },
+		{ "FuseGameConfigurationKeyValue", "(Ljava/lang/String;Ljava/lang/String;)V", (void*)&FuseGameConfigurationKeyValue },
 		{ "FuseGameConfigurationReceived",				"()V",			(void*)&FuseGameConfigurationReceived },
+		{ "FuseAPIGameDataReceivedStart",				"()V",			(void*)&FuseAPIGameDataReceivedStart },
+		{ "FuseAPIGameDataReceivedKVP",	"(ZLjava/lang/String;Ljava/lang/String;)V",	(void*)&FuseAPIGameDataReceivedKVP },
+		{ "FuseAPIGameDataReceivedEnd",	 "(Ljava/lang/String;I)V",		(void*)&FuseAPIGameDataReceivedEnd },
+		{ "FuseAPIFriendsListUpdateStart",				"(I)V",			(void*)&FuseAPIFriendsListUpdateStart },
+		{ "FuseAPIFriendsListUpdatePlayer", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZ)V", (void*)&FuseAPIFriendsListUpdatePlayer },
+		{ "FuseAPIFriendsListUpdateEnd",				"()V",			(void*)&FuseAPIFriendsListUpdateEnd },
+		{ "FuseAPIMailListUpdateStart",					"(I)V",			(void*)&FuseAPIMailListUpdateStart },
+		{ "FuseAPIMailListUpdate", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", (void*)&FuseAPIMailListUpdate },
+		{ "FuseAPIMailListUpdateGift", "(ILjava/lang/String;Ljava/lang/String;I)V", (void*)&FuseAPIMailListUpdateGift },
+		{ "FuseMailListReceived",		"(Ljava/lang/String;)V",		(void*)&FuseMailListReceived },
 	};
 
     // Get the extension class
@@ -423,6 +567,30 @@ s3eResult FuseAPIInit_platform()
 		
 	g_FuseAPIRegisterEventWithParam = env->GetMethodID(cls, "FuseAPIRegisterEventWithParam", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;D)I");
     if (!g_FuseAPIRegisterEventWithParam)
+        goto fail;
+
+	g_FuseAPIRegisterEventStart = env->GetMethodID(cls, "FuseAPIRegisterEventStart", "()V");
+    if (!g_FuseAPIRegisterEventStart)
+        goto fail;
+
+	g_FuseAPIRegisterEventKeyValue = env->GetMethodID(cls, "FuseAPIRegisterEventKeyValue", "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (!g_FuseAPIRegisterEventKeyValue)
+        goto fail;
+
+	g_FuseAPIRegisterEventEnd = env->GetMethodID(cls, "FuseAPIRegisterEventEnd", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I");
+    if (!g_FuseAPIRegisterEventEnd)
+        goto fail;
+
+	g_FuseAPIRegisterEventWithDictionaryStart = env->GetMethodID(cls, "FuseAPIRegisterEventWithDictionaryStart", "()V");
+    if (!g_FuseAPIRegisterEventWithDictionaryStart)
+        goto fail;
+
+	g_FuseAPIRegisterEventWithDictionaryKeyValue = env->GetMethodID(cls, "FuseAPIRegisterEventWithDictionaryKeyValue", "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (!g_FuseAPIRegisterEventWithDictionaryKeyValue)
+        goto fail;
+
+	g_FuseAPIRegisterEventWithDictionaryEnd = env->GetMethodID(cls, "FuseAPIRegisterEventWithDictionaryEnd", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIRegisterEventWithDictionaryEnd)
         goto fail;
 
     g_FuseAPIRegisterInAppPurchase = env->GetMethodID(cls, "FuseAPIRegisterInAppPurchase", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;DLjava/lang/String;)V");
@@ -505,6 +673,30 @@ s3eResult FuseAPIInit_platform()
     if (!g_FuseAPIEnableData)
         goto fail;
 
+	g_FuseAPISetGameDataStart = env->GetMethodID(cls, "FuseAPISetGameDataStart", "()V");
+    if (!g_FuseAPISetGameDataStart)
+        goto fail;
+
+	g_FuseAPISetGameDataKeyValue = env->GetMethodID(cls, "FuseAPISetGameDataKeyValue", "(Ljava/lang/String;Ljava/lang/String;Z)V");
+    if (!g_FuseAPISetGameDataKeyValue)
+        goto fail;
+
+	g_FuseAPISetGameDataEnd = env->GetMethodID(cls, "FuseAPISetGameDataEnd", "(Ljava/lang/String;Ljava/lang/String;)I");
+    if (!g_FuseAPISetGameDataEnd)
+        goto fail;
+
+	g_FuseAPIGetGameDataStart = env->GetMethodID(cls, "FuseAPIGetGameDataStart", "()V");
+    if (!g_FuseAPIGetGameDataStart)
+        goto fail;
+
+	g_FuseAPIGetGameDataKey = env->GetMethodID(cls, "FuseAPIGetGameDataKey", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIGetGameDataKey)
+        goto fail;
+
+	g_FuseAPIGetGameDataEnd = env->GetMethodID(cls, "FuseAPIGetGameDataEnd", "(Ljava/lang/String;Ljava/lang/String;)I");
+    if (!g_FuseAPIGetGameDataEnd)
+        goto fail;
+
     g_FuseAPIUpdateFriendsListFromServer = env->GetMethodID(cls, "FuseAPIUpdateFriendsListFromServer", "()V");
     if (!g_FuseAPIUpdateFriendsListFromServer)
         goto fail;
@@ -582,6 +774,12 @@ fail:
 void FuseAPITerminate_platform()
 {
     // Add any platform-specific termination code here
+	if( gameConfig != NULL )
+	{
+		cfuhash_destroy(gameConfig);
+		gameConfig = NULL;
+	}
+
 	FuseAPITerminateSession_platform();
 }
 
@@ -634,15 +832,60 @@ int FuseAPIRegisterEventWithParam_platform(const char* name, const char* param_n
     return (int)env->CallIntMethod(g_Obj, g_FuseAPIRegisterEventWithParam, name_jstr, param_name_jstr, param_value_jstr, param_value_jstr, variable_name_jstr, *variable_value);
 }
 
-void FuseAPIRegisterInAppPurchase_platform(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+int FuseAPIRegisterEventWithEventData_platform(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData)
 {
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring name_jstr = env->NewStringUTF(name);
+	jstring param_name_jstr = env->NewStringUTF(paramName);
+	jstring param_value_jstr = env->NewStringUTF(paramValue);
+		
+	env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventStart);
+	if( cfuhash_num_entries(eventData) > 0 )
+	{
+		char* key = NULL;
+		void* value = NULL;
+		cfuhash_each(eventData, &key, &value);
+		do
+		{
+			env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventKeyValue, env->NewStringUTF(key), env->NewStringUTF((const char*)value));
+		} 
+		while( cfuhash_next(eventData, &key, &value) );
+	}
+	return (int)env->CallIntMethod(g_Obj, g_FuseAPIRegisterEventEnd, name_jstr, param_name_jstr, param_value_jstr);
+}
+
+void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_table_t* eventData)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring message_jstr = env->NewStringUTF(message);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventWithDictionaryStart);
+	if( cfuhash_num_entries(eventData) > 0 )
+	{
+		char* key = NULL;
+		void* value = NULL;
+		cfuhash_each(eventData, &key, &value);
+		do
+		{
+			env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventWithDictionaryKeyValue, env->NewStringUTF(key), env->NewStringUTF((const char*)value));
+		} 
+		while( cfuhash_next(eventData, &key, &value) );
+	}
+	env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventWithDictionaryEnd, message_jstr);
+}
+
+void FuseAPIRegisterInAppPurchase_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+{	
     JNIEnv* env = s3eEdkJNIGetEnv();    
+	jint ps = (jint)purchaseState;
+	jlong pt = (jlong)purchaseTime;
+	jdouble pp = (jdouble)(*price);
     jstring purchaseToken_jstr = env->NewStringUTF(purchaseToken);
     jstring productId_jstr = env->NewStringUTF(productId);
     jstring orderId_jstr = env->NewStringUTF(orderId);
     jstring developerPayload_jstr = env->NewStringUTF(developerPayload);
     jstring currency_jstr = env->NewStringUTF(currency);
-    env->CallVoidMethod(g_Obj, g_FuseAPIRegisterInAppPurchase, purchaseState, purchaseToken_jstr, productId_jstr, orderId_jstr, purchaseTime, developerPayload_jstr, *price, currency_jstr);
+    env->CallVoidMethod(g_Obj, g_FuseAPIRegisterInAppPurchase, ps, purchaseToken_jstr, productId_jstr, orderId_jstr, pt, developerPayload_jstr, pp, currency_jstr);
 }
 
 void FuseAPICheckAdAvailable_platform()
@@ -704,6 +947,11 @@ void FuseAPIFuseLogin_platform(const char* fuseId, const char* alias)
     jstring fuseId_jstr = env->NewStringUTF(fuseId);
     jstring alias_jstr = env->NewStringUTF(alias);
     env->CallVoidMethod(g_Obj, g_FuseAPIFuseLogin, fuseId_jstr, alias_jstr);
+}
+
+void FuseAPIGameCenterLogin_platform()
+{
+	// only available on iOS
 }
 
 void FuseAPIGooglePlayLogin_platform(const char* alias, const char* token)
@@ -772,10 +1020,52 @@ void FuseAPIEnableData_platform(bool enable)
     env->CallVoidMethod(g_Obj, g_FuseAPIEnableData, enable);
 }
 
+int FuseAPISetGameData_platform(const char* key, const char* fuseId, cfuhash_table_t* gameData)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring key_jstr = env->NewStringUTF(key);
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPISetGameDataStart);
+	if( cfuhash_num_entries(gameData) > 0 )
+	{
+		char* key = NULL;
+		void* gameValue = NULL;
+		cfuhash_each(gameData, &key, &gameValue);
+		do
+		{
+			FuseGameValue* gv = (FuseGameValue*)gameValue;
+			env->CallVoidMethod(g_Obj, g_FuseAPISetGameDataKeyValue, env->NewStringUTF(key), env->NewStringUTF(gv->value), gv->isBinary);
+		} 
+		while( cfuhash_next(gameData, &key, &gameValue) );
+	}
+	return (int)env->CallIntMethod(g_Obj, g_FuseAPISetGameDataEnd, key_jstr, fuseId_jstr);
+}
+
+int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring key_jstr = env->NewStringUTF(key);
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIGetGameDataStart);
+	for( int i = 0; i < numKeys; i++ )
+	{
+		env->CallVoidMethod(g_Obj, g_FuseAPIGetGameDataKey, env->NewStringUTF(gameDataKeys[i]));
+	}
+	return (int)env->CallIntMethod(g_Obj, g_FuseAPIGetGameDataEnd, key_jstr, fuseId_jstr);
+}
+
 void FuseAPIUpdateFriendsListFromServer_platform()
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     env->CallVoidMethod(g_Obj, g_FuseAPIUpdateFriendsListFromServer);
+}
+
+FusePlayer* FuseAPIGetFriendsList_platform(int* numPlayers)
+{
+	*numPlayers = g_playerIndex;
+	return g_playerList;
 }
 
 void FuseAPIGetMailListFromServer_platform()
@@ -811,6 +1101,12 @@ int FuseAPISendMail_platform(const char* fuseId, const char* message)
     jstring fuseId_jstr = env->NewStringUTF(fuseId);
     jstring message_jstr = env->NewStringUTF(message);
     return (int)env->CallIntMethod(g_Obj, g_FuseAPISendMail, fuseId_jstr, message_jstr);
+}
+
+FuseMail* FuseAPIGetMailList_platform(int* numEntries)
+{
+	*numEntries = g_numMailEntries;
+	return g_mailList;
 }
 
 const char* FuseAPIGetGameConfigurationValue_platform(const char* key)

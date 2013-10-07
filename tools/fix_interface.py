@@ -20,6 +20,10 @@ def fixReturns(file_path):
 			retType = 2
 		elif "bool FuseAPI" in line:
 			retType = 3
+		elif "FusePlayer* FuseAPI" in line:
+			retType = 1
+		elif "FuseMail* FuseAPI" in line:
+			retType = 1
 		if "if (!_extLoad())" in line:
 			if retType == 1:
 				new_file.write("		return NULL;\n")

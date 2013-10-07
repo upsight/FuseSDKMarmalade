@@ -56,7 +56,11 @@ void FuseAPIRegisterEvent_platform(const char* message);
 
 int FuseAPIRegisterEventWithParam_platform(const char* name, const char* param_name, const char* param_value, const char* variable_name, const double* variable_value);
 
-void FuseAPIRegisterInAppPurchase_platform(PurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+int FuseAPIRegisterEventWithEventData_platform(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData);
+
+void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_table_t* eventData);
+
+void FuseAPIRegisterInAppPurchase_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
 
 void FuseAPICheckAdAvailable_platform();
 
@@ -71,6 +75,8 @@ void FuseAPIRegisterGender_platform(int gender);
 void FuseAPIFacebookLogin_platform(const char* facebookId, const char* name, const char* accessToken);
 
 void FuseAPITwitterLogin_platform(const char* twitterId);
+
+void FuseAPIGameCenterLogin_platform();
 
 void FuseAPIDeviceLogin_platform(const char* twitterId);
 
@@ -96,7 +102,13 @@ void FuseAPITimeFromServer_platform();
 
 void FuseAPIEnableData_platform(bool enable);
 
+int FuseAPISetGameData_platform(const char* key, const char* fuseId, cfuhash_table_t* gameData);
+
+int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys);
+
 void FuseAPIUpdateFriendsListFromServer_platform();
+
+FusePlayer* FuseAPIGetFriendsList_platform(int* numPlayers);
 
 void FuseAPIGetMailListFromServer_platform();
 
@@ -107,6 +119,8 @@ void FuseAPISetMailAsReceived_platform(int messageId);
 int FuseAPISendMailWithGift_platform(const char* fuseId, const char* message, int giftId, int giftAmount);
 
 int FuseAPISendMail_platform(const char* fuseId, const char* message);
+
+FuseMail* FuseAPIGetMailList_platform(int* numEntries);
 
 const char* FuseAPIGetGameConfigurationValue_platform(const char* key);
 

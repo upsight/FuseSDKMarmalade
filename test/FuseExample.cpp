@@ -145,7 +145,16 @@ int main()
 	RegisterFuseCallbacks();
 
 	// start Fuse session
-	FuseAPIStartSession("b6ed4e20-1d57-4def-936a-5d0d6b1badba");
+	if( s3eDeviceGetInt(S3E_DEVICE_OS) == S3E_OS_ID_IPHONE )
+	{
+		// For iOS platform
+		FuseAPIStartSession("1cc6d30a-7479-4273-a0d9-a8ec06ab1d2c");
+	}
+	else
+	{
+		// For Android platform
+		FuseAPIStartSession("b6ed4e20-1d57-4def-936a-5d0d6b1badba");
+	}
 
     // Wait for a quit request from the host OS
     while (!s3eDeviceCheckQuitRequest())

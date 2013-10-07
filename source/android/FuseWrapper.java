@@ -48,16 +48,22 @@ public class FuseWrapper
 	public native void FuseGameDataSetAcknowledged(int requestID);	
 	public native void FuseFriendsListError(int error);	
 	public native void FuseMailAcknowledged(int messageId, String fuseId, int requestID);
-	public native void FuseMailError(int error);
+	public native void FuseMailError(int error, int requestID);
 	public native void FuseMailListError(int error);
+	public native void FuseGameConfigurationStart(int numKeys);
+	public native void FuseGameConfigurationKeyValue(String key, String value);
 	public native void FuseGameConfigurationReceived();
-
-	//TODO:
-	public native void FuseAPIGameDataReceivedStart(String accountId);
+	public native void FuseAPIGameDataReceivedStart();
 	public native void FuseAPIGameDataReceivedKVP(boolean isBinary, String key, String value);
-	public native void FuseAPIGameDataReceivedEnd(int requestId);
-	//public native void FuseFriendsListUpdated(ArrayList<Player> friendsList); //TODO: array of Player
-	//public native void FuseMailListReceived(ArrayList<Mail> mailList, String fuseId); //TODO: array of mail
+	public native void FuseAPIGameDataReceivedEnd(String accountId, int requestId);
+	public native void FuseAPIFriendsListUpdateStart(int numPlayers);
+	public native void FuseAPIFriendsListUpdatePlayer(String fuseId, String alias, String type, String accountId, int level, int pending, boolean canAttack);	
+	public native void FuseAPIFriendsListUpdateEnd();
+	public native void FuseAPIMailListUpdateStart(int numEntries);
+	public native void FuseAPIMailListUpdate(int id, String alias, String fuseId, String message, String date);
+	public native void FuseAPIMailListUpdateGift(int id, String name, String url, int amount);
+	public native void FuseMailListReceived(String fuseId);
+	
 	//TODO: Enemies List callbacks
 
 	/**+------------------+
@@ -129,8 +135,7 @@ public class FuseWrapper
 		Log.d(_logTag, "FuseAPIRegisterEventWithParam(" + name + "," + param_name + "," + param_value + "," + variable_name + "," + variable_value + ")");
 		return FuseAPI.registerEvent(name, param_name, param_value, variable_name, variable_value).ordinal(); 
 	}
-
-	//TODO: FuseAPIRegisterEventWithDictionary(String message, HashMap<String,String> eventData)
+	
 	private HashMap<String,String> _eventStringData;
 	void FuseAPIRegisterEventWithDictionaryStart()
 	{
@@ -148,22 +153,32 @@ public class FuseWrapper
 		FuseAPI.registerEvent(message, _eventStringData);
 		_eventStringData = null;
 	}
-
-	//TODO: FuseAPIRegisterEvent(String name, String paramName, String paramValue, HashMap<String,Number> eventData)
+	
 	private HashMap<String,Number> _eventNumberData;
 	void FuseAPIRegisterEventStart()
 	{
-		Log.d(_logTag, "FuseAPIRegisterEventStart()");
+		Log.d(_logTag, "FuseRegisterEventWithEventDataStart()");
 		_eventNumberData = new HashMap<String,Number>();
 	}
-	void FuseAPIRegisterEventKeyValue(String key, double value)
+	void FuseAPIRegisterEventKeyValue(String key, String value)
 	{
-		Log.d(_logTag, "FuseAPIRegisterEventKeyValue(" + key + "," + value + ")");
-		_eventNumberData.put(key, value);
+		//NOTE: convert string to number/double
+		Log.d(_logTag, "FuseRegisterEventWithEventDataKeyValue(" + key + "," + value + ")");
+		double val = 0;
+		try
+		{
+			val = Double.valueOf(value);
+		}
+		catch(NumberFormatException e)
+		{
+			Log.e(_logTag, "FuseRegisterEventWithEventData: Value is not a number: " + value);
+			val = 0;
+		}
+		_eventNumberData.put(key, val);
 	}
 	int FuseAPIRegisterEventEnd(String name, String paramName, String paramValue)
 	{
-		Log.d(_logTag, "FuseAPIRegisterEventEnd(" + name + "," + paramName + "," + paramValue + ")");
+		Log.d(_logTag, "FuseRegisterEventWithEventDataEnd(" + name + "," + paramName + "," + paramValue + ")");
 		int result = FuseAPI.registerEvent(name, paramName, paramValue, _eventNumberData).ordinal();
 		_eventNumberData = null;
 		return result;
@@ -172,6 +187,7 @@ public class FuseWrapper
 	/**+-------------------------+
 	// | In-App Purchase Logging |
 	// +-------------------------*/
+	/*
 	public void FuseAPIRegisterInAppPurchase(int purchaseState, String purchaseToken, String productId, String orderId, long purchaseTime, String developerPayload)
 	{
 		Log.d(_logTag, "FuseAPIRegisterInAppPurchase(" + purchaseState + "," + purchaseToken + "," + productId + "," + orderId + "," + purchaseTime + "," + developerPayload + ")");
@@ -187,6 +203,7 @@ public class FuseWrapper
 		VerifiedPurchase purchase = new VerifiedPurchase(szPurchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload);
 		FuseAPI.registerInAppPurchase(purchase);
 	}
+	*/
 	public void FuseAPIRegisterInAppPurchase(int purchaseState, String purchaseToken, String productId, String orderId, long purchaseTime, String developerPayload, double price, String currency)
 	{
 		// If we haven't been passed a currency string, make a guess based on the current locale
@@ -381,7 +398,6 @@ public class FuseWrapper
 	/**+----------------+
 	// | User Game Data |
 	// +----------------*/
-	//TODO: int FuseAPISetGameData(String key, bool isCollection, String fuseId, HashTable<String, GameValue> gameData) run_on_os_thread
 	private static HashMap<String,GameValue> _setGameData;
 	public void FuseAPISetGameDataStart()
 	{
@@ -395,9 +411,9 @@ public class FuseWrapper
 		_setGameData.put(entryKey, new GameValue(entryValue, isBinary));
 	}
 
-	public int FuseAPISetGameDataEnd(String key, boolean isCollection, String fuseId)
+	public int FuseAPISetGameDataEnd(String key, String fuseId)
 	{
-		Log.d(_logTag, "FuseAPISetGameDataEnd(" + key + "," + isCollection + "," + fuseId + ")");
+		Log.d(_logTag, "FuseAPISetGameDataEnd(" + key + "," + fuseId + ")");
 
 		GameKeyValuePairs gameKeyValuePairs = new GameKeyValuePairs();
 		gameKeyValuePairs.setMap(_setGameData);
@@ -417,8 +433,7 @@ public class FuseWrapper
 
 		return callback.getRequestId();
 	}
-
-	//TODO: int FuseAPIGetGameData(String key, String fuseId, ArrayList<String> gameData) run_on_os_thread
+		
 	private static ArrayList<String> _getGameData;
 	public void FuseAPIGetGameDataStart()
 	{
@@ -475,9 +490,6 @@ public class FuseWrapper
 		FuseAPI.updateFriendsListFromServer(_gameDataCallback);
 	}
 
-	//TODO: List<Player> FuseAPIGetFriendsList()
-	//List<Player> FuseAPIGetFriendsList() run_on_os_thread
-
 	/**+---------+
 	// | Gifting |
 	// +---------*/
@@ -511,9 +523,6 @@ public class FuseWrapper
 		return FuseAPI.sendMail(fuseId, message, _gameDataCallback);
 	}
 
-	//TODO: return mail list
-	//List<Mail> FuseAPIGetMailList(String fuseId) run_on_os_thread
-
 	/**+-------------------------+
 	// | Game Configuration Data |
 	// +-------------------------*/
@@ -522,9 +531,6 @@ public class FuseWrapper
 		Log.d(_logTag, "FuseAPIGetGameConfigurationValue(" + key + ") = " + FuseAPI.getGameConfigurationValue(key));
 		return FuseAPI.getGameConfigurationValue(key);
 	}
-
-	/**TODO: return a hash map or array of kvps, or just an array of keys?*/
-	//String[]  FuseAPIGetGameConfigKeys() run_on_os_thread 
 
 	/**+-----------------------------+
 	// | Specific Event Registration |

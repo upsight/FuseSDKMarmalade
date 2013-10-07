@@ -5,9 +5,15 @@ platform IPHONE
 options
 {
     lib
-    output-name="lib/iphone/FuseAPI.a"
-    output-name-debug="lib/iphone/FuseAPI_d.a"
+    output-name="lib/iphone/libFuseAPIWrapper.a"
+    output-name-debug="lib/iphone/libFuseAPIWrapper_d.a"
 }
 define S3E_BUILD_EXT
 
 subproject FuseAPI_build
+
+#run a post build step to fix return statements in FuseAPI_interface.cpp after it is generated/modified
+command
+{
+	"python ./tools/fix_interface.py"
+}

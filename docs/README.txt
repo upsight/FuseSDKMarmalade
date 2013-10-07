@@ -1,10 +1,11 @@
-FuseAPI for Marmalade SDK 6.3~
+FuseAPI for Marmalade SDK 6.3
 ========================
 FuseAPI  Version v1.3
 
 This Extension currently supports
       
     ANDROID 
+	IOS
 
 Description
 ========================
@@ -50,12 +51,12 @@ Getting Started
 
 3. Project Settings - Register for callbacks as needed
 	eg)
-	FuseAPIRegister(FUSEAPI_SESSION_STARTED, (s3eCallback)GotSessionReceived, NULL);
-	FuseAPIRegister(FUSEAPI_SESSION_LOGIN_ERROR, (s3eCallback)SessionLoginError, NULL);
+	FuseAPIRegister(FUSEAPI_SESSION_STARTED, &GotSessionReceived, NULL);
+	FuseAPIRegister(FUSEAPI_SESSION_LOGIN_ERROR, &SessionLoginError, NULL);
 
 	See FuseAPI/docs/Callbacks.txt for information about callback functions available from the FuseAPI
 
-   The Fuse API key can be found in your dashboard view for the app your are trying to integrate by navigating to Admin->Integrate SDK in the (Fuseboxx)[https://www.fuseboxx.com] dashboard.
+   The Fuse API key can be found in your dashboard view for the app your are trying to integrate by navigating to Admin->Integrate SDK in the [Fuseboxx](https://www.fuseboxx.com) dashboard.
 
 
 5. UnRegister Callbacks when application terminates

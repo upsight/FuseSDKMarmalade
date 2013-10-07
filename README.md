@@ -5,6 +5,7 @@ FuseAPI  Version v1.3
 This Extension currently supports
       
     ANDROID 
+	IOS
 
 Description
 ========================
