@@ -21,8 +21,9 @@ obj = nil;}
 // A string table?  Manually grabage collect the table on Pause?
 
 // declaration of the FuseAPI delegate for callbacks
-@interface FuseAPI_Delegate : NSObject<FuseDelegate, FuseAdDelegate, FuseOverlayDelegate, FuseGameDataDelegate, UIApplicationDelegate>
+@interface FuseAPI_Delegate : NSObject<UIApplicationDelegate, FuseDelegate, FuseAdDelegate, FuseOverlayDelegate, FuseGameDataDelegate>
 {
+    id <UIApplicationDelegate>  m_appDelegate;
 }
 @end
 
@@ -129,10 +130,12 @@ int FuseAPIRegisterEventWithEventData_platform(const char* name, const char* par
         
         char* key = NULL;
         void* value = NULL;
+        NSNumberFormatter* f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
         cfuhash_each(eventData, &key, &value);
         do
         {
-            [values setObject:[NSString stringWithUTF8String:(const char*)value] forKey:[NSString stringWithUTF8String:key]];
+            [values setObject:[f numberFromString:[NSString stringWithUTF8String:(const char*)value]] forKey:[NSString stringWithUTF8String:key]];
         }
         while( cfuhash_next(eventData, &key, &value) );
     }
@@ -141,6 +144,7 @@ int FuseAPIRegisterEventWithEventData_platform(const char* name, const char* par
                           ParameterName:[NSString stringWithUTF8String:paramName]
                           ParameterValue:[NSString stringWithUTF8String:paramValue]
                               Variables:values];
+
     FuseSafeRelease(values);
     return retVal;
 }
@@ -167,15 +171,20 @@ void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_ta
     FuseSafeRelease(values);    
 }
 
-void FuseAPIRegisterInAppPurchase_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
-    //@TODO: have iOS and android specific functions?
-    //@TODO: get transaction reciept
-    [FuseAPI registerInAppPurchase:NULL
+    // Android only
+}
+
+void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+{
+    NSData* receipt = [[NSData alloc] initWithBytes:(void*)receiptData length:recieptDataLength];
+    [FuseAPI registerInAppPurchase:receipt
                            TxState:purchaseState
                              Price:[NSString stringWithFormat:@"%.2f", *price]
                           Currency:[NSString stringWithUTF8String:currency]
-                         ProductID:[NSString stringWithUTF8String:productId]];
+                         ProductID:[NSString stringWithUTF8String:productID]];
+    FuseSafeRelease(receipt);
 }
 
 void FuseAPICheckAdAvailable_platform()
@@ -492,16 +501,26 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 
 #pragma mark Initialization
 
+- (id) init
+{
+    self = [super init];
+    
+	if (self)
+    {
+        m_appDelegate = [[UIApplication sharedApplication] delegate];        
+        [[UIApplication sharedApplication] setDelegate:self];
+    }
+    
+    return self;
+}
+
 + (void)load
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
 }
 
 + (void)applicationDidFinishLaunching:(NSNotification *)notification
-{
-	// This no longer works under Unity 4.1 due to a mono_mutex_lock error,
-	// so it is now called from StartSession until mono under Unity 4.1 is investigated further.
-	//FuseAPI_Initialize();
+{	
 }
 
 #pragma mark Session Creation
@@ -548,7 +567,7 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
     params.originalTransactionID = copy;    
     
     IwTrace(FuseAPI, ("FuseAPIPurchaseVerified(%i, %s, %s)", params.verified, params.transactionID, params.originalTransactionID));
-    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_SESSION_LOGIN_ERROR, &params, sizeof(paramList));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_PURCHASE_VERIFIED, &params, sizeof(paramList));
 }
 
 #pragma mark Fuse Interstitial Ads
@@ -888,7 +907,7 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 	{
 		gameConfig = cfuhash_new_with_initial_size(gc.count);
 	}
-	cfuhash_clear(gameConfig);    
+	cfuhash_clear(gameConfig);
     
     if (gc != nil && [test count] > 0)
     {
@@ -907,14 +926,146 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
             cfuhash_put(gameConfig, key.UTF8String, (void*)copy);
         }
     }
-    [test release];
+    FuseSafeRelease(test);
     params.gameConfig = gameConfig;
 	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_CONFIGURATION_RECEIVED, &params, sizeof(paramList));
 }
 
+#pragma mark - Application Delegate Functions
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
 	[FuseAPI applicationdidRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"ERROR registering for remote notification: %@", [error localizedDescription]);
+}
+
+// These are forwarded to the real application delegate
+- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return [m_appDelegate application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+//- (void) application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame
+//{
+//    [m_appDelegate application:application didChangeStatusBarFrame:oldStatusBarFrame];
+//}
+
+//- (void) application:(UIApplication *)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation
+//{
+//    [m_appDelegate application:application didChangeStatusBarOrientation:oldStatusBarOrientation];
+//}
+
+- (void) application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [m_appDelegate application:application didDecodeRestorableStateWithCoder:coder];
+}
+
+- (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [m_appDelegate application:application didReceiveLocalNotification:notification];
+}
+
+- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [m_appDelegate application:application didReceiveRemoteNotification:userInfo];
+}
+
+- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
+//- (BOOL) application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+//{
+//    return [m_appDelegate application:application shouldRestoreApplicationState:coder];
+//}
+//
+//- (BOOL) application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+//{
+//    return [m_appDelegate application:application shouldSaveApplicationState:coder];
+//}
+
+//- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+//{
+//    return [m_appDelegate application:application supportedInterfaceOrientationsForWindow:window];
+//}
+
+- (UIViewController*) application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    return [m_appDelegate application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
+}
+
+//- (void) application:(UIApplication *)application willChangeStatusBarFrame:(CGRect)newStatusBarFrame
+//{
+//    [m_appDelegate application:application willChangeStatusBarFrame:newStatusBarFrame];
+//}
+
+//- (void) application:(UIApplication *)application willChangeStatusBarOrientation:(UIInterfaceOrientation)newStatusBarOrientation duration:(NSTimeInterval)duration
+//{
+//    [m_appDelegate application:application willChangeStatusBarOrientation:newStatusBarOrientation duration:duration];
+//}
+
+- (void) application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [m_appDelegate application:application willEncodeRestorableStateWithCoder:coder];
+}
+
+- (BOOL) application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return [m_appDelegate application:application willFinishLaunchingWithOptions:launchOptions];
+}
+
+- (void) applicationDidBecomeActive:(UIApplication *)application
+{
+    [m_appDelegate applicationDidBecomeActive:application];
+}
+
+- (void) applicationDidEnterBackground:(UIApplication *)application
+{
+    [m_appDelegate applicationDidEnterBackground:application];
+}
+
+- (void) applicationDidFinishLaunching:(UIApplication *)application
+{
+    [m_appDelegate applicationDidFinishLaunching:application];
+}
+
+- (void) applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    [m_appDelegate applicationDidReceiveMemoryWarning:application];
+}
+
+- (void) applicationProtectedDataDidBecomeAvailable:(UIApplication *)application
+{
+    [m_appDelegate applicationProtectedDataDidBecomeAvailable:application];
+}
+
+- (void) applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application
+{
+    [m_appDelegate applicationProtectedDataWillBecomeUnavailable:application];
+}
+
+- (void) applicationSignificantTimeChange:(UIApplication *)application
+{
+    [m_appDelegate applicationSignificantTimeChange:application];
+}
+
+- (void) applicationWillEnterForeground:(UIApplication *)application
+{
+    [m_appDelegate applicationWillEnterForeground:application];
+}
+
+- (void) applicationWillResignActive:(UIApplication *)application
+{
+    [m_appDelegate applicationWillResignActive:application];
+}
+
+- (void) applicationWillTerminate:(UIApplication *)application
+{
+    [m_appDelegate applicationWillTerminate:application];
 }
 
 

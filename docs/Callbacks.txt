@@ -90,6 +90,7 @@ FUSEAPI_OVERLAY_WILL_CLOSE
 Response to: More games overlay closing. Only on iOS
 Params: none
 //-------------------------------------
+
 //-------------------------------------
 FUSEAPI_NOTIFICATION_ACTION
 Response to: Pressing a button on an action.  

@@ -14,8 +14,8 @@ Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseAPI
 
 Version: 1.31
 
-Platform: Android
-Extension Developer: Fuse Powered
+Platform: Android, iOS<br>
+Extension Developer: Fuse Powered<br>
 Library Developer: www.fusepowered.com
 
 Installation
@@ -33,16 +33,16 @@ Installation
 Getting Started
 -----------------
 1. Enable Push Notifications<br><br>
-	Edit FuseAPI/source/ExtraAppManifests.txt
+	Edit FuseAPI/source/ExtraAppManifests.txt<br>
 		Replace com.fusepowered.marmaladesample with your application bundle ID in the two activities
 
-	Edit FuseAPI/source/ExtraManifests.txt
+	Edit FuseAPI/source/ExtraManifests.txt<br>
 		Replace com.fusepowered.marmaladesample with your application bundle ID for the two permissions
 
-	Replace notification_large.png and notification_small.png in FuseAPI/res/drawable with your own icons
-		The names must be the same.
-		notification_large.png is a 72x72 24-bit png
-		notification_small.png is a 36x26 24-bit png
+	Replace notification_large.png and notification_small.png in FuseAPI/res/drawable with your own icons<br>
+		The names must be the same.<br>
+		notification_large.png is a 72x72 24-bit png<br>
+		notification_small.png is a 36x26 24-bit png<br>
 
 2. To use the FuseAPI extension in your project, first include the FuseAPI header:
 ```
@@ -64,7 +64,7 @@ Getting Started
 
 	See FuseAPI/docs/Callbacks.txt for information about callback functions available from the FuseAPI
 
-   The Fuse API key can be found in your dashboard view for the app your are trying to integrate by navigating to Admin->Integrate SDK in the [Fuseboxx](https://www.fuseboxx.com) dashboard.
+   The Fuse API key can be found in your dashboard view for the app your are integrating by navigating to Admin->Integrate SDK in the [Fuseboxx](https://www.fuseboxx.com) dashboard.
 
 
 5. UnRegister Callbacks when application terminates<br>

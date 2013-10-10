@@ -60,7 +60,9 @@ int FuseAPIRegisterEventWithEventData_platform(const char* name, const char* par
 
 void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_table_t* eventData);
 
-void FuseAPIRegisterInAppPurchase_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+
+void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID);
 
 void FuseAPICheckAdAvailable_platform();
 

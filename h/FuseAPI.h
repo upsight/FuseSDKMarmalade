@@ -362,21 +362,34 @@ void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* ev
 // | In-App Purchase Logging |
 // +-------------------------*/
 /*
-* @brief This function records in-app purchases in the Fuse system.
+* @brief This function records in-app purchases for Android devices in the Fuse system.
 * @details Call this function directly after an in-app purchase is made once it has been confirmed that the transaction has occurred successfully.  
 * 
 * @param purchaseState [FusePurchaseState] An object set to the purchase details for easy parsing by the fuse system (PURCHASED=0, CANCELED=1, REFUNDED=2)
 * @param purchaseToken [const char*] The token from the purchase transaction
 * @param productId [const char*] The product identifier
-* @param productId [const char*] The product identifier
 * @param orderId [const char*] The order identifier
 * @param purchaseTime [long] Timestamp of the purchase
 * @param developerPayload [const char*] Developer payload from the purchase
-* @param price [const double*] Purchase price
+* @param price [const double*] Purchase price.  Note: this is a reference to a double value
 * @param currency [const char*] Currency code
 *
 */
-void FuseAPIRegisterInAppPurchase(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+
+/*
+* @brief This function records in-app purchases for iOS devices in the Fuse system.
+* @details Call this function directly after an in-app purchase is made once it has been confirmed that the transaction has occurred successfully.  
+* 
+* @param purchaseState [FusePurchaseState] An object set to the purchase details for easy parsing by the fuse system (PURCHASED=0, CANCELED=1, REFUNDED=2)
+* @param receiptData [const char*] The receipt from the purchase transaction
+* @param recieptDataLength [int] the size of the receipt data
+* @param price [const double*] Purchase price.  Note: this is a reference to a double value
+* @param currency [const char*] Currency code
+* @param productId [const char*] The product identifier
+*
+*/
+void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID);
 
 /**+-----------------------+
 // | Fuse Interstitial Ads |

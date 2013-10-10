@@ -14,7 +14,7 @@ Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseAPI
 
 Version: 1.31
 
-Platform: Android
+Platform: Android, iOS
 Extension Developer: Fuse Powered
 Library Developer: www.fusepowered.com
 

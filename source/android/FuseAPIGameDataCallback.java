@@ -110,21 +110,48 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 
 	public void gameDataReceived(String accountId, GameKeyValuePairs gameKeyValuePairs, int requestId)
 	{
+		//GameKeyValuePairs user=390463487 rowKey=my data reqId=5 [requestIdMap=(5:my data)][objectMap={Key:my data(myawesomekey,value)(cat,good)}]
 		Log.d(_logTag, "gameDataReceived(" + accountId + ",[data]," + requestId + ")");
-	
-		_wrapper.FuseAPIGameDataReceivedStart();
-		HashMap<String,GameValue> hashMap = gameKeyValuePairs.getMap();
-		for (Map.Entry<String,GameValue> entry : hashMap.entrySet())
+		
+		// received game data with no master key
+		if( gameKeyValuePairs.getMap() != null && gameKeyValuePairs.getMap().size() > 0 )
 		{
-			boolean isBinary = entry.getValue().isBinary();
-			String key = entry.getKey();
-			String value = entry.getValue().getValue();
-
-			Log.d(_logTag, "Key: " + key + " Value: " + value);
-			_wrapper.FuseAPIGameDataReceivedKVP(isBinary, key, value);
+			HashMap<String,GameValue> hashMap = gameKeyValuePairs.getMap();
+			_wrapper.FuseAPIGameDataReceivedStart();			
+			for (Map.Entry<String,GameValue> entry : hashMap.entrySet())
+			{
+				boolean isBinary = entry.getValue().isBinary();
+				String key = entry.getKey();
+				String value = entry.getValue().getValue();
+				//Log.d(_logTag, "Key: " + key + " Value: " + value);
+				_wrapper.FuseAPIGameDataReceivedKVP(isBinary, key, value);
+			}			
+			_wrapper.FuseAPIGameDataReceivedEnd(accountId, requestId);
 		}
-
-		_wrapper.FuseAPIGameDataReceivedEnd(accountId, requestId);
+		// received data with a master key
+		else if( gameKeyValuePairs.getRequestIdToObjectMapKeyMap() != null && gameKeyValuePairs.getRequestIdToObjectMapKeyMap().size() > 0 )
+		{
+			HashMap<String,String> hashMap = gameKeyValuePairs.getRequestIdToObjectMapKeyMap();
+			_wrapper.FuseAPIGameDataReceivedStart();			
+			for (Map.Entry<String,String> entry : hashMap.entrySet())
+			{				
+				String key = entry.getKey();
+				String value = entry.getValue();
+				//Log.d(_logTag, "Key: " + key + " Value: " + value);
+				HashMap<String,String> gameData = gameKeyValuePairs.getMapForKey(value);
+				for( Map.Entry<String,String> dataEntry : gameData.entrySet() )
+				{
+					_wrapper.FuseAPIGameDataReceivedKVP(false, dataEntry.getKey(), dataEntry.getValue());
+				}
+			}			
+			_wrapper.FuseAPIGameDataReceivedEnd(accountId, requestId);
+		}
+		else
+		{
+			Log.d(_logTag, "No KVPs");
+			_wrapper.FuseAPIGameDataReceivedStart();
+			_wrapper.FuseAPIGameDataReceivedEnd(accountId, requestId);
+		}		
 	}
 
 	public void gameDataError(FuseGameDataError fuseGameDataError)
