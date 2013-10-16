@@ -178,7 +178,7 @@ void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseStat
 
 void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
 {
-    NSData* receipt = [[NSData alloc] initWithBytes:(void*)receiptData length:recieptDataLength];
+    NSData* receipt = [[NSData marmaladeDataFromBase64String:[NSString stringWithUTF8String:receiptData]] retain]; 
     [FuseAPI registerInAppPurchase:receipt
                            TxState:purchaseState
                              Price:[NSString stringWithFormat:@"%.2f", *price]
