@@ -66,6 +66,7 @@ if {{ not defined IW_MKF_IWCRT}}
 #Include the extension's jar file during deployment
 deployments
 {
+	android-external-jars="lib/android/android-support-v4.jar"
     android-external-jars="lib/android/FuseAPI.jar"
 	android-external-jars="lib/android/libFuseAPI.jar"
 	android-external-res="res"
@@ -87,9 +88,13 @@ deployments
 #lines will cause the extension builder to re-output this section.
 deployments
 {
-    iphone-link-opts="-framework StoreKit"
-	iphone-link-opts="-framework CoreTelephony"
-	iphone-link-opts="-framework AdSupport"
+    iphone-link-opts="-weak_framework StoreKit"
+	iphone-link-opts="-weak_framework CoreTelephony"
+	iphone-link-opts="-weak_framework AdSupport"
+	iphone-link-opts="-weak_framework EventKit"
+	iphone-link-opts="-weak_framework EventKitUI"
+	iphone-link-opts="-weak_framework CoreMedia"
+	iphone-link-opts="-weak_framework MessageUI"
 	iphone-link-opts="-ObjC"
 	iphone-link-lib="FuseAPI"
 	iphone-link-lib="FuseAPIWrapper"

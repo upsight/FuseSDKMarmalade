@@ -144,7 +144,7 @@ extern void
 cfuthread_queue_destroy(cfuthread_queue_t *tq) {
 	void *rv = NULL;
 
-	pthread_cancel(tq->thread);
+	//pthread_cancel(tq->thread);
 	pthread_join(tq->thread, &rv);
 	pthread_mutex_destroy(&tq->mutex);
 	pthread_cond_destroy(&tq->cv);

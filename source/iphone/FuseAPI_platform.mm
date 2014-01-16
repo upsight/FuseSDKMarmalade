@@ -64,8 +64,8 @@ s3eResult FuseAPIInit_platform()
 {
     // Add any platform-specific initialisation code here
     _FuseAPI_delegate = [FuseAPI_Delegate new];
-    s3eDeviceRegister(S3E_DEVICE_PAUSE, &FusePause, 0);
-	s3eDeviceRegister(S3E_DEVICE_UNPAUSE, &FuseResume, 0);
+    //s3eDeviceRegister(S3E_DEVICE_PAUSE, &FusePause, 0);
+	//s3eDeviceRegister(S3E_DEVICE_UNPAUSE, &FuseResume, 0);
     
     return S3E_RESULT_SUCCESS;
 }
