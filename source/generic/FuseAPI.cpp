@@ -189,6 +189,11 @@ int FuseAPIGetGameData(const char* key, const char* fuseId, const char** gameDat
 	return FuseAPIGetGameData_platform(key, fuseId, gameDataKeys, numKeys);
 }
 
+void FuseAPIMigrateFriends(const char* fuseId)
+{
+	FuseAPIMigrateFriends_platform(fuseId);
+}
+
 void FuseAPIUpdateFriendsListFromServer()
 {
 	FuseAPIUpdateFriendsListFromServer_platform();

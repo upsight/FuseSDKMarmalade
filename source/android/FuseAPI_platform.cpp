@@ -55,6 +55,7 @@ static jmethodID g_FuseAPISetGameDataEnd;
 static jmethodID g_FuseAPIGetGameDataStart;
 static jmethodID g_FuseAPIGetGameDataKey;
 static jmethodID g_FuseAPIGetGameDataEnd;
+static jmethodID g_FuseAPIMigrateFriends;
 static jmethodID g_FuseAPIUpdateFriendsListFromServer;
 static jmethodID g_FuseAPIGetMailListFromServer;
 static jmethodID g_FuseAPIGetMailListFriendFromServer;
@@ -247,6 +248,25 @@ void FuseGameDataSetAcknowledged(JNIEnv* env, jobject obj, jint requestID)
 	params.requestID = requestID;
     IwTrace(FuseAPI, ("FuseGameDataSetAcknowledged(%i)", requestID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_DATASET_ACKNOWLEDGED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseFriendsMigrated
+// Params: const char* fuseId, int error
+//-------------------------------------
+void FuseFriendsMigrated(JNIEnv* env, jobject obj, jstring fuseId, jint error)
+{
+	struct paramList
+	{
+		const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = error;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+
+	IwTrace(FuseAPI, ("FuseFriendsMigrated(%s, %i)", params.fuseId, params.error));
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIENDS_MIGRATED, &params, sizeof(paramList));
 }
 
 //-------------------------------------
@@ -506,6 +526,7 @@ s3eResult FuseAPIInit_platform()
 		{ "FuseAPITimeUpdated",							"(I)V",			(void*)&FuseAPITimeUpdated },
 		{ "FuseGameDataError",							"(II)V",		(void*)&FuseGameDataError },
 		{ "FuseGameDataSetAcknowledged",				"(I)V",			(void*)&FuseGameDataSetAcknowledged },
+		{ "FuseFriendsMigrated",	"(Ljava/lang/String;I)V",			(void*)&FuseFriendsMigrated },
 		{ "FuseFriendsListError",						"(I)V",			(void*)&FuseFriendsListError },
 		{ "FuseMailAcknowledged",	 "(ILjava/lang/String;I)V",			(void*)&FuseMailAcknowledged },
 		{ "FuseMailError",								"(II)V",		(void*)&FuseMailError },
@@ -695,6 +716,10 @@ s3eResult FuseAPIInit_platform()
 
 	g_FuseAPIGetGameDataEnd = env->GetMethodID(cls, "FuseAPIGetGameDataEnd", "(Ljava/lang/String;Ljava/lang/String;)I");
     if (!g_FuseAPIGetGameDataEnd)
+        goto fail;
+
+	g_FuseAPIMigrateFriends = env->GetMethodID(cls, "FuseAPIMigrateFriends", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIMigrateFriends)
         goto fail;
 
     g_FuseAPIUpdateFriendsListFromServer = env->GetMethodID(cls, "FuseAPIUpdateFriendsListFromServer", "()V");
@@ -1059,6 +1084,14 @@ int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char*
 		env->CallVoidMethod(g_Obj, g_FuseAPIGetGameDataKey, env->NewStringUTF(gameDataKeys[i]));
 	}
 	return (int)env->CallIntMethod(g_Obj, g_FuseAPIGetGameDataEnd, key_jstr, fuseId_jstr);
+}
+
+void FuseAPIMigrateFriends_platform(const char* fuseId)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIMigrateFriends, fuseId_jstr);
 }
 
 void FuseAPIUpdateFriendsListFromServer_platform()

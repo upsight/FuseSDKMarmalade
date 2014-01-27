@@ -222,6 +222,12 @@ static int FuseAPIGetGameData_wrap(const char* key, const char* fuseId, const ch
     return (int)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGetGameData, 4, key, fuseId, gameDataKeys, numKeys);
 }
 
+static void FuseAPIMigrateFriends_wrap(const char* fuseId)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIMigrateFriends"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIMigrateFriends, 1, fuseId);
+}
+
 static void FuseAPIUpdateFriendsListFromServer_wrap()
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIUpdateFriendsListFromServer"));
@@ -339,6 +345,7 @@ static void FuseAPIRegisterTapjoyReward_wrap(int amount)
 #define FuseAPIEnableData FuseAPIEnableData_wrap
 #define FuseAPISetGameData FuseAPISetGameData_wrap
 #define FuseAPIGetGameData FuseAPIGetGameData_wrap
+#define FuseAPIMigrateFriends FuseAPIMigrateFriends_wrap
 #define FuseAPIUpdateFriendsListFromServer FuseAPIUpdateFriendsListFromServer_wrap
 #define FuseAPIGetFriendsList FuseAPIGetFriendsList_wrap
 #define FuseAPIGetMailListFromServer FuseAPIGetMailListFromServer_wrap
@@ -369,7 +376,7 @@ s3eResult FuseAPIUnRegister(FuseAPICallback cbid, s3eCallback fn)
 void FuseAPIRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[49];
+    void* funcPtrs[50];
     funcPtrs[0] = (void*)FuseAPIRegister;
     funcPtrs[1] = (void*)FuseAPIUnRegister;
     funcPtrs[2] = (void*)FuseAPIStartSession;
@@ -405,25 +412,26 @@ void FuseAPIRegisterExt()
     funcPtrs[32] = (void*)FuseAPIEnableData;
     funcPtrs[33] = (void*)FuseAPISetGameData;
     funcPtrs[34] = (void*)FuseAPIGetGameData;
-    funcPtrs[35] = (void*)FuseAPIUpdateFriendsListFromServer;
-    funcPtrs[36] = (void*)FuseAPIGetFriendsList;
-    funcPtrs[37] = (void*)FuseAPIGetMailListFromServer;
-    funcPtrs[38] = (void*)FuseAPIGetMailListFriendFromServer;
-    funcPtrs[39] = (void*)FuseAPISetMailAsReceived;
-    funcPtrs[40] = (void*)FuseAPISendMailWithGift;
-    funcPtrs[41] = (void*)FuseAPISendMail;
-    funcPtrs[42] = (void*)FuseAPIGetMailList;
-    funcPtrs[43] = (void*)FuseAPIGetGameConfigurationValue;
-    funcPtrs[44] = (void*)FuseAPIRegisterLevel;
-    funcPtrs[45] = (void*)FuseAPIRegisterCurrency;
-    funcPtrs[46] = (void*)FuseAPIRegisterFlurryView;
-    funcPtrs[47] = (void*)FuseAPIRegisterFlurryClick;
-    funcPtrs[48] = (void*)FuseAPIRegisterTapjoyReward;
+    funcPtrs[35] = (void*)FuseAPIMigrateFriends;
+    funcPtrs[36] = (void*)FuseAPIUpdateFriendsListFromServer;
+    funcPtrs[37] = (void*)FuseAPIGetFriendsList;
+    funcPtrs[38] = (void*)FuseAPIGetMailListFromServer;
+    funcPtrs[39] = (void*)FuseAPIGetMailListFriendFromServer;
+    funcPtrs[40] = (void*)FuseAPISetMailAsReceived;
+    funcPtrs[41] = (void*)FuseAPISendMailWithGift;
+    funcPtrs[42] = (void*)FuseAPISendMail;
+    funcPtrs[43] = (void*)FuseAPIGetMailList;
+    funcPtrs[44] = (void*)FuseAPIGetGameConfigurationValue;
+    funcPtrs[45] = (void*)FuseAPIRegisterLevel;
+    funcPtrs[46] = (void*)FuseAPIRegisterCurrency;
+    funcPtrs[47] = (void*)FuseAPIRegisterFlurryView;
+    funcPtrs[48] = (void*)FuseAPIRegisterFlurryClick;
+    funcPtrs[49] = (void*)FuseAPIRegisterTapjoyReward;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[49] = { 0 };
+    int flags[50] = { 0 };
 
     /*
      * Register the extension

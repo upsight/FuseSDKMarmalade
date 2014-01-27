@@ -46,6 +46,7 @@ public class FuseWrapper
 	public native void FuseAPITimeUpdated(int timestamp);	
 	public native void FuseGameDataError(int requestId, int error);
 	public native void FuseGameDataSetAcknowledged(int requestID);	
+	public native void FuseFriendsMigrated(String fuseId, int error);
 	public native void FuseFriendsListError(int error);	
 	public native void FuseMailAcknowledged(int messageId, String fuseId, int requestID);
 	public native void FuseMailError(int error, int requestID);
@@ -484,6 +485,12 @@ public class FuseWrapper
 	/**+-------------+
 	// | Friend List |
 	// +-------------*/
+	public void FuseAPIMigrateFriends(String fuseId)
+	{
+		Log.d(_logTag, "FuseAPIMigrateFriends(" + fuseId + ")");
+		FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+	}
+
 	public void FuseAPIUpdateFriendsListFromServer()
 	{
 		Log.d(_logTag, "FuseAPIUpdateFriendsListFromServer()");

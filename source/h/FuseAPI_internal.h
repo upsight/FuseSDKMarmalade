@@ -108,6 +108,8 @@ int FuseAPISetGameData_platform(const char* key, const char* fuseId, cfuhash_tab
 
 int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char** gameDataKeys, int numKeys);
 
+void FuseAPIMigrateFriends_platform(const char* fuseId);
+
 void FuseAPIUpdateFriendsListFromServer_platform();
 
 FusePlayer* FuseAPIGetFriendsList_platform(int* numPlayers);

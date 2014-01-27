@@ -415,6 +415,11 @@ int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char*
 	return requestId;
 }
 
+void FuseAPIMigrateFriends_platform(const char* fuseId)
+{
+    [FuseAPI migrateFriends:[NSString stringWithUTF8String:fuseId]];
+}
+
 void FuseAPIUpdateFriendsListFromServer_platform()
 {
     [FuseAPI updateFriendsListFromServer];
@@ -718,6 +723,19 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 }
 
 #pragma mark Friends List
+-(void) friendsMigrated:(NSString*)_fuse_id Error:(NSNumber*)_error
+{
+    struct paramList
+	{
+        const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = _error.intValue;
+    params.fuseId = _fuse_id.UTF8String;
+    IwTrace(FuseAPI, ("FuseFriendsMigrated(%s, %i)", params.fuseId, params.error));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIENDS_MIGRATED, &params, sizeof(paramList));
+}
 
 -(void) friendsListUpdated:(NSDictionary*)_friendsList
 {

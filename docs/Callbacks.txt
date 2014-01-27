@@ -157,6 +157,18 @@ struct paramList
 //-------------------------------------
 
 //-------------------------------------
+FUSEAPI_FRIENDS_MIGRATED
+Response to: This callback is sent after attempting to migrate a Fuse user's friend's list through calling FuseAPIMigrateFriends
+See FuseMigrateFriendErrors in FuseAPI.h for error code values
+Params: 
+struct paramList
+{
+	const char* fuseId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
 FUSEAPI_FRIENDSLIST_UPDATED
 Response to: This callback is sent when a local copy of the player's friends list is stored after calling FuseAPIUpdateFriendsListFromServer
 At this point, you can call FuseAPIGetFriendsList to get the friends list in the form of an array of FusePlayers

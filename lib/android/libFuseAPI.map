@@ -123,7 +123,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  .gnu.version_r
                 0x00000000        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
-.rel.dyn        0x00000a58      0x440
+.rel.dyn        0x00000a58      0x460
  *(.rel.init)
  *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
  .rel.text      0x00000a58        0x8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
@@ -131,19 +131,19 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
  *(.rel.data.rel.ro* .rel.gnu.linkonce.d.rel.ro.*)
  .rel.data.rel.ro
-                0x00000a60      0x2a0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00000a60      0x2b8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
  *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
  *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
  *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
  *(.rel.ctors)
  *(.rel.dtors)
  *(.rel.got)
- .rel.got       0x00000d00      0x188 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .rel.got       0x00000d18      0x190 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
  *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
  .rel.fini_array
-                0x00000e88        0x8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00000ea8        0x8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
  .rel.init_array
-                0x00000e90        0x8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x00000eb0        0x8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
 .rela.dyn
  *(.rela.init)
@@ -158,9 +158,9 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(.rela.got)
  *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
 
-.rel.plt        0x00000e98      0x170
+.rel.plt        0x00000eb8      0x170
  *(.rel.plt)
- .rel.plt       0x00000e98      0x170 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .rel.plt       0x00000eb8      0x170 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
 .rela.plt
  *(.rela.plt)
@@ -168,316 +168,319 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 .init
  *(.init)
 
-.plt            0x00001008      0x23c
+.plt            0x00001028      0x23c
  *(.plt)
- .plt           0x00001008      0x23c /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .plt           0x00001028      0x23c /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
-.text           0x00001248     0xccf0
+.text           0x00001268     0xce30
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x00001248       0x10 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
- .text          0x00001258     0x2b38 release/FuseAPI_platform.os
-                0x00002c54                _Z27FuseAPIGetGameData_platformPKcS0_PS0_i
-                0x00001924                _Z29FuseAPIAdAvailabilityResponseP7_JNIEnvP8_jobjectii
-                0x00001690                _Z20FuseFriendsListErrorP7_JNIEnvP8_jobjecti
-                0x0000284c                _Z25FuseAPIFuseLogin_platformPKcS0_
-                0x000018ac                _Z18FuseAPIAdDisplayedP7_JNIEnvP8_jobject
-                0x00002748                _Z41FuseAPIGetGameConfigurationValue_platformPKc
-                0x00001df8                _Z35FuseAPIRegisterFlurryClick_platformv
-                0x000019e8                _Z26FuseAPIGameDataReceivedKVPP7_JNIEnvP8_jobjectbP8_jstringS4_
-                0x00001a7c                _Z26FuseGameConfigurationStartP7_JNIEnvP8_jobjecti
-                0x00002170                _Z22FuseAPIShowAd_platformv
-                0x00002abc                _Z38FuseAPIRegisterEventWithParam_platformPKcS0_S0_S0_PKd
-                0x00001cf8                _Z26FuseAPIEnableData_platformb
-                0x000019ac                _Z27FuseAPISessionStartReceivedP7_JNIEnvP8_jobject
-                0x00001afc                _Z29FuseAPIFriendsListUpdateStartP7_JNIEnvP8_jobjecti
-                0x00002028                _Z38FuseAPIGetOriginalAccountType_platformv
-                0x0000156c                _Z17FuseMailListErrorP7_JNIEnvP8_jobjecti
-                0x00001754                _Z17FuseGameDataErrorP7_JNIEnvP8_jobjectii
-                0x0000296c                _Z32FuseAPISendMailWithGift_platformPKcS0_ii
-                0x0000133c                _Z21FuseAPIMailListUpdateP7_JNIEnvP8_jobjectiP8_jstringS4_S4_S4_
-                0x000015b0                _Z13FuseMailErrorP7_JNIEnvP8_jobjecti
-                0x00001260                _Z30FuseAPIGetFriendsList_platformPi
-                0x00001828                _Z25FuseAPINotificationActionP7_JNIEnvP8_jobjectP8_jstring
-                0x00002078                _Z30FuseAPIRegisterGender_platformi
-                0x000024a8                _Z43FuseAPIGetMailListFriendFromServer_platformPKc
-                0x0000125c                _Z31FuseAPIGameCenterLogin_platformv
-                0x00001258                _Z40FuseAPIRegisterInAppPurchaseiOS_platform17FusePurchaseStatePKciPdS1_S1_
-                0x00002358                _Z30FuseAPILibraryVersion_platformv
-                0x00002a0c                _Z29FuseAPIFacebookLogin_platformPKcS0_S0_
-                0x00001870                _Z16FuseAPIAdClickedP7_JNIEnvP8_jobject
-                0x00002668                _Z28FuseAPIStartSession_platformPKc
-                0x000013d0                _Z30FuseAPIFriendsListUpdatePlayerP7_JNIEnvP8_jobjectP8_jstringS4_S4_S4_iib
-                0x00001f60                _Z9FusePausePvS_
-                0x000020d0                _Z32FuseAPIDisplayMoreGames_platformv
-                0x00002e68                _Z43FuseAPIRegisterEventWithDictionary_platformPKcP13cfuhash_table
-                0x00001e98                _Z25FuseAPITerminate_platformv
-                0x0000326c                _Z20FuseAPIInit_platformv
-                0x00001ba8                _Z33FuseAPISetMailAsReceived_platformi
-                0x00002120                _Z36FuseAPIDisplayNotifications_platformv
-                0x00001b48                _Z32FuseAPIRegisterCurrency_platformii
-                0x00002260                _Z29FuseAPIResumeSession_platformv
-                0x00001710                _Z27FuseGameDataSetAcknowledgedP7_JNIEnvP8_jobjecti
-                0x00002518                _Z27FuseAPIDeviceLogin_platformPKc
-                0x00001d50                _Z30FuseAPITimeFromServer_platformv
-                0x00001a28                _Z29FuseGameConfigurationKeyValueP7_JNIEnvP8_jobjectP8_jstringS4_
-                0x00002454                _Z36FuseAPIGetOriginalAccountId_platformv
-                0x00001fd8                _Z27FuseAPIgamesPlayed_platformv
-                0x000015f4                _Z20FuseMailListReceivedP7_JNIEnvP8_jobjectP8_jstring
-                0x00001a68                _Z28FuseAPIGameDataReceivedStartP7_JNIEnvP8_jobject
-                0x00001f0c                _Z10FuseResumePvS_
-                0x000026d8                _Z29FuseAPIRegisterEvent_platformPKc
-                0x00001ab0                _Z26FuseAPIMailListUpdateStartP7_JNIEnvP8_jobjecti
-                0x000016d4                _Z27FuseAPIFriendsListUpdateEndP7_JNIEnvP8_jobject
-                0x00002f94                _Z27FuseAPISetGameData_platformPKcS0_P13cfuhash_table
-                0x00002210                _Z32FuseAPITerminateSession_platformv
-                0x000021c0                _Z32FuseAPICheckAdAvailable_platformv
-                0x00001c58                _Z37FuseAPIGetMailListFromServer_platformv
-                0x000023ac                _Z25FuseAPIGetFuseID_platformv
-                0x0000151c                _Z29FuseGameConfigurationReceivedP7_JNIEnvP8_jobject
-                0x000014b8                _Z26FuseAPIGameDataReceivedEndP7_JNIEnvP8_jobjectP8_jstringi
-                0x000030f4                _Z42FuseAPIRegisterEventWithEventData_platformPKcS0_S0_P13cfuhash_table
-                0x00001da0                _Z36FuseAPIRegisterTapjoyReward_platformi
-                0x0000163c                _Z20FuseMailAcknowledgedP7_JNIEnvP8_jobjectiP8_jstringi
-                0x00002588                _Z44FuseAPIRegisterForPushNotifications_platformPKc
-                0x000022b0                _Z28FuseAPIPauseSession_platformv
-                0x000027bc                _Z31FuseAPIGooglePlayLogin_platformPKcS0_
-                0x00001e48                _Z34FuseAPIRegisterFlurryView_platformv
-                0x00002300                _Z25FuseAPIConnected_platformv
-                0x000018e8                _Z18FuseAPIAdWillCloseP7_JNIEnvP8_jobject
-                0x0000127c                _Z27FuseAPIGetMailList_platformPi
-                0x000012b8                _Z25FuseAPIMailListUpdateGiftP7_JNIEnvP8_jobjectiP8_jstringS4_i
-                0x00001968                _Z17FuseAPILoginErrorP7_JNIEnvP8_jobjecti
-                0x000017dc                _Z27FuseAPIAccountLoginCompleteP7_JNIEnvP8_jobjectiP8_jstring
-                0x000028dc                _Z24FuseAPISendMail_platformPKcS0_
-                0x000025f8                _Z28FuseAPITwitterLogin_platformPKc
-                0x00001c00                _Z29FuseAPIRegisterLevel_platformi
-                0x00002400                _Z39FuseAPIGetOriginalAccountAlias_platformv
-                0x00001ca8                _Z43FuseAPIUpdateFriendsListFromServer_platformv
-                0x00001798                _Z18FuseAPITimeUpdatedP7_JNIEnvP8_jobjecti
-                0x00002d54                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform17FusePurchaseStatePKcS1_S1_lS1_PKdS1_
+ .text          0x00001268       0x10 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .text          0x00001278     0x2c1c release/FuseAPI_platform.os
+                0x00002d30                _Z27FuseAPIGetGameData_platformPKcS0_PS0_i
+                0x00001990                _Z29FuseAPIAdAvailabilityResponseP7_JNIEnvP8_jobjectii
+                0x000016b0                _Z20FuseFriendsListErrorP7_JNIEnvP8_jobjecti
+                0x00002a58                _Z25FuseAPIFuseLogin_platformPKcS0_
+                0x00001918                _Z18FuseAPIAdDisplayedP7_JNIEnvP8_jobject
+                0x00002824                _Z41FuseAPIGetGameConfigurationValue_platformPKc
+                0x00002164                _Z35FuseAPIRegisterFlurryClick_platformv
+                0x00001a54                _Z26FuseAPIGameDataReceivedKVPP7_JNIEnvP8_jobjectbP8_jstringS4_
+                0x00001ae8                _Z26FuseGameConfigurationStartP7_JNIEnvP8_jobjecti
+                0x0000206c                _Z22FuseAPIShowAd_platformv
+                0x00002b98                _Z38FuseAPIRegisterEventWithParam_platformPKcS0_S0_S0_PKd
+                0x00001d6c                _Z26FuseAPIEnableData_platformb
+                0x00001a18                _Z27FuseAPISessionStartReceivedP7_JNIEnvP8_jobject
+                0x00001b68                _Z29FuseAPIFriendsListUpdateStartP7_JNIEnvP8_jobjecti
+                0x000022a4                _Z38FuseAPIGetOriginalAccountType_platformv
+                0x0000158c                _Z17FuseMailListErrorP7_JNIEnvP8_jobjecti
+                0x000017c0                _Z17FuseGameDataErrorP7_JNIEnvP8_jobjectii
+                0x00002898                _Z32FuseAPISendMailWithGift_platformPKcS0_ii
+                0x0000135c                _Z21FuseAPIMailListUpdateP7_JNIEnvP8_jobjectiP8_jstringS4_S4_S4_
+                0x000015d0                _Z13FuseMailErrorP7_JNIEnvP8_jobjecti
+                0x00001280                _Z30FuseAPIGetFriendsList_platformPi
+                0x00001894                _Z25FuseAPINotificationActionP7_JNIEnvP8_jobjectP8_jstring
+                0x00001f74                _Z30FuseAPIRegisterGender_platformi
+                0x000025f4                _Z43FuseAPIGetMailListFriendFromServer_platformPKc
+                0x0000127c                _Z31FuseAPIGameCenterLogin_platformv
+                0x00001278                _Z40FuseAPIRegisterInAppPurchaseiOS_platform17FusePurchaseStatePKciPdS1_S1_
+                0x000023c4                _Z30FuseAPILibraryVersion_platformv
+                0x00002ae8                _Z29FuseAPIFacebookLogin_platformPKcS0_S0_
+                0x000018dc                _Z16FuseAPIAdClickedP7_JNIEnvP8_jobject
+                0x00002514                _Z28FuseAPIStartSession_platformPKc
+                0x000013f0                _Z30FuseAPIFriendsListUpdatePlayerP7_JNIEnvP8_jobjectP8_jstringS4_S4_S4_iib
+                0x000022f4                _Z9FusePausePvS_
+                0x00001fcc                _Z32FuseAPIDisplayMoreGames_platformv
+                0x00002f44                _Z43FuseAPIRegisterEventWithDictionary_platformPKcP13cfuhash_table
+                0x00001c08                _Z25FuseAPITerminate_platformv
+                0x00003348                _Z20FuseAPIInit_platformv
+                0x00001f1c                _Z33FuseAPISetMailAsReceived_platformi
+                0x0000201c                _Z36FuseAPIDisplayNotifications_platformv
+                0x00001e64                _Z32FuseAPIRegisterCurrency_platformii
+                0x000021b4                _Z29FuseAPIResumeSession_platformv
+                0x0000177c                _Z27FuseGameDataSetAcknowledgedP7_JNIEnvP8_jobjecti
+                0x00002584                _Z27FuseAPIDeviceLogin_platformPKc
+                0x00001dc4                _Z30FuseAPITimeFromServer_platformv
+                0x00001a94                _Z29FuseGameConfigurationKeyValueP7_JNIEnvP8_jobjectP8_jstringS4_
+                0x000026d4                _Z30FuseAPIMigrateFriends_platformPKc
+                0x0000246c                _Z36FuseAPIGetOriginalAccountId_platformv
+                0x00002254                _Z27FuseAPIgamesPlayed_platformv
+                0x00001614                _Z20FuseMailListReceivedP7_JNIEnvP8_jobjectP8_jstring
+                0x00001ad4                _Z28FuseAPIGameDataReceivedStartP7_JNIEnvP8_jobject
+                0x00001bb4                _Z10FuseResumePvS_
+                0x000027b4                _Z29FuseAPIRegisterEvent_platformPKc
+                0x00001b1c                _Z26FuseAPIMailListUpdateStartP7_JNIEnvP8_jobjecti
+                0x000016f4                _Z27FuseAPIFriendsListUpdateEndP7_JNIEnvP8_jobject
+                0x00003070                _Z27FuseAPISetGameData_platformPKcS0_P13cfuhash_table
+                0x00001c7c                _Z32FuseAPITerminateSession_platformv
+                0x000020bc                _Z32FuseAPICheckAdAvailable_platformv
+                0x00001ccc                _Z37FuseAPIGetMailListFromServer_platformv
+                0x00002418                _Z25FuseAPIGetFuseID_platformv
+                0x0000153c                _Z29FuseGameConfigurationReceivedP7_JNIEnvP8_jobject
+                0x000014d8                _Z26FuseAPIGameDataReceivedEndP7_JNIEnvP8_jobjectP8_jstringi
+                0x000031d0                _Z42FuseAPIRegisterEventWithEventData_platformPKcS0_S0_P13cfuhash_table
+                0x0000210c                _Z36FuseAPIRegisterTapjoyReward_platformi
+                0x00001730                _Z19FuseFriendsMigratedP7_JNIEnvP8_jobjectP8_jstringi
+                0x0000165c                _Z20FuseMailAcknowledgedP7_JNIEnvP8_jobjectiP8_jstringi
+                0x00002744                _Z44FuseAPIRegisterForPushNotifications_platformPKc
+                0x00002204                _Z28FuseAPIPauseSession_platformv
+                0x00002938                _Z31FuseAPIGooglePlayLogin_platformPKcS0_
+                0x00001e14                _Z34FuseAPIRegisterFlurryView_platformv
+                0x0000236c                _Z25FuseAPIConnected_platformv
+                0x00001954                _Z18FuseAPIAdWillCloseP7_JNIEnvP8_jobject
+                0x0000129c                _Z27FuseAPIGetMailList_platformPi
+                0x000012d8                _Z25FuseAPIMailListUpdateGiftP7_JNIEnvP8_jobjectiP8_jstringS4_i
+                0x000019d4                _Z17FuseAPILoginErrorP7_JNIEnvP8_jobjecti
+                0x00001848                _Z27FuseAPIAccountLoginCompleteP7_JNIEnvP8_jobjectiP8_jstring
+                0x000029c8                _Z24FuseAPISendMail_platformPKcS0_
+                0x00002664                _Z28FuseAPITwitterLogin_platformPKc
+                0x00001ec4                _Z29FuseAPIRegisterLevel_platformi
+                0x000024c0                _Z39FuseAPIGetOriginalAccountAlias_platformv
+                0x00001d1c                _Z43FuseAPIUpdateFriendsListFromServer_platformv
+                0x00001804                _Z18FuseAPITimeUpdatedP7_JNIEnvP8_jobjecti
+                0x00002e30                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform17FusePurchaseStatePKcS1_S1_lS1_PKdS1_
  .text._ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
-                0x00003d90       0x14 release/FuseAPI_platform.os
-                0x00003d90                _ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
+                0x00003e94       0x14 release/FuseAPI_platform.os
+                0x00003e94                _ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
  .text._ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz
-                0x00003da4       0x34 release/FuseAPI_platform.os
-                0x00003da4                _ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz
+                0x00003ea8       0x34 release/FuseAPI_platform.os
+                0x00003ea8                _ZN7_JNIEnv14CallVoidMethodEP8_jobjectP10_jmethodIDz
  .text._ZN7_JNIEnv16CallObjectMethodEP8_jobjectP10_jmethodIDz
-                0x00003dd8       0x34 release/FuseAPI_platform.os
-                0x00003dd8                _ZN7_JNIEnv16CallObjectMethodEP8_jobjectP10_jmethodIDz
+                0x00003edc       0x34 release/FuseAPI_platform.os
+                0x00003edc                _ZN7_JNIEnv16CallObjectMethodEP8_jobjectP10_jmethodIDz
  .text._ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz
-                0x00003e0c       0x34 release/FuseAPI_platform.os
-                0x00003e0c                _ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz
+                0x00003f10       0x34 release/FuseAPI_platform.os
+                0x00003f10                _ZN7_JNIEnv13CallIntMethodEP8_jobjectP10_jmethodIDz
  .text._ZN7_JNIEnv17CallBooleanMethodEP8_jobjectP10_jmethodIDz
-                0x00003e40       0x34 release/FuseAPI_platform.os
-                0x00003e40                _ZN7_JNIEnv17CallBooleanMethodEP8_jobjectP10_jmethodIDz
+                0x00003f44       0x34 release/FuseAPI_platform.os
+                0x00003f44                _ZN7_JNIEnv17CallBooleanMethodEP8_jobjectP10_jmethodIDz
  .text._ZN7_JNIEnv9NewObjectEP7_jclassP10_jmethodIDz
-                0x00003e74       0x34 release/FuseAPI_platform.os
-                0x00003e74                _ZN7_JNIEnv9NewObjectEP7_jclassP10_jmethodIDz
- .text          0x00003ea8       0xc4 release/FuseAPI.os
-                0x00003ec0                FuseAPIGetMailList
-                0x00003ec8                FuseAPISendMailWithGift
-                0x00003ed0                FuseAPIGetMailListFriendFromServer
-                0x00003f4c                FuseAPIRegisterEvent
-                0x00003ee8                FuseAPIEnableData
-                0x00003ed4                FuseAPIGetMailListFromServer
-                0x00003edc                FuseAPIUpdateFriendsListFromServer
-                0x00003f34                FuseAPICheckAdAvailable
-                0x00003ef4                FuseAPILibraryVersion
-                0x00003ecc                FuseAPISetMailAsReceived
-                0x00003f10                FuseAPIFuseLogin
-                0x00003f24                FuseAPIRegisterGender
-                0x00003f48                FuseAPIRegisterEventWithParam
-                0x00003eb8                FuseAPIRegisterLevel
-                0x00003ebc                FuseAPIGetGameConfigurationValue
-                0x00003f1c                FuseAPITwitterLogin
-                0x00003f54                FuseAPITerminateSession
-                0x00003ef0                FuseAPIConnected
-                0x00003f14                FuseAPIDeviceLogin
-                0x00003eec                FuseAPITimeFromServer
-                0x00003f28                FuseAPIDisplayMoreGames
-                0x00003ea8                FuseAPIRegisterTapjoyReward
-                0x00003f58                FuseAPIResumeSession
-                0x00003f68                _Z11FuseAPIInitv
-                0x00003ee0                FuseAPIGetGameData
-                0x00003f3c                FuseAPIRegisterInAppPurchaseAndroid
-                0x00003f30                FuseAPIShowAd
-                0x00003f64                _Z16FuseAPITerminatev
-                0x00003f40                FuseAPIRegisterEventWithDictionary
-                0x00003efc                FuseAPIGetFuseID
-                0x00003f08                FuseAPIGetOriginalAccountId
-                0x00003ed8                FuseAPIGetFriendsList
-                0x00003f50                FuseAPIRegisterForPushNotifications
-                0x00003eb4                FuseAPIRegisterCurrency
-                0x00003f04                FuseAPIGetOriginalAccountAlias
-                0x00003f20                FuseAPIFacebookLogin
-                0x00003ef8                FuseAPIgamesPlayed
-                0x00003f2c                FuseAPIDisplayNotifications
-                0x00003f44                FuseAPIRegisterEventWithEventData
-                0x00003f38                FuseAPIRegisterInAppPurchaseiOS
-                0x00003eac                FuseAPIRegisterFlurryClick
-                0x00003f18                FuseAPIGameCenterLogin
-                0x00003f00                FuseAPIGetOriginalAccountType
-                0x00003ec4                FuseAPISendMail
-                0x00003ee4                FuseAPISetGameData
-                0x00003f0c                FuseAPIGooglePlayLogin
-                0x00003f60                FuseAPIStartSession
-                0x00003f5c                FuseAPIPauseSession
-                0x00003eb0                FuseAPIRegisterFlurryView
- .text          0x00003f6c     0x1184 release/FuseAPI_register.os
-                0x00004ab0                FuseAPIUnRegister
-                0x00004ae0                FuseAPIRegister
-                0x00004b14                RegisterExt
-                0x00003f6c                _Z18FuseAPIRegisterExtv
- .text          0x000050f0       0x98 release/cfu.os
-                0x000050f0                cfu_get_type
-                0x0000516c                cfu_is_conf
-                0x00005118                cfu_is_list
-                0x00005150                cfu_is_time
-                0x00005134                cfu_is_string
-                0x000050fc                cfu_is_hash
- .text          0x00005188     0x101c release/cfuconf.os
-                0x00005194                cfuconf_get_directives
-                0x00005dd0                cfuconf_parse_buffer
-                0x000054d4                cfuconf_destroy
-                0x00005ea0                cfuconf_parse_file
-                0x00006008                cfuconf_get_directive_one_arg
-                0x00005188                cfuconf_get_containers
-                0x000054b4                cfuconf_get_directive_two_args
-                0x000060ac                cfuconf_pretty_print_conf
-                0x000053b8                cfuconf_get_directive_n_args
- .text          0x000061a4     0x3e8c release/cfuhash.os
-                0x000074f4                cfuhash_new_with_free_fn
-                0x00006a20                cfuhash_pretty_print
-                0x000063ec                cfuhash_each
-                0x00006da4                cfuhash_rehash
-                0x000065b0                cfuhash_destroy_with_free_fn
-                0x00007c74                cfuhash_keys
-                0x00006298                cfuhash_next_data
-                0x0000916c                cfuhash_delete_data
-                0x00008e38                cfuhash_clear
-                0x00006200                cfuhash_clear_flag
-                0x0000707c                cfuhash_get_data
-                0x000075ac                cfuhash_bencode_strings
-                0x00006214                cfuhash_set_thresholds
-                0x00006fd0                cfuhash_each_data
-                0x00006380                cfuhash_num_buckets
-                0x00008190                cfuhash_get
-                0x000061ec                cfuhash_set_flag
-                0x00007370                cfuhash_new_with_flags
-                0x00006b10                cfuhash_keys_data
-                0x00006374                cfuhash_num_entries
-                0x00008390                cfuhash_copy
-                0x00009640                cfuhash_put_data
-                0x00009b64                cfuhash_put
-                0x00006858                cfuhash_foreach
-                0x00007fa0                cfuhash_exists_data
-                0x00007420                cfuhash_new_with_initial_size
-                0x0000652c                cfuhash_num_buckets_used
-                0x000066dc                cfuhash_foreach_remove
-                0x00006928                cfuhash_destroy
-                0x00007dc0                cfuhash_exists
-                0x00006474                cfuhash_next
-                0x000061e4                cfuhash_get_flags
-                0x000079d0                cfuhash_delete
-                0x000072c4                cfuhash_new
-                0x00006288                cfuhash_set_free_function
-                0x00006250                cfuhash_set_hash_function
-                0x000063a0                cfuhash_unlock
-                0x00008d2c                cfuhash_merge
-                0x0000638c                cfuhash_lock
- .text          0x0000a030     0x10d4 release/cfulist.os
-                0x0000ac5c                cfulist_push_string
-                0x0000ab3c                cfulist_enqueue
-                0x0000a358                cfulist_nth_data
-                0x0000a27c                cfulist_last_data
-                0x0000a5e8                cfulist_pop_data
-                0x0000a9c0                cfulist_unshift_string
-                0x0000aac0                cfulist_enqueue_string
-                0x0000a414                cfulist_destroy_with_free_fn
-                0x0000adc4                cfulist_shift
-                0x0000a030                cfulist_num_entries
-                0x0000aebc                cfulist_unshift
-                0x0000a108                cfulist_unshift_data
-                0x0000aa38                cfulist_enqueue_data
-                0x0000a90c                cfulist_join
-                0x0000a4a8                cfulist_shift_data
-                0x0000a6c4                cfulist_each_data
-                0x0000abb0                cfulist_dequeue_data
-                0x0000a0d8                cfulist_new
-                0x0000a038                cfulist_reset_each
-                0x0000a048                cfulist_next_data
-                0x0000af2c                cfulist_dequeue_string
-                0x0000a714                cfulist_new_with_free_fn
-                0x0000a74c                cfulist_pop_string
-                0x0000a2e4                cfulist_foreach
-                0x0000a18c                cfulist_push_data
-                0x0000a554                cfulist_pop
-                0x0000acd8                cfulist_push
-                0x0000a7e4                cfulist_map
-                0x0000b054                cfulist_destroy
-                0x0000ae40                cfulist_dequeue
-                0x0000a214                cfulist_first_data
-                0x0000ad4c                cfulist_shift_string
- .text          0x0000b104      0xb48 release/cfuopt.os
-                0x0000b3e8                cfuopt_pretty_print
-                0x0000b4f4                cfuopt_destroy
-                0x0000b120                cfuopt_get_help_str
-                0x0000b7e8                cfuopt_parse
-                0x0000b320                _param_map_fn
-                0x0000b7b4                cfuopt_new
-                0x0000b538                cfuopt_add_entry
- .text          0x0000bc4c     0x1e74 release/cfustring.os
-                0x0000cba0                cfustring_c_str_split
-                0x0000bd4c                cfustring_append_n
-                0x0000bef4                cfustring_dup_c_str_n
-                0x0000c6a0                cfustring_dup
-                0x0000c7c4                cfustring_split_to_c_str
-                0x0000bc4c                cfustring_clear
-                0x0000da38                cfustring_sprintf_c_str
-                0x0000bce0                cfustring_dup_c_str
-                0x0000c4c8                cfustring_append
-                0x0000bf34                cfustring_new
-                0x0000bf50                cfustring_split
-                0x0000da08                cfustring_sprintf
-                0x0000bd14                cfustring_get_buffer_copy
-                0x0000bc6c                cfustring_get_buffer
-                0x0000c5a0                cfustring_new_from_string
-                0x0000bc74                cfustring_new_with_initial_size
-                0x0000bcc0                cfustring_destroy
-                0x0000d0c4                cfustring_vsprintf
- .text          0x0000dac0      0x284 release/cfuthread_queue.os
-                0x0000dccc                cfuthread_queue_new
-                0x0000dba4                cfuthread_queue_new_with_cleanup
-                0x0000dac0                cfuthread_queue_destroy
-                0x0000db08                cfuthread_queue_make_request
- *fill*         0x0000dd44        0x4 00000000
- .text          0x0000dd48       0x80 release/cfutime.os
-                0x0000ddac                cfutime_new
-                0x0000dd94                cfutime_end
-                0x0000dda0                cfutime_begin
-                0x0000dd48                cfutime_elapsed
-                0x0000dd90                cfutime_free
- .text          0x0000ddc8        0x0 release/libcfu-config.os
- .text          0x0000ddc8        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x00003f78       0x34 release/FuseAPI_platform.os
+                0x00003f78                _ZN7_JNIEnv9NewObjectEP7_jclassP10_jmethodIDz
+ .text          0x00003fac       0xc8 release/FuseAPI.os
+                0x00003fc4                FuseAPIGetMailList
+                0x00003fcc                FuseAPISendMailWithGift
+                0x00003fd4                FuseAPIGetMailListFriendFromServer
+                0x00004054                FuseAPIRegisterEvent
+                0x00003ff0                FuseAPIEnableData
+                0x00003fd8                FuseAPIGetMailListFromServer
+                0x00003fe0                FuseAPIUpdateFriendsListFromServer
+                0x0000403c                FuseAPICheckAdAvailable
+                0x00003ffc                FuseAPILibraryVersion
+                0x00003fd0                FuseAPISetMailAsReceived
+                0x00004018                FuseAPIFuseLogin
+                0x0000402c                FuseAPIRegisterGender
+                0x00004050                FuseAPIRegisterEventWithParam
+                0x00003fbc                FuseAPIRegisterLevel
+                0x00003fc0                FuseAPIGetGameConfigurationValue
+                0x00004024                FuseAPITwitterLogin
+                0x0000405c                FuseAPITerminateSession
+                0x00003ff8                FuseAPIConnected
+                0x0000401c                FuseAPIDeviceLogin
+                0x00003ff4                FuseAPITimeFromServer
+                0x00004030                FuseAPIDisplayMoreGames
+                0x00003fac                FuseAPIRegisterTapjoyReward
+                0x00004060                FuseAPIResumeSession
+                0x00004070                _Z11FuseAPIInitv
+                0x00003fe4                FuseAPIMigrateFriends
+                0x00003fe8                FuseAPIGetGameData
+                0x00004044                FuseAPIRegisterInAppPurchaseAndroid
+                0x00004038                FuseAPIShowAd
+                0x0000406c                _Z16FuseAPITerminatev
+                0x00004048                FuseAPIRegisterEventWithDictionary
+                0x00004004                FuseAPIGetFuseID
+                0x00004010                FuseAPIGetOriginalAccountId
+                0x00003fdc                FuseAPIGetFriendsList
+                0x00004058                FuseAPIRegisterForPushNotifications
+                0x00003fb8                FuseAPIRegisterCurrency
+                0x0000400c                FuseAPIGetOriginalAccountAlias
+                0x00004028                FuseAPIFacebookLogin
+                0x00004000                FuseAPIgamesPlayed
+                0x00004034                FuseAPIDisplayNotifications
+                0x0000404c                FuseAPIRegisterEventWithEventData
+                0x00004040                FuseAPIRegisterInAppPurchaseiOS
+                0x00003fb0                FuseAPIRegisterFlurryClick
+                0x00004020                FuseAPIGameCenterLogin
+                0x00004008                FuseAPIGetOriginalAccountType
+                0x00003fc8                FuseAPISendMail
+                0x00003fec                FuseAPISetGameData
+                0x00004014                FuseAPIGooglePlayLogin
+                0x00004068                FuseAPIStartSession
+                0x00004064                FuseAPIPauseSession
+                0x00003fb4                FuseAPIRegisterFlurryView
+ .text          0x00004074     0x11dc release/FuseAPI_register.os
+                0x00004bf0                FuseAPIUnRegister
+                0x00004c20                FuseAPIRegister
+                0x00004c54                RegisterExt
+                0x00004074                _Z18FuseAPIRegisterExtv
+ .text          0x00005250       0x98 release/cfu.os
+                0x00005250                cfu_get_type
+                0x000052cc                cfu_is_conf
+                0x00005278                cfu_is_list
+                0x000052b0                cfu_is_time
+                0x00005294                cfu_is_string
+                0x0000525c                cfu_is_hash
+ .text          0x000052e8     0x101c release/cfuconf.os
+                0x000052f4                cfuconf_get_directives
+                0x00005f30                cfuconf_parse_buffer
+                0x00005634                cfuconf_destroy
+                0x00006000                cfuconf_parse_file
+                0x00006168                cfuconf_get_directive_one_arg
+                0x000052e8                cfuconf_get_containers
+                0x00005614                cfuconf_get_directive_two_args
+                0x0000620c                cfuconf_pretty_print_conf
+                0x00005518                cfuconf_get_directive_n_args
+ .text          0x00006304     0x3e8c release/cfuhash.os
+                0x00007654                cfuhash_new_with_free_fn
+                0x00006b80                cfuhash_pretty_print
+                0x0000654c                cfuhash_each
+                0x00006f04                cfuhash_rehash
+                0x00006710                cfuhash_destroy_with_free_fn
+                0x00007dd4                cfuhash_keys
+                0x000063f8                cfuhash_next_data
+                0x000092cc                cfuhash_delete_data
+                0x00008f98                cfuhash_clear
+                0x00006360                cfuhash_clear_flag
+                0x000071dc                cfuhash_get_data
+                0x0000770c                cfuhash_bencode_strings
+                0x00006374                cfuhash_set_thresholds
+                0x00007130                cfuhash_each_data
+                0x000064e0                cfuhash_num_buckets
+                0x000082f0                cfuhash_get
+                0x0000634c                cfuhash_set_flag
+                0x000074d0                cfuhash_new_with_flags
+                0x00006c70                cfuhash_keys_data
+                0x000064d4                cfuhash_num_entries
+                0x000084f0                cfuhash_copy
+                0x000097a0                cfuhash_put_data
+                0x00009cc4                cfuhash_put
+                0x000069b8                cfuhash_foreach
+                0x00008100                cfuhash_exists_data
+                0x00007580                cfuhash_new_with_initial_size
+                0x0000668c                cfuhash_num_buckets_used
+                0x0000683c                cfuhash_foreach_remove
+                0x00006a88                cfuhash_destroy
+                0x00007f20                cfuhash_exists
+                0x000065d4                cfuhash_next
+                0x00006344                cfuhash_get_flags
+                0x00007b30                cfuhash_delete
+                0x00007424                cfuhash_new
+                0x000063e8                cfuhash_set_free_function
+                0x000063b0                cfuhash_set_hash_function
+                0x00006500                cfuhash_unlock
+                0x00008e8c                cfuhash_merge
+                0x000064ec                cfuhash_lock
+ .text          0x0000a190     0x10d4 release/cfulist.os
+                0x0000adbc                cfulist_push_string
+                0x0000ac9c                cfulist_enqueue
+                0x0000a4b8                cfulist_nth_data
+                0x0000a3dc                cfulist_last_data
+                0x0000a748                cfulist_pop_data
+                0x0000ab20                cfulist_unshift_string
+                0x0000ac20                cfulist_enqueue_string
+                0x0000a574                cfulist_destroy_with_free_fn
+                0x0000af24                cfulist_shift
+                0x0000a190                cfulist_num_entries
+                0x0000b01c                cfulist_unshift
+                0x0000a268                cfulist_unshift_data
+                0x0000ab98                cfulist_enqueue_data
+                0x0000aa6c                cfulist_join
+                0x0000a608                cfulist_shift_data
+                0x0000a824                cfulist_each_data
+                0x0000ad10                cfulist_dequeue_data
+                0x0000a238                cfulist_new
+                0x0000a198                cfulist_reset_each
+                0x0000a1a8                cfulist_next_data
+                0x0000b08c                cfulist_dequeue_string
+                0x0000a874                cfulist_new_with_free_fn
+                0x0000a8ac                cfulist_pop_string
+                0x0000a444                cfulist_foreach
+                0x0000a2ec                cfulist_push_data
+                0x0000a6b4                cfulist_pop
+                0x0000ae38                cfulist_push
+                0x0000a944                cfulist_map
+                0x0000b1b4                cfulist_destroy
+                0x0000afa0                cfulist_dequeue
+                0x0000a374                cfulist_first_data
+                0x0000aeac                cfulist_shift_string
+ .text          0x0000b264      0xb48 release/cfuopt.os
+                0x0000b548                cfuopt_pretty_print
+                0x0000b654                cfuopt_destroy
+                0x0000b280                cfuopt_get_help_str
+                0x0000b948                cfuopt_parse
+                0x0000b480                _param_map_fn
+                0x0000b914                cfuopt_new
+                0x0000b698                cfuopt_add_entry
+ .text          0x0000bdac     0x1e74 release/cfustring.os
+                0x0000cd00                cfustring_c_str_split
+                0x0000beac                cfustring_append_n
+                0x0000c054                cfustring_dup_c_str_n
+                0x0000c800                cfustring_dup
+                0x0000c924                cfustring_split_to_c_str
+                0x0000bdac                cfustring_clear
+                0x0000db98                cfustring_sprintf_c_str
+                0x0000be40                cfustring_dup_c_str
+                0x0000c628                cfustring_append
+                0x0000c094                cfustring_new
+                0x0000c0b0                cfustring_split
+                0x0000db68                cfustring_sprintf
+                0x0000be74                cfustring_get_buffer_copy
+                0x0000bdcc                cfustring_get_buffer
+                0x0000c700                cfustring_new_from_string
+                0x0000bdd4                cfustring_new_with_initial_size
+                0x0000be20                cfustring_destroy
+                0x0000d224                cfustring_vsprintf
+ .text          0x0000dc20      0x284 release/cfuthread_queue.os
+                0x0000de2c                cfuthread_queue_new
+                0x0000dd04                cfuthread_queue_new_with_cleanup
+                0x0000dc20                cfuthread_queue_destroy
+                0x0000dc68                cfuthread_queue_make_request
+ *fill*         0x0000dea4        0x4 00000000
+ .text          0x0000dea8       0x80 release/cfutime.os
+                0x0000df0c                cfutime_new
+                0x0000def4                cfutime_end
+                0x0000df00                cfutime_begin
+                0x0000dea8                cfutime_elapsed
+                0x0000def0                cfutime_free
+ .text          0x0000df28        0x0 release/libcfu-config.os
+ .text          0x0000df28        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
  .text.s3eEdkThreadRunOnOSAsync
-                0x0000ddc8       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x0000ddc8                s3eEdkThreadRunOnOSAsync
+                0x0000df28       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x0000df28                s3eEdkThreadRunOnOSAsync
  .text.s3eEdkThreadRunOnOS
-                0x0000ddf8       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x0000ddf8                s3eEdkThreadRunOnOS
+                0x0000df58       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x0000df58                s3eEdkThreadRunOnOS
  .text.s3eEdkErrorSetString
-                0x0000de28       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x0000de28                s3eEdkErrorSetString
- .text          0x0000de58        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .text._ZdlPv   0x0000de58        0xc /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
-                0x0000de58                _ZdlPv
- .text          0x0000de64       0xc4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
-                0x0000de64                __udivsi3
-                0x0000de64                __aeabi_uidiv
-                0x0000df10                __aeabi_uidivmod
- .text          0x0000df28       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
-                0x0000df28                __div0
- .text          0x0000df38        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+                0x0000df88       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x0000df88                s3eEdkErrorSetString
+ .text          0x0000dfb8        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .text._ZdlPv   0x0000dfb8        0xc /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+                0x0000dfb8                _ZdlPv
+ .text          0x0000dfc4       0xc4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
+                0x0000dfc4                __udivsi3
+                0x0000dfc4                __aeabi_uidiv
+                0x0000e070                __aeabi_uidivmod
+ .text          0x0000e088       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
+                0x0000e088                __div0
+ .text          0x0000e098        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(.gnu.warning)
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
@@ -490,46 +493,46 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 
 .fini
  *(.fini)
-                0x0000df38                PROVIDE (__etext, .)
-                0x0000df38                PROVIDE (_etext, .)
-                0x0000df38                PROVIDE (etext, .)
+                0x0000e098                PROVIDE (__etext, .)
+                0x0000e098                PROVIDE (_etext, .)
+                0x0000e098                PROVIDE (etext, .)
 
-.rodata         0x0000df38      0xd40
+.rodata         0x0000e098      0xd6c
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.str1.4
-                0x0000df38      0xbb9 release/FuseAPI_platform.os
-                                0xbbc (size before relaxing)
- *fill*         0x0000eaf1        0x3 00
+                0x0000e098      0xbe5 release/FuseAPI_platform.os
+                                0xbe8 (size before relaxing)
+ *fill*         0x0000ec7d        0x3 00
  .rodata.str1.4
-                0x0000eaf4        0x8 release/FuseAPI_register.os
+                0x0000ec80        0x8 release/FuseAPI_register.os
  .rodata.str1.4
-                0x0000eafc       0xaf release/cfuconf.os
+                0x0000ec88       0xaf release/cfuconf.os
                                  0xb8 (size before relaxing)
- *fill*         0x0000ebab        0x1 00
+ *fill*         0x0000ed37        0x1 00
  .rodata.str1.4
-                0x0000ebac       0x1c release/cfuhash.os
+                0x0000ed38       0x1c release/cfuhash.os
                                  0x24 (size before relaxing)
  .rodata.str1.4
-                0x0000ebc8       0xa6 release/cfuopt.os
+                0x0000ed54       0xa6 release/cfuopt.os
                                  0xb4 (size before relaxing)
- *fill*         0x0000ec6e        0x2 00
+ *fill*         0x0000edfa        0x2 00
  .rodata.str1.4
-                0x0000ec70        0x8 release/cfustring.os
+                0x0000edfc        0x8 release/cfustring.os
 
 .rodata1
  *(.rodata1)
 
-.ARM.extab      0x0000ec78        0x0
+.ARM.extab      0x0000ee04        0x0
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.text._ZdlPv
-                0x0000ec78        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
-                0x0000ec78                __exidx_start = .
+                0x0000ee04        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+                0x0000ee04                __exidx_start = .
 
-.ARM.exidx      0x0000ec78        0x8
+.ARM.exidx      0x0000ee04        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.text._ZdlPv
-                0x0000ec78        0x8 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
-                0x0000ec80                __exidx_end = .
+                0x0000ee04        0x8 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+                0x0000ee0c                __exidx_end = .
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -539,7 +542,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 
 .gcc_except_table
  *(.gcc_except_table .gcc_except_table.*)
-                0x0000ec80                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
+                0x0000ee0c                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
                 0x0000f000                . = (0x1000 DATA_SEGMENT_ALIGN 0x1000)
 
 .eh_frame
@@ -590,92 +593,92 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 .jcr
  *(.jcr)
 
-.data.rel.ro    0x0000f018      0x150
+.data.rel.ro    0x0000f018      0x15c
  *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
  *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*)
- .data.rel.ro   0x0000f018      0x150 release/FuseAPI_platform.os
+ .data.rel.ro   0x0000f018      0x15c release/FuseAPI_platform.os
 
-.dynamic        0x0000f168       0xf0
+.dynamic        0x0000f174       0xf0
  *(.dynamic)
- .dynamic       0x0000f168       0xf0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
-                0x0000f168                _DYNAMIC
-                0x0000f258                . = (. DATA_SEGMENT_RELRO_END 0x0)
+ .dynamic       0x0000f174       0xf0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x0000f174                _DYNAMIC
+                0x0000f264                . = (. DATA_SEGMENT_RELRO_END 0x0)
 
-.got            0x0000f258      0x188
+.got            0x0000f264      0x18c
  *(.got.plt)
- .got.plt       0x0000f258       0xc4 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
-                0x0000f258                _GLOBAL_OFFSET_TABLE_
+ .got.plt       0x0000f264       0xc4 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x0000f264                _GLOBAL_OFFSET_TABLE_
  *(.got)
- .got           0x0000f31c       0xc4 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .got           0x0000f328       0xc8 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
-.data           0x0000f3e0        0x0
-                0x0000f3e0                __data_start = .
+.data           0x0000f3f0        0x0
+                0x0000f3f0                __data_start = .
  *(.data .data.* .gnu.linkonce.d.*)
- .data          0x0000f3e0        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
- .data          0x0000f3e0        0x0 release/FuseAPI_platform.os
- .data          0x0000f3e0        0x0 release/FuseAPI.os
- .data          0x0000f3e0        0x0 release/FuseAPI_register.os
- .data          0x0000f3e0        0x0 release/cfu.os
- .data          0x0000f3e0        0x0 release/cfuconf.os
- .data          0x0000f3e0        0x0 release/cfuhash.os
- .data          0x0000f3e0        0x0 release/cfulist.os
- .data          0x0000f3e0        0x0 release/cfuopt.os
- .data          0x0000f3e0        0x0 release/cfustring.os
- .data          0x0000f3e0        0x0 release/cfuthread_queue.os
- .data          0x0000f3e0        0x0 release/cfutime.os
- .data          0x0000f3e0        0x0 release/libcfu-config.os
- .data          0x0000f3e0        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
- .data          0x0000f3e0        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .data          0x0000f3e0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
- .data          0x0000f3e0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
- .data          0x0000f3e0        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ .data          0x0000f3f0        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+ .data          0x0000f3f0        0x0 release/FuseAPI_platform.os
+ .data          0x0000f3f0        0x0 release/FuseAPI.os
+ .data          0x0000f3f0        0x0 release/FuseAPI_register.os
+ .data          0x0000f3f0        0x0 release/cfu.os
+ .data          0x0000f3f0        0x0 release/cfuconf.os
+ .data          0x0000f3f0        0x0 release/cfuhash.os
+ .data          0x0000f3f0        0x0 release/cfulist.os
+ .data          0x0000f3f0        0x0 release/cfuopt.os
+ .data          0x0000f3f0        0x0 release/cfustring.os
+ .data          0x0000f3f0        0x0 release/cfuthread_queue.os
+ .data          0x0000f3f0        0x0 release/cfutime.os
+ .data          0x0000f3f0        0x0 release/libcfu-config.os
+ .data          0x0000f3f0        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+ .data          0x0000f3f0        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .data          0x0000f3f0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
+ .data          0x0000f3f0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
+ .data          0x0000f3f0        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 
 .data1
  *(.data1)
-                0x0000f3e0                _edata = .
-                0x0000f3e0                PROVIDE (edata, .)
-                0x0000f3e0                __bss_start = .
-                0x0000f3e0                __bss_start__ = .
+                0x0000f3f0                _edata = .
+                0x0000f3f0                PROVIDE (edata, .)
+                0x0000f3f0                __bss_start = .
+                0x0000f3f0                __bss_start__ = .
 
-.bss            0x0000f3e0       0xf8
+.bss            0x0000f3f0       0xfc
  *(.dynbss)
  .dynbss        0x00000000        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x0000f3e0       0x10 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
-                0x0000f3e0                __dso_handle
- .bss           0x0000f3f0       0xe8 release/FuseAPI_platform.os
-                0x0000f3f4                g_playerList
-                0x0000f3f0                g_playerIndex
-                0x0000f3f8                g_numMailEntries
-                0x0000f3fc                g_mailList
-                0x0000f400                gameData
-                0x0000f404                gameConfig
- .bss           0x0000f4d8        0x0 release/FuseAPI.os
- .bss           0x0000f4d8        0x0 release/FuseAPI_register.os
- .bss           0x0000f4d8        0x0 release/cfu.os
- .bss           0x0000f4d8        0x0 release/cfuconf.os
- .bss           0x0000f4d8        0x0 release/cfuhash.os
- .bss           0x0000f4d8        0x0 release/cfulist.os
- .bss           0x0000f4d8        0x0 release/cfuopt.os
- .bss           0x0000f4d8        0x0 release/cfustring.os
- .bss           0x0000f4d8        0x0 release/cfuthread_queue.os
- .bss           0x0000f4d8        0x0 release/cfutime.os
- .bss           0x0000f4d8        0x0 release/libcfu-config.os
- .bss           0x0000f4d8        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
- .bss           0x0000f4d8        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .bss           0x0000f4d8        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
- .bss           0x0000f4d8        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
- .bss           0x0000f4d8        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+ .bss           0x0000f3f0       0x10 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
+                0x0000f3f0                __dso_handle
+ .bss           0x0000f400       0xec release/FuseAPI_platform.os
+                0x0000f404                g_playerList
+                0x0000f400                g_playerIndex
+                0x0000f408                g_numMailEntries
+                0x0000f40c                g_mailList
+                0x0000f410                gameData
+                0x0000f414                gameConfig
+ .bss           0x0000f4ec        0x0 release/FuseAPI.os
+ .bss           0x0000f4ec        0x0 release/FuseAPI_register.os
+ .bss           0x0000f4ec        0x0 release/cfu.os
+ .bss           0x0000f4ec        0x0 release/cfuconf.os
+ .bss           0x0000f4ec        0x0 release/cfuhash.os
+ .bss           0x0000f4ec        0x0 release/cfulist.os
+ .bss           0x0000f4ec        0x0 release/cfuopt.os
+ .bss           0x0000f4ec        0x0 release/cfustring.os
+ .bss           0x0000f4ec        0x0 release/cfuthread_queue.os
+ .bss           0x0000f4ec        0x0 release/cfutime.os
+ .bss           0x0000f4ec        0x0 release/libcfu-config.os
+ .bss           0x0000f4ec        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+ .bss           0x0000f4ec        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .bss           0x0000f4ec        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
+ .bss           0x0000f4ec        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
+ .bss           0x0000f4ec        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(COMMON)
-                0x0000f4d8                . = ALIGN ((. != 0x0)?0x4:0x1)
-                0x0000f4d8                _bss_end__ = .
-                0x0000f4d8                __bss_end__ = .
-                0x0000f4d8                . = ALIGN (0x4)
-                0x0000f4d8                . = ALIGN (0x4)
-                0x0000f4d8                __end__ = .
-                0x0000f4d8                _end = .
-                0x0000f4d8                PROVIDE (end, .)
-                0x0000f4d8                . = DATA_SEGMENT_END (.)
+                0x0000f4ec                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x0000f4ec                _bss_end__ = .
+                0x0000f4ec                __bss_end__ = .
+                0x0000f4ec                . = ALIGN (0x4)
+                0x0000f4ec                . = ALIGN (0x4)
+                0x0000f4ec                __end__ = .
+                0x0000f4ec                _end = .
+                0x0000f4ec                PROVIDE (end, .)
+                0x0000f4ec                . = DATA_SEGMENT_END (.)
 
 .stab
  *(.stab)
