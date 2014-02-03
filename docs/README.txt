@@ -1,6 +1,6 @@
 FuseAPI for Marmalade SDK 6.3
 ========================
-FuseAPI  Version v1.3
+FuseAPI  Version v1.34.3
 
 This Extension currently supports
       
@@ -12,7 +12,7 @@ Description
 
 Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseAPI](http://www.fuseboxx.com) for Android.
 
-Version: 1.31
+Version: 1.34.3
 
 Platform: Android, iOS
 Extension Developer: Fuse Powered
