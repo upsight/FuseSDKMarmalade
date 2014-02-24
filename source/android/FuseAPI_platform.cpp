@@ -825,10 +825,10 @@ s3eResult FuseAPIInit_platform()
     if (!g_FuseAPIMigrateFriends)
         goto fail;
 
-	g_FuseAPIUserPushNotification = env->GetMethodID(cls, "FuseAPIUserPushNotification", "(Ljava/lang/String;)V");
+	g_FuseAPIUserPushNotification = env->GetMethodID(cls, "FuseAPIUserPushNotification", "(Ljava/lang/String;Ljava/lang/String;)V");
     if (!g_FuseAPIUserPushNotification)
         goto fail;
-	g_FuseAPIFriendsPushNotification = env->GetMethodID(cls, "FuseAPIFriendsPushNotification", "(Ljava/lang/String;Ljava/lang/String;)V");
+	g_FuseAPIFriendsPushNotification = env->GetMethodID(cls, "FuseAPIFriendsPushNotification", "(Ljava/lang/String;)V");
     if (!g_FuseAPIFriendsPushNotification)
         goto fail;
 
