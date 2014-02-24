@@ -415,9 +415,39 @@ int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char*
 	return requestId;
 }
 
+void FuseAPIAddFriend_platform(const char* fuseId)
+{
+	[FuseAPI addFriend:[NSString stringWithUTF8String:fuseId]];
+}
+
+void FuseAPIRemoveFriend_platform(const char* fuseId)
+{
+	[FuseAPI removeFriend:[NSString stringWithUTF8String:fuseId]];
+}
+
+void FuseAPIAcceptFriend_platform(const char* fuseId)
+{
+	[FuseAPI acceptFriend:[NSString stringWithUTF8String:fuseId]];
+}
+
+void FuseAPIRejectFriend_platform(const char* fuseId)
+{
+	[FuseAPI rejectFriend:[NSString stringWithUTF8String:fuseId]];
+}
+
 void FuseAPIMigrateFriends_platform(const char* fuseId)
 {
     [FuseAPI migrateFriends:[NSString stringWithUTF8String:fuseId]];
+}
+
+void FuseAPIUserPushNotification_platform(const char* fuseId, const char* message)
+{
+	[FuseAPI userPushNotification:[NSString stringWithUTF8String:fuseId] Message:[NSString stringWithUTF8String:message]];
+}
+
+void FuseAPIFriendsPushNotification_platform(const char* message)
+{
+	[FuseAPI friendsPushNotification:[NSString stringWithUTF8String:message]];
 }
 
 void FuseAPIUpdateFriendsListFromServer_platform()
@@ -723,6 +753,62 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 }
 
 #pragma mark Friends List
+-(void) friendAdded:(NSString*)_fuse_id Error:(NSNumber*)_error
+{
+    struct paramList
+	{
+        const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = _error.intValue;
+    params.fuseId = _fuse_id.UTF8String;
+    IwTrace(FuseAPI, ("FuseFriendAdded(%s, %i)", params.fuseId, params.error));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_ADDED, &params, sizeof(paramList));
+}
+
+-(void) friendRemoved:(NSString*)_fuse_id Error:(NSNumber*)_error
+{
+    struct paramList
+	{
+        const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = _error.intValue;
+    params.fuseId = _fuse_id.UTF8String;
+    IwTrace(FuseAPI, ("FuseFriendRemoved(%s, %i)", params.fuseId, params.error));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_REMOVED, &params, sizeof(paramList));
+}
+
+-(void) friendAccepted:(NSString*)_fuse_id Error:(NSNumber*)_error
+{
+    struct paramList
+	{
+        const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = _error.intValue;
+    params.fuseId = _fuse_id.UTF8String;
+    IwTrace(FuseAPI, ("FuseFriendAccepted(%s, %i)", params.fuseId, params.error));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_ACCEPTED, &params, sizeof(paramList));
+}
+
+-(void) friendRejected:(NSString*)_fuse_id Error:(NSNumber*)_error
+{
+    struct paramList
+	{
+        const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = _error.intValue;
+    params.fuseId = _fuse_id.UTF8String;
+    IwTrace(FuseAPI, ("FuseFriendsRejected(%s, %i)", params.fuseId, params.error));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_REJECTED, &params, sizeof(paramList));
+}
+
 -(void) friendsMigrated:(NSString*)_fuse_id Error:(NSNumber*)_error
 {
     struct paramList

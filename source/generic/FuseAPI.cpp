@@ -189,9 +189,39 @@ int FuseAPIGetGameData(const char* key, const char* fuseId, const char** gameDat
 	return FuseAPIGetGameData_platform(key, fuseId, gameDataKeys, numKeys);
 }
 
+void FuseAPIAddFriend(const char* fuseId)
+{
+	FuseAPIAddFriend_platform(fuseId);
+}
+
+void FuseAPIRemoveFriend(const char* fuseId)
+{
+	FuseAPIRemoveFriend_platform(fuseId);
+}
+
+void FuseAPIAcceptFriend(const char* fuseId)
+{
+	FuseAPIAcceptFriend_platform(fuseId);
+}
+
+void FuseAPIRejectFriend(const char* fuseId)
+{
+	FuseAPIRejectFriend_platform(fuseId);
+}
+
 void FuseAPIMigrateFriends(const char* fuseId)
 {
 	FuseAPIMigrateFriends_platform(fuseId);
+}
+
+void FuseAPIUserPushNotification(const char* fuseId, const char* message)
+{
+	FuseAPIUserPushNotification_platform(fuseId, message);
+}
+
+void FuseAPIFriendsPushNotification(const char* message)
+{
+	FuseAPIFriendsPushNotification_platform(message);
 }
 
 void FuseAPIUpdateFriendsListFromServer()

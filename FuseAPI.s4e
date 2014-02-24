@@ -30,6 +30,10 @@ enum FuseAPICallback
 	FUSEAPI_GAME_CONFIGURATION_RECEIVED,
     FUSEAPI_PURCHASE_VERIFIED,
 	FUSEAPI_FRIENDS_MIGRATED,
+	FUSEAPI_FRIEND_ADDED,
+	FUSEAPI_FRIEND_REMOVED,
+	FUSEAPI_FRIEND_ACCEPTED,
+	FUSEAPI_FRIEND_REJECTED,
 	FUSEAPI_CALLBACK_MAX,
 };
 
@@ -860,10 +864,128 @@ void FuseAPIUpdateFriendsListFromServer() run_on_os_thread
 */
 FusePlayer* FuseAPIGetFriendsList(int* numPlayers) run_on_os_thread
 
+/*!
+ * @brief This method is used to invite (add) a friend to the logged in user's friends list
+ * @details A friend is not added right away to the inviting user's list.  Instead, there is a handshaking mechanism whereby the invited user needs to agree to 
+ * the invite (see FuseAPIAcceptFriend) before both users are shown in each others list.  A FUSEAPI_FRIEND_ADDED callback is made once the friend is accepted.
+ * 
+ * To add a friend:
+ *
+ * @code
+ 
+ FuseAPIAddFriend("012345678");
+ 
+ * @endcode
+ * 
+ * @param _fuse_id [const char*] This is the "Fuse ID" of the player being invited
+ */
+void FuseAPIAddFriend(const char* fuse_id) run_on_os_thread
 
-/**+---------+
-// | Gifting |
-// +---------*/
+/*!
+ * @brief This method is used to delete a friend from the logged in user's friends list
+ * @details Once a friend is removed by a user, both the target and source user will not show in each other's friends list.  
+ * A FUSEAPI_FRIEND_REMOVED callback is sent in response to this method.
+ * 
+ * To remove a friend:
+ *
+ * @code
+ 
+ FuseAPIRemoveFriend("012345678");
+ 
+ * @endcode
+ *  
+ * @param fuse_id [const char*] This is the "Fuse ID" of the player being deleted
+ */
+void FuseAPIRemoveFriend(const char* fuse_id) run_on_os_thread
+
+/*!
+ * @brief This method is used to accept a friend request
+ * @details The inviting of a friend is a two-step process.  The first step is to actually invite the user (source user) using addFriend:, and the second step is the 
+ * acceptance by the target user using this method.  A FUSEAPI_FRIEND_ACCEPTED callback is made once the friend is accepted.
+ * 
+ * To accept a user:
+ * 
+ * @code
+ 
+ FuseAPIAcceptFriend("012345678");
+ 
+ * @endcode
+ *  
+ * @param fuse_id [const char*] This is the "Fuse ID" of the player being accepted
+ */
+void FuseAPIAcceptFriend(const char* fuse_id) run_on_os_thread
+
+/*!
+ * @brief This method is used to reject a friend request.
+ * @details In the second half of the inviting a friend process, the user can optionally accept or reject a friend request.  If this user 
+ * decides that they do not want the source user as a friend, call this method to remove it from the list of pending requests.  
+ * A FUSEAPI_FRIEND_REJECTED callback is made when the friend is rejected.  
+ * A friend is in the second phase of the process if it is indicated as 'pending' in the updateFriendsListFromServer callback friendsListUpdated.
+ * 
+ * To reject a friend:
+ * 
+ * @code
+ 
+    FuseAPIRejectFriend("012345678");
+ 
+ * @endcode
+ * 
+ * @param fuse_id [const char*] This is the "Fuse ID" of the player being rejected
+ */
+void FuseAPIRejectFriend(const char* fuse_id) run_on_os_thread
+
+
+
+/**+---------------------------------+
+// | User-to-User Push Notifications |
+// +---------------------------------*/
+/*!
+ * @brief Send a push notification to another user
+ * @details Use this method to send a push notification to another user, using their Fuse ID to each of their devices that have logged in with that ID 
+ * (and that have registered to receive notifications).  This system is dependent upon both the sender and the recipient to have logged in with either a 
+ * Game Center account (see gameCenterLogin:) or similar method.  This system would most likely be used in conjunction with another social tool, such as the 
+ * friend's list (see getFriendsList), where a list of users and their associated Fuse IDs would be known.  Messages can be no longer than 256 characters in length.
+ *
+ * To send a push notification:
+ * 
+ * @code
+ 
+ FuseAPIUserPushNotification("012345678", "Test Push Message");
+ 
+ * @endcode
+ * 
+ * Please ensure that your game is registered to collect device tokens and receive push notifications to be compatible with this feature.  The can be up to a five minute delay or longer before a message is received by a user.
+ *
+ * @param fuse_id [const char*] This is the "Fuse ID" of the player to which the message will be sent
+ * @param message [const char*] The message to be sent to the user (max 256 characters)
+ * @see FuseAPIGameCenterLogin for more information on how to register a login with a Game Center ID
+ * @see FuseAPIFacebookLogin for more information on how to register a login with a Facebook account ID
+ * @see FuseAPITwitterLogin for more information on how to register a login with a Twitter account ID
+ * @see FuseAPIFuseLogin for more information on how to register a login with a Fuse ID 
+ */
+void FuseAPIUserPushNotification(const char* fuse_id, const char* message) run_on_os_thread
+
+/*!
+ * @brief Send a push notification to a user's entire friends list
+ * @details Similar to FuseAPIUserPushNotification, this method sends the same message to each user in the source user's friends list.
+ *
+ * To send this type of push notification:
+ *
+ * @code
+ 
+ FuseAPIFriendsPushNotification("Test Push Message Friends List");
+ 
+ * @endcode
+ *
+ * @param _message [const char*] The message to be sent to the user (max 256 characters)
+ * @see userPushNotification:Message: for more information on sending a push notification 
+ */
+void FuseAPIFriendsPushNotification(const char* message) run_on_os_thread
+
+
+/**+--------------+
+// | Mail/Gifting |
+// +--------------*/
 /*
 * @brief Get the the list of messages (and gifts) sent to the currently signed in user.
 * @details This function receives the server list of gifts granted to the user.  This function is asynchronous in that a list will not be returned to the user 

@@ -240,6 +240,42 @@ static FusePlayer* FuseAPIGetFriendsList_wrap(int* numPlayers)
     return (FusePlayer*)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIGetFriendsList, 1, numPlayers);
 }
 
+static void FuseAPIAddFriend_wrap(const char* fuse_id)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIAddFriend"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIAddFriend, 1, fuse_id);
+}
+
+static void FuseAPIRemoveFriend_wrap(const char* fuse_id)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRemoveFriend"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRemoveFriend, 1, fuse_id);
+}
+
+static void FuseAPIAcceptFriend_wrap(const char* fuse_id)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIAcceptFriend"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIAcceptFriend, 1, fuse_id);
+}
+
+static void FuseAPIRejectFriend_wrap(const char* fuse_id)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRejectFriend"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRejectFriend, 1, fuse_id);
+}
+
+static void FuseAPIUserPushNotification_wrap(const char* fuse_id, const char* message)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIUserPushNotification"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIUserPushNotification, 2, fuse_id, message);
+}
+
+static void FuseAPIFriendsPushNotification_wrap(const char* message)
+{
+    IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIFriendsPushNotification"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIFriendsPushNotification, 1, message);
+}
+
 static void FuseAPIGetMailListFromServer_wrap()
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIGetMailListFromServer"));
@@ -348,6 +384,12 @@ static void FuseAPIRegisterTapjoyReward_wrap(int amount)
 #define FuseAPIMigrateFriends FuseAPIMigrateFriends_wrap
 #define FuseAPIUpdateFriendsListFromServer FuseAPIUpdateFriendsListFromServer_wrap
 #define FuseAPIGetFriendsList FuseAPIGetFriendsList_wrap
+#define FuseAPIAddFriend FuseAPIAddFriend_wrap
+#define FuseAPIRemoveFriend FuseAPIRemoveFriend_wrap
+#define FuseAPIAcceptFriend FuseAPIAcceptFriend_wrap
+#define FuseAPIRejectFriend FuseAPIRejectFriend_wrap
+#define FuseAPIUserPushNotification FuseAPIUserPushNotification_wrap
+#define FuseAPIFriendsPushNotification FuseAPIFriendsPushNotification_wrap
 #define FuseAPIGetMailListFromServer FuseAPIGetMailListFromServer_wrap
 #define FuseAPIGetMailListFriendFromServer FuseAPIGetMailListFriendFromServer_wrap
 #define FuseAPISetMailAsReceived FuseAPISetMailAsReceived_wrap
@@ -376,7 +418,7 @@ s3eResult FuseAPIUnRegister(FuseAPICallback cbid, s3eCallback fn)
 void FuseAPIRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[50];
+    void* funcPtrs[56];
     funcPtrs[0] = (void*)FuseAPIRegister;
     funcPtrs[1] = (void*)FuseAPIUnRegister;
     funcPtrs[2] = (void*)FuseAPIStartSession;
@@ -415,23 +457,29 @@ void FuseAPIRegisterExt()
     funcPtrs[35] = (void*)FuseAPIMigrateFriends;
     funcPtrs[36] = (void*)FuseAPIUpdateFriendsListFromServer;
     funcPtrs[37] = (void*)FuseAPIGetFriendsList;
-    funcPtrs[38] = (void*)FuseAPIGetMailListFromServer;
-    funcPtrs[39] = (void*)FuseAPIGetMailListFriendFromServer;
-    funcPtrs[40] = (void*)FuseAPISetMailAsReceived;
-    funcPtrs[41] = (void*)FuseAPISendMailWithGift;
-    funcPtrs[42] = (void*)FuseAPISendMail;
-    funcPtrs[43] = (void*)FuseAPIGetMailList;
-    funcPtrs[44] = (void*)FuseAPIGetGameConfigurationValue;
-    funcPtrs[45] = (void*)FuseAPIRegisterLevel;
-    funcPtrs[46] = (void*)FuseAPIRegisterCurrency;
-    funcPtrs[47] = (void*)FuseAPIRegisterFlurryView;
-    funcPtrs[48] = (void*)FuseAPIRegisterFlurryClick;
-    funcPtrs[49] = (void*)FuseAPIRegisterTapjoyReward;
+    funcPtrs[38] = (void*)FuseAPIAddFriend;
+    funcPtrs[39] = (void*)FuseAPIRemoveFriend;
+    funcPtrs[40] = (void*)FuseAPIAcceptFriend;
+    funcPtrs[41] = (void*)FuseAPIRejectFriend;
+    funcPtrs[42] = (void*)FuseAPIUserPushNotification;
+    funcPtrs[43] = (void*)FuseAPIFriendsPushNotification;
+    funcPtrs[44] = (void*)FuseAPIGetMailListFromServer;
+    funcPtrs[45] = (void*)FuseAPIGetMailListFriendFromServer;
+    funcPtrs[46] = (void*)FuseAPISetMailAsReceived;
+    funcPtrs[47] = (void*)FuseAPISendMailWithGift;
+    funcPtrs[48] = (void*)FuseAPISendMail;
+    funcPtrs[49] = (void*)FuseAPIGetMailList;
+    funcPtrs[50] = (void*)FuseAPIGetGameConfigurationValue;
+    funcPtrs[51] = (void*)FuseAPIRegisterLevel;
+    funcPtrs[52] = (void*)FuseAPIRegisterCurrency;
+    funcPtrs[53] = (void*)FuseAPIRegisterFlurryView;
+    funcPtrs[54] = (void*)FuseAPIRegisterFlurryClick;
+    funcPtrs[55] = (void*)FuseAPIRegisterTapjoyReward;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[50] = { 0 };
+    int flags[56] = { 0 };
 
     /*
      * Register the extension

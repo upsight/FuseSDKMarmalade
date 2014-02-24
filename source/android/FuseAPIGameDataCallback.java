@@ -17,6 +17,11 @@ import com.fusepowered.util.Mail;
 import com.fusepowered.util.Player;
 import com.fusepowered.util.UserTransactionLog;
 import com.fusepowered.util.FuseMigrateFriendsError;
+import com.fusepowered.util.FuseAddFriendError;
+import com.fusepowered.util.FuseRemoveFriendError;
+import com.fusepowered.util.FuseAcceptFriendError;
+import com.fusepowered.util.FuseRejectFriendError;
+
 
 import android.util.Log;
 
@@ -177,6 +182,30 @@ public class FuseAPIGameDataCallback extends FuseGameDataCallback
 // +-------------+
 // | Friend List |
 // +-------------+
+	public void friendAdded(String fuse_id, final FuseAddFriendError error)
+	{
+		Log.d(_logTag, "friendAdded(" + fuseId + ", " + error + ")");
+		_wrapper.FuseFriendAdded(fuseId, error.getErrorCode());
+    }
+
+    public void friendRemoved(String fuse_id, final FuseRemoveFriendError error) 
+	{
+		Log.d(_logTag, "friendRemoved(" + fuseId + ", " + error + ")");
+		_wrapper.FuseFriendRemoved(fuseId, error.getErrorCode());
+    }
+
+    public void friendAccepted(String fuse_id, final FuseAcceptFriendError error) 
+	{
+		Log.d(_logTag, "friendAccepted(" + fuseId + ", " + error + ")");
+		_wrapper.FuseFriendAccepted(fuseId, error.getErrorCode());
+    }
+
+    public void friendRejected(String fuse_id, final FuseRejectFriendError error) 
+	{
+		Log.d(_logTag, "friendRejected(" + fuseId + ", " + error + ")");
+		_wrapper.FuseFriendRejected(fuseId, error.getErrorCode());
+    }
+
 	public void friendsMigrated(String fuseId, FuseMigrateFriendsError migrateFriendsError)
     {
 		Log.d(_logTag, "friendsMigrated(" + fuseId + ", " + migrateFriendsError + ")");

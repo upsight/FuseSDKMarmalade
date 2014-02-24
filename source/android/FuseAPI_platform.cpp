@@ -55,7 +55,13 @@ static jmethodID g_FuseAPISetGameDataEnd;
 static jmethodID g_FuseAPIGetGameDataStart;
 static jmethodID g_FuseAPIGetGameDataKey;
 static jmethodID g_FuseAPIGetGameDataEnd;
+static jmethodID g_FuseAPIAddFriend;
+static jmethodID g_FuseAPIRemoveFriend;
+static jmethodID g_FuseAPIAcceptFriend;
+static jmethodID g_FuseAPIRejectFriend;
 static jmethodID g_FuseAPIMigrateFriends;
+static jmethodID g_FuseAPIUserPushNotification;
+static jmethodID g_FuseAPIFriendsPushNotification;
 static jmethodID g_FuseAPIUpdateFriendsListFromServer;
 static jmethodID g_FuseAPIGetMailListFromServer;
 static jmethodID g_FuseAPIGetMailListFriendFromServer;
@@ -248,6 +254,82 @@ void FuseGameDataSetAcknowledged(JNIEnv* env, jobject obj, jint requestID)
 	params.requestID = requestID;
     IwTrace(FuseAPI, ("FuseGameDataSetAcknowledged(%i)", requestID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_GAME_DATASET_ACKNOWLEDGED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseFriendAdded
+// Params: const char* fuseId, int error
+//-------------------------------------
+void FuseFriendAdded(JNIEnv* env, jobject obj, jstring fuseId, jint error)
+{
+	struct paramList
+	{
+		const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = error;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+
+	IwTrace(FuseAPI, ("FuseFriendAdded(%s, %i)", params.fuseId, params.error));
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_ADDED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseFriendRemoved
+// Params: const char* fuseId, int error
+//-------------------------------------
+void FuseFriendRemoved(JNIEnv* env, jobject obj, jstring fuseId, jint error)
+{
+	struct paramList
+	{
+		const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = error;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+
+	IwTrace(FuseAPI, ("FuseFriendRemoved(%s, %i)", params.fuseId, params.error));
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_REMOVED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseFriendAccepted
+// Params: const char* fuseId, int error
+//-------------------------------------
+void FuseFriendAccepted(JNIEnv* env, jobject obj, jstring fuseId, jint error)
+{
+	struct paramList
+	{
+		const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = error;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+
+	IwTrace(FuseAPI, ("FuseFriendAccepted(%s, %i)", params.fuseId, params.error));
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_ACCEPTED, &params, sizeof(paramList));
+}
+
+//-------------------------------------
+// FuseFriendRejected
+// Params: const char* fuseId, int error
+//-------------------------------------
+void FuseFriendRejected(JNIEnv* env, jobject obj, jstring fuseId, jint error)
+{
+	struct paramList
+	{
+		const char* fuseId;
+		int error;
+	};
+	paramList params;
+	params.error = error;
+	params.fuseId = s3eEdkGetStringUTF8Chars(fuseId);
+
+	IwTrace(FuseAPI, ("FuseFriendRejected(%s, %i)", params.fuseId, params.error));
+	s3eEdkCallbacksEnqueue(S3E_EXT_FUSEAPI_HASH, FUSEAPI_FRIEND_REJECTED, &params, sizeof(paramList));
 }
 
 //-------------------------------------
@@ -513,6 +595,7 @@ s3eResult FuseAPIInit_platform()
     jobject obj = NULL;
     jmethodID cons = NULL;
 
+	// callbacks
 	const JNINativeMethod nativeMethodDefs[] =
     {
 		{ "FuseAPISessionStartReceived",				"()V",			(void*)&FuseAPISessionStartReceived },
@@ -526,6 +609,10 @@ s3eResult FuseAPIInit_platform()
 		{ "FuseAPITimeUpdated",							"(I)V",			(void*)&FuseAPITimeUpdated },
 		{ "FuseGameDataError",							"(II)V",		(void*)&FuseGameDataError },
 		{ "FuseGameDataSetAcknowledged",				"(I)V",			(void*)&FuseGameDataSetAcknowledged },
+		{ "FuseFriendAdded",		"(Ljava/lang/String;I)V",			(void*)&FuseFriendAdded },
+		{ "FuseFriendRemoved",		"(Ljava/lang/String;I)V",			(void*)&FuseFriendRemoved },
+		{ "FuseFriendAccepted",		"(Ljava/lang/String;I)V",			(void*)&FuseFriendAccepted },
+		{ "FuseFriendRejected",		"(Ljava/lang/String;I)V",			(void*)&FuseFriendRejected },
 		{ "FuseFriendsMigrated",	"(Ljava/lang/String;I)V",			(void*)&FuseFriendsMigrated },
 		{ "FuseFriendsListError",						"(I)V",			(void*)&FuseFriendsListError },
 		{ "FuseMailAcknowledged",	 "(ILjava/lang/String;I)V",			(void*)&FuseMailAcknowledged },
@@ -718,8 +805,31 @@ s3eResult FuseAPIInit_platform()
     if (!g_FuseAPIGetGameDataEnd)
         goto fail;
 
+	g_FuseAPIAddFriend = env->GetMethodID(cls, "FuseAPIAddFriend", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIAddFriend)
+        goto fail;
+
+	g_FuseAPIRemoveFriend = env->GetMethodID(cls, "FuseAPIRemoveFriend", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIRemoveFriend)
+        goto fail;
+
+	g_FuseAPIAcceptFriend = env->GetMethodID(cls, "FuseAPIAcceptFriend", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIAcceptFriend)
+        goto fail;
+
+	g_FuseAPIRejectFriend = env->GetMethodID(cls, "FuseAPIRejectFriend", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIRejectFriend)
+        goto fail;
+
 	g_FuseAPIMigrateFriends = env->GetMethodID(cls, "FuseAPIMigrateFriends", "(Ljava/lang/String;)V");
     if (!g_FuseAPIMigrateFriends)
+        goto fail;
+
+	g_FuseAPIUserPushNotification = env->GetMethodID(cls, "FuseAPIUserPushNotification", "(Ljava/lang/String;)V");
+    if (!g_FuseAPIUserPushNotification)
+        goto fail;
+	g_FuseAPIFriendsPushNotification = env->GetMethodID(cls, "FuseAPIFriendsPushNotification", "(Ljava/lang/String;Ljava/lang/String;)V");
+    if (!g_FuseAPIFriendsPushNotification)
         goto fail;
 
     g_FuseAPIUpdateFriendsListFromServer = env->GetMethodID(cls, "FuseAPIUpdateFriendsListFromServer", "()V");
@@ -1086,12 +1196,61 @@ int FuseAPIGetGameData_platform(const char* key, const char* fuseId, const char*
 	return (int)env->CallIntMethod(g_Obj, g_FuseAPIGetGameDataEnd, key_jstr, fuseId_jstr);
 }
 
+void FuseAPIAddFriend_platform(const char* fuseId)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIAddFriend, fuseId_jstr);
+}
+
+void FuseAPIRemoveFriend_platform(const char* fuseId)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIRemoveFriend, fuseId_jstr);
+}
+
+void FuseAPIAcceptFriend_platform(const char* fuseId)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIAcceptFriend, fuseId_jstr);
+}
+
+void FuseAPIRejectFriend_platform(const char* fuseId)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIRejectFriend, fuseId_jstr);
+}
+
 void FuseAPIMigrateFriends_platform(const char* fuseId)
 {
 	JNIEnv* env = s3eEdkJNIGetEnv();
 	jstring fuseId_jstr = env->NewStringUTF(fuseId);
 
 	env->CallVoidMethod(g_Obj, g_FuseAPIMigrateFriends, fuseId_jstr);
+}
+
+void FuseAPIUserPushNotification_platform(const char* fuseId, const char* message)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring fuseId_jstr = env->NewStringUTF(fuseId);
+	jstring message_jstr = env->NewStringUTF(message);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIUserPushNotification, fuseId_jstr, message_jstr);
+}
+
+void FuseAPIFriendsPushNotification_platform(const char* message)
+{
+	JNIEnv* env = s3eEdkJNIGetEnv();
+	jstring message_jstr = env->NewStringUTF(message);
+
+	env->CallVoidMethod(g_Obj, g_FuseAPIFriendsPushNotification, message_jstr);
 }
 
 void FuseAPIUpdateFriendsListFromServer_platform()

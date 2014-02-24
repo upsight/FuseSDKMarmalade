@@ -45,7 +45,11 @@ public class FuseWrapper
 	public native void FuseAPIAccountLoginComplete(int accountType, String accountID);
 	public native void FuseAPITimeUpdated(int timestamp);	
 	public native void FuseGameDataError(int requestId, int error);
-	public native void FuseGameDataSetAcknowledged(int requestID);	
+	public native void FuseGameDataSetAcknowledged(int requestID);
+	public native void FuseFriendAdded(String fuseId, int error);
+	public native void FuseFriendRemoved(String fuseId, int error);
+	public native void FuseFriendAccepted(String fuseId, int error);
+	public native void FuseFriendRejected(String fuseId, int error);
 	public native void FuseFriendsMigrated(String fuseId, int error);
 	public native void FuseFriendsListError(int error);	
 	public native void FuseMailAcknowledged(int messageId, String fuseId, int requestID);
@@ -485,6 +489,27 @@ public class FuseWrapper
 	/**+-------------+
 	// | Friend List |
 	// +-------------*/
+	public void FuseAPIAddFriend(String fuseId)
+	{
+		Log.d(_logTag, "FuseAPIAddFriend(" + fuseId + ")");
+		FuseAPI.addFriend(fuseId, _gameDataCallback);
+	}
+	public void FuseAPIRemoveFriend(String fuseId)
+	{
+		Log.d(_logTag, "FuseAPIRemoveFriend(" + fuseId + ")");
+		FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+	}
+	public void FuseAPIAcceptFriend(String fuseId)
+	{
+		Log.d(_logTag, "FuseAPIAcceptFriend(" + fuseId + ")");
+		FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+	}
+	public void FuseAPIRejectFriend(String fuseId)
+	{
+		Log.d(_logTag, "FuseAPIRejectFriend(" + fuseId + ")");
+		FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+	}
+
 	public void FuseAPIMigrateFriends(String fuseId)
 	{
 		Log.d(_logTag, "FuseAPIMigrateFriends(" + fuseId + ")");
@@ -495,6 +520,21 @@ public class FuseWrapper
 	{
 		Log.d(_logTag, "FuseAPIUpdateFriendsListFromServer()");
 		FuseAPI.updateFriendsListFromServer(_gameDataCallback);
+	}
+
+	/**+---------------------------------+
+	// | User-to-User Push Notifications |
+	// +---------------------------------*/
+	public void FuseAPIUserPushNotification(String fuseId, String message)
+	{
+		Log.d(_logTag, "FuseAPIUserPushNotification(" + fuseId + ", " + message + ")");
+		FuseAPI.userPushNotification(fuseId, message);
+	}
+
+	public void FuseAPIFriendsPushNotification(String message)
+	{
+		Log.d(_logTag, "FuseAPIFriendsPushNotification(" + message + ")");
+		FuseAPI.friendsPushNotification(message);
 	}
 
 	/**+---------+

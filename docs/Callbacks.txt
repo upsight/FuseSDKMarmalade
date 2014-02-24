@@ -157,6 +157,50 @@ struct paramList
 //-------------------------------------
 
 //-------------------------------------
+FUSEAPI_FRIEND_ADDED
+Response to: This callback is sent after adding a friend through FuseAPIAddFriend
+Params: 
+struct paramList
+{
+	const char* fuseId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_FRIEND_REMOVED
+Response to: This callback is sent after removing a friend through FuseAPIRemoveFriend
+Params: 
+struct paramList
+{
+	const char* fuseId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_FRIEND_ACCEPTED
+Response to: This callback is sent after accepting a friend request through FuseAPIAcceptFriend
+Params: 
+struct paramList
+{
+	const char* fuseId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSEAPI_FRIEND_REJECTED
+Response to: This callback is sent after rejecting a friend request through FuseAPIRejectFriend
+Params: 
+struct paramList
+{
+	const char* fuseId;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
 FUSEAPI_FRIENDS_MIGRATED
 Response to: This callback is sent after attempting to migrate a Fuse user's friend's list through calling FuseAPIMigrateFriends
 See FuseMigrateFriendErrors in FuseAPI.h for error code values
