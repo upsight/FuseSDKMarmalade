@@ -54,9 +54,10 @@ enum FuseAccountType
 // purchase state for registering in-app purchases
 enum FusePurchaseState 
 { 
-	PURCHASED = 0, 
-	CANCELED = 1, 
-	REFUNDED = 2,
+	PURCHASING = 0,
+	PURCHASED = 1,
+	FAILED = 2,
+	RESTORED = 3,
 };
 
 // Game Values from game data
