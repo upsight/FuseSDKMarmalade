@@ -78,16 +78,16 @@ static void FuseAPIRegisterEventWithDictionary_wrap(const char* message, cfuhash
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterEventWithDictionary, 2, message, eventData);
 }
 
-static void FuseAPIRegisterInAppPurchaseAndroid_wrap(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+static void FuseAPIRegisterInAppPurchaseAndroid_wrap(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRegisterInAppPurchaseAndroid"));
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterInAppPurchaseAndroid, 8, purchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload, price, currency);
 }
 
-static void FuseAPIRegisterInAppPurchaseiOS_wrap(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+static void FuseAPIRegisterInAppPurchaseiOS_wrap(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI func on main thread: FuseAPIRegisterInAppPurchaseiOS"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterInAppPurchaseiOS, 6, purchaseState, receiptData, recieptDataLength, price, currency, productID);
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseAPIRegisterInAppPurchaseiOS, 7, purchaseState, receiptData, recieptDataLength, price, currency, productID, transactionID);
 }
 
 static void FuseAPICheckAdAvailable_wrap()

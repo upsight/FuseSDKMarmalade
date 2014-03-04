@@ -1009,7 +1009,7 @@ void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_ta
 	env->CallVoidMethod(g_Obj, g_FuseAPIRegisterEventWithDictionaryEnd, message_jstr);
 }
 
-void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {	
     JNIEnv* env = s3eEdkJNIGetEnv();    
 	jint ps = (jint)purchaseState;
@@ -1023,7 +1023,7 @@ void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseStat
     env->CallVoidMethod(g_Obj, g_FuseAPIRegisterInAppPurchase, ps, purchaseToken_jstr, productId_jstr, orderId_jstr, pt, developerPayload_jstr, pp, currency_jstr);
 }
 
-void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
     // iOS only
 }

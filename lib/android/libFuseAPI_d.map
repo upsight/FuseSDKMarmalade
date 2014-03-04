@@ -224,7 +224,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(.plt)
  .plt           0x00001bfc      0x2fc /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
 
-.text           0x00001ef8    0x137ec
+.text           0x00001ef8    0x137fc
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text          0x00001ef8       0x10 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtbegin_so.o
  .text          0x00001f08     0x50b4 debug/FuseAPI_platform.os
@@ -243,6 +243,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x000063d4                _Z26FuseAPIEnableData_platformb
                 0x00002028                _Z27FuseAPISessionStartReceivedP7_JNIEnvP8_jobject
                 0x00002c94                _Z29FuseAPIFriendsListUpdateStartP7_JNIEnvP8_jobjecti
+                0x00005cc0                _Z40FuseAPIRegisterInAppPurchaseiOS_platform20FusePurchaseStateiOSPKciPdS1_S1_S1_
                 0x000061b4                _Z38FuseAPIGetOriginalAccountType_platformv
                 0x0000376c                _Z17FuseMailListErrorP7_JNIEnvP8_jobjecti
                 0x000026cc                _Z17FuseGameDataErrorP7_JNIEnvP8_jobjectii
@@ -255,13 +256,13 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x00006b00                _Z43FuseAPIGetMailListFriendFromServer_platformPKc
                 0x00006060                _Z31FuseAPIGameCenterLogin_platformv
                 0x0000679c                _Z28FuseAPIRemoveFriend_platformPKc
-                0x00005cc0                _Z40FuseAPIRegisterInAppPurchaseiOS_platform17FusePurchaseStatePKciPdS1_S1_
                 0x000062c0                _Z30FuseAPILibraryVersion_platformv
                 0x00005e60                _Z29FuseAPIFacebookLogin_platformPKcS0_S0_
                 0x000023bc                _Z16FuseAPIAdClickedP7_JNIEnvP8_jobject
                 0x00005564                _Z28FuseAPIStartSession_platformPKc
                 0x00006804                _Z28FuseAPIAcceptFriend_platformPKc
                 0x000069c4                _Z39FuseAPIFriendsPushNotification_platformPKc
+                0x00005ba4                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform24FusePurchaseStateAndroidPKcS1_S1_lS1_PKdS1_
                 0x0000285c                _Z15FuseFriendAddedP7_JNIEnvP8_jobjectP8_jstringi
                 0x00002d80                _Z30FuseAPIFriendsListUpdatePlayerP7_JNIEnvP8_jobjectP8_jstringS4_S4_S4_iib
                 0x00003d18                _Z9FusePausePvS_
@@ -318,7 +319,6 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x00006150                _Z39FuseAPIGetOriginalAccountAlias_platformv
                 0x00006a2c                _Z43FuseAPIUpdateFriendsListFromServer_platformv
                 0x0000260c                _Z18FuseAPITimeUpdatedP7_JNIEnvP8_jobjecti
-                0x00005ba4                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform17FusePurchaseStatePKcS1_S1_lS1_PKdS1_
  .text._ZN7_JNIEnv9FindClassEPKc
                 0x00006fbc       0x38 debug/FuseAPI_platform.os
                 0x00006fbc                _ZN7_JNIEnv9FindClassEPKc
@@ -367,323 +367,323 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  .text._ZN7_JavaVM6GetEnvEPPvi
                 0x00007390       0x40 debug/FuseAPI_platform.os
                 0x00007390                _ZN7_JavaVM6GetEnvEPPvi
- .text          0x000073d0      0x678 debug/FuseAPI.os
-                0x0000798c                FuseAPIGetMailList
-                0x00007924                FuseAPISendMailWithGift
-                0x000078ec                FuseAPIGetMailListFriendFromServer
-                0x00007894                FuseAPIFriendsPushNotification
+ .text          0x000073d0      0x680 debug/FuseAPI.os
+                0x00007994                FuseAPIGetMailList
+                0x0000792c                FuseAPISendMailWithGift
+                0x000078f4                FuseAPIGetMailListFriendFromServer
+                0x0000789c                FuseAPIFriendsPushNotification
                 0x0000745c                FuseAPIRegisterEvent
-                0x00007750                FuseAPIEnableData
-                0x000078e0                FuseAPIGetMailListFromServer
-                0x000078b0                FuseAPIUpdateFriendsListFromServer
-                0x000075b4                FuseAPICheckAdAvailable
-                0x0000771c                FuseAPILibraryVersion
-                0x00007838                FuseAPIRejectFriend
-                0x00007908                FuseAPISetMailAsReceived
-                0x00007670                FuseAPIFuseLogin
-                0x000075e4                FuseAPIRegisterGender
+                0x00007758                FuseAPIEnableData
+                0x000078e8                FuseAPIGetMailListFromServer
+                0x000078b8                FuseAPIUpdateFriendsListFromServer
+                0x000075bc                FuseAPICheckAdAvailable
+                0x00007724                FuseAPILibraryVersion
+                0x00007840                FuseAPIRejectFriend
+                0x00007910                FuseAPISetMailAsReceived
+                0x00007678                FuseAPIFuseLogin
+                0x000075ec                FuseAPIRegisterGender
                 0x00007478                FuseAPIRegisterEventWithParam
-                0x000079d4                FuseAPIRegisterLevel
-                0x000079b0                FuseAPIGetGameConfigurationValue
-                0x0000762c                FuseAPITwitterLogin
+                0x000079dc                FuseAPIRegisterLevel
+                0x000079b8                FuseAPIGetGameConfigurationValue
+                0x00007634                FuseAPITwitterLogin
                 0x00007434                FuseAPITerminateSession
-                0x00007800                FuseAPIRemoveFriend
-                0x00007730                FuseAPIConnected
-                0x00007654                FuseAPIDeviceLogin
-                0x00007744                FuseAPITimeFromServer
-                0x000075d8                FuseAPIDisplayMoreGames
-                0x00007a2c                FuseAPIRegisterTapjoyReward
+                0x00007808                FuseAPIRemoveFriend
+                0x00007738                FuseAPIConnected
+                0x0000765c                FuseAPIDeviceLogin
+                0x0000774c                FuseAPITimeFromServer
+                0x000075e0                FuseAPIDisplayMoreGames
+                0x00007a34                FuseAPIRegisterTapjoyReward
                 0x00007428                FuseAPIResumeSession
                 0x000073d0                _Z11FuseAPIInitv
-                0x00007854                FuseAPIMigrateFriends
-                0x000077a8                FuseAPIGetGameData
+                0x0000785c                FuseAPIMigrateFriends
+                0x000077b0                FuseAPIGetGameData
                 0x0000751c                FuseAPIRegisterInAppPurchaseAndroid
-                0x000075c0                FuseAPIShowAd
+                0x000075c8                FuseAPIShowAd
                 0x000073f4                _Z16FuseAPITerminatev
                 0x000074f8                FuseAPIRegisterEventWithDictionary
-                0x000076f4                FuseAPIGetFuseID
-                0x000076b8                FuseAPIGetOriginalAccountId
-                0x000078bc                FuseAPIGetFriendsList
+                0x000076fc                FuseAPIGetFuseID
+                0x000076c0                FuseAPIGetOriginalAccountId
+                0x000078c4                FuseAPIGetFriendsList
                 0x00007440                FuseAPIRegisterForPushNotifications
-                0x000079f0                FuseAPIRegisterCurrency
-                0x000076cc                FuseAPIGetOriginalAccountAlias
-                0x00007600                FuseAPIFacebookLogin
-                0x000077e4                FuseAPIAddFriend
-                0x00007870                FuseAPIUserPushNotification
-                0x00007708                FuseAPIgamesPlayed
-                0x000075cc                FuseAPIDisplayNotifications
+                0x000079f8                FuseAPIRegisterCurrency
+                0x000076d4                FuseAPIGetOriginalAccountAlias
+                0x00007608                FuseAPIFacebookLogin
+                0x000077ec                FuseAPIAddFriend
+                0x00007878                FuseAPIUserPushNotification
+                0x00007710                FuseAPIgamesPlayed
+                0x000075d4                FuseAPIDisplayNotifications
                 0x000074bc                FuseAPIRegisterEventWithEventData
                 0x00007570                FuseAPIRegisterInAppPurchaseiOS
-                0x00007a20                FuseAPIRegisterFlurryClick
-                0x00007648                FuseAPIGameCenterLogin
-                0x000076e0                FuseAPIGetOriginalAccountType
-                0x00007960                FuseAPISendMail
-                0x00007774                FuseAPISetGameData
-                0x00007694                FuseAPIGooglePlayLogin
+                0x00007a28                FuseAPIRegisterFlurryClick
+                0x00007650                FuseAPIGameCenterLogin
+                0x000076e8                FuseAPIGetOriginalAccountType
+                0x00007968                FuseAPISendMail
+                0x0000777c                FuseAPISetGameData
+                0x0000769c                FuseAPIGooglePlayLogin
                 0x00007400                FuseAPIStartSession
                 0x0000741c                FuseAPIPauseSession
-                0x00007a14                FuseAPIRegisterFlurryView
-                0x0000781c                FuseAPIAcceptFriend
- .text          0x00007a48     0x2570 debug/FuseAPI_register.os
-                0x00009b64                FuseAPIUnRegister
-                0x00009b14                FuseAPIRegister
-                0x00009fac                RegisterExt
-                0x00009ba8                _Z18FuseAPIRegisterExtv
- .text          0x00009fb8      0x148 debug/cfu.os
-                0x00009fb8                cfu_get_type
-                0x0000a0c8                cfu_is_conf
-                0x0000a020                cfu_is_list
-                0x0000a090                cfu_is_time
-                0x0000a058                cfu_is_string
-                0x00009fe8                cfu_is_hash
- .text          0x0000a100     0x19b4 debug/cfuconf.os
-                0x0000a320                cfuconf_get_directives
-                0x0000b5b4                cfuconf_parse_buffer
-                0x0000a234                cfuconf_destroy
-                0x0000b49c                cfuconf_parse_file
-                0x0000a448                cfuconf_get_directive_one_arg
-                0x0000a2f0                cfuconf_get_containers
-                0x0000a4ec                cfuconf_get_directive_two_args
-                0x0000ba88                cfuconf_pretty_print_conf
-                0x0000a530                cfuconf_get_directive_n_args
- .text          0x0000bab4     0x2364 debug/cfuhash.os
-                0x0000be70                cfuhash_new_with_free_fn
-                0x0000d878                cfuhash_pretty_print
-                0x0000d634                cfuhash_each
-                0x0000d92c                cfuhash_rehash
-                0x0000d6d4                cfuhash_destroy_with_free_fn
-                0x0000d078                cfuhash_keys
-                0x0000d10c                cfuhash_next_data
-                0x0000cba0                cfuhash_delete_data
-                0x0000ca18                cfuhash_clear
-                0x0000c0ec                cfuhash_clear_flag
-                0x0000c520                cfuhash_get_data
-                0x0000dbec                cfuhash_bencode_strings
-                0x0000c12c                cfuhash_set_thresholds
-                0x0000d0b0                cfuhash_each_data
-                0x0000db14                cfuhash_num_buckets
-                0x0000c690                cfuhash_get
-                0x0000c0b0                cfuhash_set_flag
-                0x0000be40                cfuhash_new_with_flags
-                0x0000cdfc                cfuhash_keys_data
-                0x0000dae4                cfuhash_num_entries
-                0x0000beac                cfuhash_copy
-                0x0000c78c                cfuhash_put_data
-                0x0000c9b4                cfuhash_put
-                0x0000d4ec                cfuhash_foreach
-                0x0000c6f8                cfuhash_exists_data
-                0x0000be04                cfuhash_new_with_initial_size
-                0x0000db44                cfuhash_num_buckets_used
-                0x0000d30c                cfuhash_foreach_remove
-                0x0000d7dc                cfuhash_destroy
-                0x0000c75c                cfuhash_exists
-                0x0000d684                cfuhash_next
-                0x0000c094                cfuhash_get_flags
-                0x0000cdcc                cfuhash_delete
-                0x0000bde8                cfuhash_new
-                0x0000c254                cfuhash_set_free_function
-                0x0000c1f8                cfuhash_set_hash_function
-                0x0000c35c                cfuhash_unlock
-                0x0000bffc                cfuhash_merge
-                0x0000c330                cfuhash_lock
- .text          0x0000de18     0x1144 debug/cfulist.os
-                0x0000eb50                cfulist_push_string
-                0x0000eb00                cfulist_enqueue
-                0x0000e5f8                cfulist_nth_data
-                0x0000e530                cfulist_last_data
-                0x0000e018                cfulist_pop_data
-                0x0000ebcc                cfulist_unshift_string
-                0x0000ec48                cfulist_enqueue_string
-                0x0000ee90                cfulist_destroy_with_free_fn
-                0x0000eab4                cfulist_shift
-                0x0000de98                cfulist_num_entries
-                0x0000ea84                cfulist_unshift
-                0x0000e1a4                cfulist_unshift_data
-                0x0000e400                cfulist_enqueue_data
-                0x0000ed1c                cfulist_join
-                0x0000e2a4                cfulist_shift_data
-                0x0000e77c                cfulist_each_data
-                0x0000e434                cfulist_dequeue_data
-                0x0000de18                cfulist_new
-                0x0000e748                cfulist_reset_each
-                0x0000e7cc                cfulist_next_data
-                0x0000ec74                cfulist_dequeue_string
-                0x0000de64                cfulist_new_with_free_fn
-                0x0000eb80                cfulist_pop_string
-                0x0000e860                cfulist_foreach
-                0x0000df18                cfulist_push_data
-                0x0000ea38                cfulist_pop
-                0x0000ea08                cfulist_push
-                0x0000e9a4                cfulist_map
-                0x0000edc0                cfulist_destroy
-                0x0000eb2c                cfulist_dequeue
-                0x0000e468                cfulist_first_data
-                0x0000ebfc                cfulist_shift_string
- .text          0x0000ef5c     0x14bc debug/cfuopt.os
-                0x0000febc                cfuopt_pretty_print
-                0x0000fcd4                cfuopt_destroy
-                0x00010304                cfuopt_get_help_str
-                0x0000f840                cfuopt_parse
-                0x0000ff10                _param_map_fn
-                0x0000ef8c                cfuopt_new
-                0x0000f394                cfuopt_add_entry
- .text          0x00010418     0x1b78 debug/cfustring.os
-                0x00011eb8                cfustring_c_str_split
-                0x000105a0                cfustring_append_n
-                0x000109ac                cfustring_dup_c_str_n
-                0x000104e0                cfustring_dup
-                0x000111ac                cfustring_split_to_c_str
-                0x0001055c                cfustring_clear
-                0x00011268                cfustring_sprintf_c_str
-                0x00010988                cfustring_dup_c_str
-                0x000107f4                cfustring_append
-                0x00010418                cfustring_new
-                0x00011028                cfustring_split
-                0x000112d0                cfustring_sprintf
-                0x00010840                cfustring_get_buffer_copy
-                0x00010824                cfustring_get_buffer
-                0x000104ac                cfustring_new_from_string
-                0x00010430                cfustring_new_with_initial_size
-                0x00011e84                cfustring_destroy
-                0x000115c4                cfustring_vsprintf
- .text          0x00011f90      0x404 debug/cfuthread_queue.os
-                0x00012244                cfuthread_queue_new
-                0x0001215c                cfuthread_queue_new_with_cleanup
-                0x0001232c                cfuthread_queue_destroy
-                0x0001227c                cfuthread_queue_make_request
- *fill*         0x00012394        0x4 00000000
- .text          0x00012398      0x128 debug/cfutime.os
-                0x00012398                cfutime_new
-                0x00012400                cfutime_end
-                0x000123d0                cfutime_begin
-                0x00012430                cfutime_elapsed
-                0x000124a0                cfutime_free
- .text          0x000124c0        0x0 debug/libcfu-config.os
- .text          0x000124c0        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00007a1c                FuseAPIRegisterFlurryView
+                0x00007824                FuseAPIAcceptFriend
+ .text          0x00007a50     0x2578 debug/FuseAPI_register.os
+                0x00009b74                FuseAPIUnRegister
+                0x00009b24                FuseAPIRegister
+                0x00009fbc                RegisterExt
+                0x00009bb8                _Z18FuseAPIRegisterExtv
+ .text          0x00009fc8      0x148 debug/cfu.os
+                0x00009fc8                cfu_get_type
+                0x0000a0d8                cfu_is_conf
+                0x0000a030                cfu_is_list
+                0x0000a0a0                cfu_is_time
+                0x0000a068                cfu_is_string
+                0x00009ff8                cfu_is_hash
+ .text          0x0000a110     0x19b4 debug/cfuconf.os
+                0x0000a330                cfuconf_get_directives
+                0x0000b5c4                cfuconf_parse_buffer
+                0x0000a244                cfuconf_destroy
+                0x0000b4ac                cfuconf_parse_file
+                0x0000a458                cfuconf_get_directive_one_arg
+                0x0000a300                cfuconf_get_containers
+                0x0000a4fc                cfuconf_get_directive_two_args
+                0x0000ba98                cfuconf_pretty_print_conf
+                0x0000a540                cfuconf_get_directive_n_args
+ .text          0x0000bac4     0x2364 debug/cfuhash.os
+                0x0000be80                cfuhash_new_with_free_fn
+                0x0000d888                cfuhash_pretty_print
+                0x0000d644                cfuhash_each
+                0x0000d93c                cfuhash_rehash
+                0x0000d6e4                cfuhash_destroy_with_free_fn
+                0x0000d088                cfuhash_keys
+                0x0000d11c                cfuhash_next_data
+                0x0000cbb0                cfuhash_delete_data
+                0x0000ca28                cfuhash_clear
+                0x0000c0fc                cfuhash_clear_flag
+                0x0000c530                cfuhash_get_data
+                0x0000dbfc                cfuhash_bencode_strings
+                0x0000c13c                cfuhash_set_thresholds
+                0x0000d0c0                cfuhash_each_data
+                0x0000db24                cfuhash_num_buckets
+                0x0000c6a0                cfuhash_get
+                0x0000c0c0                cfuhash_set_flag
+                0x0000be50                cfuhash_new_with_flags
+                0x0000ce0c                cfuhash_keys_data
+                0x0000daf4                cfuhash_num_entries
+                0x0000bebc                cfuhash_copy
+                0x0000c79c                cfuhash_put_data
+                0x0000c9c4                cfuhash_put
+                0x0000d4fc                cfuhash_foreach
+                0x0000c708                cfuhash_exists_data
+                0x0000be14                cfuhash_new_with_initial_size
+                0x0000db54                cfuhash_num_buckets_used
+                0x0000d31c                cfuhash_foreach_remove
+                0x0000d7ec                cfuhash_destroy
+                0x0000c76c                cfuhash_exists
+                0x0000d694                cfuhash_next
+                0x0000c0a4                cfuhash_get_flags
+                0x0000cddc                cfuhash_delete
+                0x0000bdf8                cfuhash_new
+                0x0000c264                cfuhash_set_free_function
+                0x0000c208                cfuhash_set_hash_function
+                0x0000c36c                cfuhash_unlock
+                0x0000c00c                cfuhash_merge
+                0x0000c340                cfuhash_lock
+ .text          0x0000de28     0x1144 debug/cfulist.os
+                0x0000eb60                cfulist_push_string
+                0x0000eb10                cfulist_enqueue
+                0x0000e608                cfulist_nth_data
+                0x0000e540                cfulist_last_data
+                0x0000e028                cfulist_pop_data
+                0x0000ebdc                cfulist_unshift_string
+                0x0000ec58                cfulist_enqueue_string
+                0x0000eea0                cfulist_destroy_with_free_fn
+                0x0000eac4                cfulist_shift
+                0x0000dea8                cfulist_num_entries
+                0x0000ea94                cfulist_unshift
+                0x0000e1b4                cfulist_unshift_data
+                0x0000e410                cfulist_enqueue_data
+                0x0000ed2c                cfulist_join
+                0x0000e2b4                cfulist_shift_data
+                0x0000e78c                cfulist_each_data
+                0x0000e444                cfulist_dequeue_data
+                0x0000de28                cfulist_new
+                0x0000e758                cfulist_reset_each
+                0x0000e7dc                cfulist_next_data
+                0x0000ec84                cfulist_dequeue_string
+                0x0000de74                cfulist_new_with_free_fn
+                0x0000eb90                cfulist_pop_string
+                0x0000e870                cfulist_foreach
+                0x0000df28                cfulist_push_data
+                0x0000ea48                cfulist_pop
+                0x0000ea18                cfulist_push
+                0x0000e9b4                cfulist_map
+                0x0000edd0                cfulist_destroy
+                0x0000eb3c                cfulist_dequeue
+                0x0000e478                cfulist_first_data
+                0x0000ec0c                cfulist_shift_string
+ .text          0x0000ef6c     0x14bc debug/cfuopt.os
+                0x0000fecc                cfuopt_pretty_print
+                0x0000fce4                cfuopt_destroy
+                0x00010314                cfuopt_get_help_str
+                0x0000f850                cfuopt_parse
+                0x0000ff20                _param_map_fn
+                0x0000ef9c                cfuopt_new
+                0x0000f3a4                cfuopt_add_entry
+ .text          0x00010428     0x1b78 debug/cfustring.os
+                0x00011ec8                cfustring_c_str_split
+                0x000105b0                cfustring_append_n
+                0x000109bc                cfustring_dup_c_str_n
+                0x000104f0                cfustring_dup
+                0x000111bc                cfustring_split_to_c_str
+                0x0001056c                cfustring_clear
+                0x00011278                cfustring_sprintf_c_str
+                0x00010998                cfustring_dup_c_str
+                0x00010804                cfustring_append
+                0x00010428                cfustring_new
+                0x00011038                cfustring_split
+                0x000112e0                cfustring_sprintf
+                0x00010850                cfustring_get_buffer_copy
+                0x00010834                cfustring_get_buffer
+                0x000104bc                cfustring_new_from_string
+                0x00010440                cfustring_new_with_initial_size
+                0x00011e94                cfustring_destroy
+                0x000115d4                cfustring_vsprintf
+ .text          0x00011fa0      0x404 debug/cfuthread_queue.os
+                0x00012254                cfuthread_queue_new
+                0x0001216c                cfuthread_queue_new_with_cleanup
+                0x0001233c                cfuthread_queue_destroy
+                0x0001228c                cfuthread_queue_make_request
+ *fill*         0x000123a4        0x4 00000000
+ .text          0x000123a8      0x128 debug/cfutime.os
+                0x000123a8                cfutime_new
+                0x00012410                cfutime_end
+                0x000123e0                cfutime_begin
+                0x00012440                cfutime_elapsed
+                0x000124b0                cfutime_free
+ .text          0x000124d0        0x0 debug/libcfu-config.os
+ .text          0x000124d0        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
  .text.IwAssertRegisterTextCallback
-                0x000124c0       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x000124c0                IwAssertRegisterTextCallback
+                0x000124d0       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x000124d0                IwAssertRegisterTextCallback
  .text.IwAssertRegisterCallback
-                0x000124dc       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x000124dc                IwAssertRegisterCallback
+                0x000124ec       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x000124ec                IwAssertRegisterCallback
  .text.IwDebugTraceSetTraceChannel
-                0x000124f8       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x000124f8                IwDebugTraceSetTraceChannel
+                0x00012508       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012508                IwDebugTraceSetTraceChannel
  .text.IwDebugErrorRegisterCallback
-                0x00012514       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012514                IwDebugErrorRegisterCallback
+                0x00012524       0x1c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012524                IwDebugErrorRegisterCallback
  .text.IwDebugAssertSetUID
-                0x00012530       0x14 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012530                IwDebugAssertSetUID
+                0x00012540       0x14 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012540                IwDebugAssertSetUID
  .text._GLOBAL__I_Y__sdk_modules_iwcore_source_IwDebug.cpp
-                0x00012544       0xa4 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012554       0xa4 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
  .text.IwDebugClearConfigCache
-                0x000125e8       0x80 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x000125e8                IwDebugClearConfigCache
+                0x000125f8       0x80 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x000125f8                IwDebugClearConfigCache
  .text.IwDebugErrorShow
-                0x00012668       0xec /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012668                IwDebugErrorShow
+                0x00012678       0xec /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012678                IwDebugErrorShow
  .text.IwDebugTraceLineVPrintf
-                0x00012754       0xfc /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012754                IwDebugTraceLineVPrintf
+                0x00012764       0xfc /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012764                IwDebugTraceLineVPrintf
  .text.IwDebugAssertIsChannelOn
-                0x00012850      0x204 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012850                IwDebugAssertIsChannelOn
+                0x00012860      0x204 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012860                IwDebugAssertIsChannelOn
  .text.IwDebugTraceDisable
-                0x00012a54       0x10 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012a54                IwDebugTraceDisable
+                0x00012a64       0x10 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012a64                IwDebugTraceDisable
  .text.IwDebugAssertSetMessage
-                0x00012a64       0xfc /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012a64                IwDebugAssertSetMessage
+                0x00012a74       0xfc /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012a74                IwDebugAssertSetMessage
  .text.IwDebugAssertSetSolution
-                0x00012b60       0xa0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012b60                IwDebugAssertSetSolution
+                0x00012b70       0xa0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012b70                IwDebugAssertSetSolution
  .text.IwDebugAssertShow
-                0x00012c00      0x2d0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012c00                IwDebugAssertShow
+                0x00012c10      0x2d0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012c10                IwDebugAssertShow
  .text.IwDebugTraceIsChannelOn
-                0x00012ed0      0x2b8 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00012ed0                IwDebugTraceIsChannelOn
+                0x00012ee0      0x2b8 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00012ee0                IwDebugTraceIsChannelOn
  .text.IwDebugTraceChannelSwitch
-                0x00013188      0x4c4 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x00013188                IwDebugTraceChannelSwitch
+                0x00013198      0x4c4 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x00013198                IwDebugTraceChannelSwitch
  .text.IwDebugTraceLinePrintf
-                0x0001364c      0x10c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
-                0x0001364c                IwDebugTraceLinePrintf
- .text          0x00013758        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x0001365c      0x10c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x0001365c                IwDebugTraceLinePrintf
+ .text          0x00013768        0x0 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
  .text.s3eEdkThreadRunOnOSAsync
-                0x00013758       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x00013758                s3eEdkThreadRunOnOSAsync
+                0x00013768       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x00013768                s3eEdkThreadRunOnOSAsync
  .text.s3eEdkThreadRunOnOS
-                0x00013788       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x00013788                s3eEdkThreadRunOnOS
+                0x00013798       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x00013798                s3eEdkThreadRunOnOS
  .text.s3eEdkErrorSetString
-                0x000137b8       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
-                0x000137b8                s3eEdkErrorSetString
- .text          0x000137e8        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .text._ZdlPv   0x000137e8        0xc /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
-                0x000137e8                _ZdlPv
- .text          0x000137f4       0xc4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
-                0x000137f4                __udivsi3
-                0x000137f4                __aeabi_uidiv
-                0x000138a0                __aeabi_uidivmod
- .text          0x000138b8       0x1c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_aeabi_ldivmod.o)
-                0x000138b8                __aeabi_ldivmod
- .text          0x000138d4       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
-                0x000138d4                __div0
- .text          0x000138e4       0x88 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
-                0x000138e4                __gnu_uldivmod_helper
-                0x00013928                __gnu_ldivmod_helper
- .text          0x0001396c      0xec4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
-                0x00014394                __gnu_Unwind_RaiseException
-                0x00013eec                __aeabi_unwind_cpp_pr0
-                0x00013a1c                _Unwind_GetCFA
-                0x000139b8                _Unwind_VRS_Set
-                0x00014130                __gnu_Unwind_Backtrace
-                0x000144c4                _Unwind_VRS_Pop
-                0x00013edc                __aeabi_unwind_cpp_pr2
-                0x00013a28                _Unwind_DeleteException
-                0x00013a24                _Unwind_Complete
-                0x00014458                __gnu_Unwind_Resume
-                0x00014320                __gnu_Unwind_ForcedUnwind
-                0x00014438                __gnu_Unwind_Resume_or_Rethrow
-                0x0001396c                _Unwind_VRS_Get
-                0x00013ee4                __aeabi_unwind_cpp_pr1
- .text          0x00014830      0x1a8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(libunwind.o)
-                0x00014990                ___Unwind_ForcedUnwind
-                0x0001484c                __gnu_Unwind_Save_VFP
-                0x0001496c                _Unwind_Resume_or_Rethrow
-                0x0001496c                ___Unwind_Resume_or_Rethrow
-                0x000149b4                _Unwind_Backtrace
-                0x00014830                __restore_core_regs
-                0x0001486c                __gnu_Unwind_Save_VFP_D_16_to_31
-                0x0001485c                __gnu_Unwind_Save_VFP_D
-                0x000149b4                ___Unwind_Backtrace
-                0x00014924                ___Unwind_RaiseException
-                0x00014948                ___Unwind_Resume
-                0x00014874                __gnu_Unwind_Restore_WMMXD
-                0x00014844                __gnu_Unwind_Restore_VFP
-                0x00014948                _Unwind_Resume
-                0x00014854                __gnu_Unwind_Restore_VFP_D
-                0x00014864                __gnu_Unwind_Restore_VFP_D_16_to_31
-                0x00014924                _Unwind_RaiseException
-                0x00014830                restore_core_regs
-                0x00014910                __gnu_Unwind_Save_WMMXC
-                0x000148fc                __gnu_Unwind_Restore_WMMXC
-                0x00014990                _Unwind_ForcedUnwind
-                0x000148b8                __gnu_Unwind_Save_WMMXD
- .text          0x000149d8      0x484 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
-                0x00014a78                _Unwind_GetRegionStart
-                0x00014aa4                __gnu_unwind_execute
-                0x00014a30                _Unwind_GetTextRelBase
-                0x00014a40                _Unwind_GetLanguageSpecificData
-                0x00014e1c                __gnu_unwind_frame
-                0x00014a38                _Unwind_GetDataRelBase
- .text          0x00014e5c      0x47c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
-                0x00014e5c                __divdi3
- .text          0x000152d8      0x40c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
-                0x000152d8                __udivdi3
- .text          0x000156e4        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
+                0x000137c8       0x30 /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(edk_helpers.o)
+                0x000137c8                s3eEdkErrorSetString
+ .text          0x000137f8        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .text._ZdlPv   0x000137f8        0xc /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+                0x000137f8                _ZdlPv
+ .text          0x00013804       0xc4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
+                0x00013804                __udivsi3
+                0x00013804                __aeabi_uidiv
+                0x000138b0                __aeabi_uidivmod
+ .text          0x000138c8       0x1c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_aeabi_ldivmod.o)
+                0x000138c8                __aeabi_ldivmod
+ .text          0x000138e4       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
+                0x000138e4                __div0
+ .text          0x000138f4       0x88 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
+                0x000138f4                __gnu_uldivmod_helper
+                0x00013938                __gnu_ldivmod_helper
+ .text          0x0001397c      0xec4 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
+                0x000143a4                __gnu_Unwind_RaiseException
+                0x00013efc                __aeabi_unwind_cpp_pr0
+                0x00013a2c                _Unwind_GetCFA
+                0x000139c8                _Unwind_VRS_Set
+                0x00014140                __gnu_Unwind_Backtrace
+                0x000144d4                _Unwind_VRS_Pop
+                0x00013eec                __aeabi_unwind_cpp_pr2
+                0x00013a38                _Unwind_DeleteException
+                0x00013a34                _Unwind_Complete
+                0x00014468                __gnu_Unwind_Resume
+                0x00014330                __gnu_Unwind_ForcedUnwind
+                0x00014448                __gnu_Unwind_Resume_or_Rethrow
+                0x0001397c                _Unwind_VRS_Get
+                0x00013ef4                __aeabi_unwind_cpp_pr1
+ .text          0x00014840      0x1a8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(libunwind.o)
+                0x000149a0                ___Unwind_ForcedUnwind
+                0x0001485c                __gnu_Unwind_Save_VFP
+                0x0001497c                _Unwind_Resume_or_Rethrow
+                0x0001497c                ___Unwind_Resume_or_Rethrow
+                0x000149c4                _Unwind_Backtrace
+                0x00014840                __restore_core_regs
+                0x0001487c                __gnu_Unwind_Save_VFP_D_16_to_31
+                0x0001486c                __gnu_Unwind_Save_VFP_D
+                0x000149c4                ___Unwind_Backtrace
+                0x00014934                ___Unwind_RaiseException
+                0x00014958                ___Unwind_Resume
+                0x00014884                __gnu_Unwind_Restore_WMMXD
+                0x00014854                __gnu_Unwind_Restore_VFP
+                0x00014958                _Unwind_Resume
+                0x00014864                __gnu_Unwind_Restore_VFP_D
+                0x00014874                __gnu_Unwind_Restore_VFP_D_16_to_31
+                0x00014934                _Unwind_RaiseException
+                0x00014840                restore_core_regs
+                0x00014920                __gnu_Unwind_Save_WMMXC
+                0x0001490c                __gnu_Unwind_Restore_WMMXC
+                0x000149a0                _Unwind_ForcedUnwind
+                0x000148c8                __gnu_Unwind_Save_WMMXD
+ .text          0x000149e8      0x484 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
+                0x00014a88                _Unwind_GetRegionStart
+                0x00014ab4                __gnu_unwind_execute
+                0x00014a40                _Unwind_GetTextRelBase
+                0x00014a50                _Unwind_GetLanguageSpecificData
+                0x00014e2c                __gnu_unwind_frame
+                0x00014a48                _Unwind_GetDataRelBase
+ .text          0x00014e6c      0x47c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
+                0x00014e6c                __divdi3
+ .text          0x000152e8      0x40c /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
+                0x000152e8                __udivdi3
+ .text          0x000156f4        0x0 /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  *(.gnu.warning)
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
@@ -696,46 +696,46 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 
 .fini
  *(.fini)
-                0x000156e4                PROVIDE (__etext, .)
-                0x000156e4                PROVIDE (_etext, .)
-                0x000156e4                PROVIDE (etext, .)
+                0x000156f4                PROVIDE (__etext, .)
+                0x000156f4                PROVIDE (_etext, .)
+                0x000156f4                PROVIDE (etext, .)
 
-.rodata         0x000156e4     0x20dc
+.rodata         0x000156f4     0x20dc
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x000156e4     0x10c8 debug/FuseAPI_platform.os
- .rodata        0x000167ac      0xd5c debug/FuseAPI_register.os
- .rodata        0x00017508       0xb8 debug/cfuconf.os
- .rodata        0x000175c0       0x24 debug/cfuhash.os
- .rodata        0x000175e4       0xb8 debug/cfuopt.os
- .rodata        0x0001769c        0x8 debug/cfustring.os
+ .rodata        0x000156f4     0x10c8 debug/FuseAPI_platform.os
+ .rodata        0x000167bc      0xd5c debug/FuseAPI_register.os
+ .rodata        0x00017518       0xb8 debug/cfuconf.os
+ .rodata        0x000175d0       0x24 debug/cfuhash.os
+ .rodata        0x000175f4       0xb8 debug/cfuopt.os
+ .rodata        0x000176ac        0x8 debug/cfustring.os
  .rodata.str1.4
-                0x000176a4      0x11c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
+                0x000176b4      0x11c /Applications/Marmalade.app/Contents/s3e/edk/lib/android/libedk.a(IwDebug.o)
                                 0x120 (size before relaxing)
 
 .rodata1
  *(.rodata1)
 
-.ARM.extab      0x000177c0       0x24
+.ARM.extab      0x000177d0       0x24
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.text._ZdlPv
-                0x000177c0        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .ARM.extab     0x000177c0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
- .ARM.extab     0x000177c0       0x24 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
- .ARM.extab     0x000177e4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
- .ARM.extab     0x000177e4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
- .ARM.extab     0x000177e4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
-                0x000177e4                __exidx_start = .
+                0x000177d0        0x0 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .ARM.extab     0x000177d0        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
+ .ARM.extab     0x000177d0       0x24 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
+ .ARM.extab     0x000177f4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
+ .ARM.extab     0x000177f4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
+ .ARM.extab     0x000177f4        0x0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
+                0x000177f4                __exidx_start = .
 
-.ARM.exidx      0x000177e4      0x100
+.ARM.exidx      0x000177f4      0x100
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.text._ZdlPv
-                0x000177e4        0x8 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
- .ARM.exidx     0x000177ec       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
- .ARM.exidx     0x000177fc       0xa0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
- .ARM.exidx     0x0001789c       0x38 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
- .ARM.exidx     0x000178d4        0x8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
- .ARM.exidx     0x000178dc        0x8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
-                0x000178e4                __exidx_end = .
+                0x000177f4        0x8 /Developer/android-ndk-r8/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libgnustl_static.a(del_op.o)
+ .ARM.exidx     0x000177fc       0x10 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
+ .ARM.exidx     0x0001780c       0xa0 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
+ .ARM.exidx     0x000178ac       0x38 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
+ .ARM.exidx     0x000178e4        0x8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
+ .ARM.exidx     0x000178ec        0x8 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
+                0x000178f4                __exidx_end = .
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -745,7 +745,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
 
 .gcc_except_table
  *(.gcc_except_table .gcc_except_table.*)
-                0x000178e4                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
+                0x000178f4                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
                 0x00018000                . = (0x1000 DATA_SEGMENT_ALIGN 0x1000)
 
 .eh_frame
@@ -1033,29 +1033,29 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  .debug_pubnames
                 0x00002235       0x20 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
 
-.debug_info     0x00000000    0x11dee
+.debug_info     0x00000000    0x11e76
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000     0x859f debug/FuseAPI_platform.os
- .debug_info    0x0000859f      0xb70 debug/FuseAPI.os
- .debug_info    0x0000910f      0xce6 debug/FuseAPI_register.os
- .debug_info    0x00009df5      0x1cf debug/cfu.os
- .debug_info    0x00009fc4     0x103e debug/cfuconf.os
- .debug_info    0x0000b002     0x175b debug/cfuhash.os
- .debug_info    0x0000c75d      0xd70 debug/cfulist.os
- .debug_info    0x0000d4cd      0xc41 debug/cfuopt.os
- .debug_info    0x0000e10e      0xb6d debug/cfustring.os
- .debug_info    0x0000ec7b      0x444 debug/cfuthread_queue.os
- .debug_info    0x0000f0bf      0x262 debug/cfutime.os
- .debug_info    0x0000f321        0x0 debug/libcfu-config.os
- .debug_info    0x0000f321       0xf3 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
- .debug_info    0x0000f414       0xed /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_aeabi_ldivmod.o)
- .debug_info    0x0000f501       0xf3 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
- .debug_info    0x0000f5f4       0xde /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
- .debug_info    0x0000f6d2     0x1424 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
- .debug_info    0x00010af6       0xf1 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(libunwind.o)
- .debug_info    0x00010be7      0x636 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
- .debug_info    0x0001121d      0x606 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
- .debug_info    0x00011823      0x5cb /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
+ .debug_info    0x00000000     0x85cd debug/FuseAPI_platform.os
+ .debug_info    0x000085cd      0xb9d debug/FuseAPI.os
+ .debug_info    0x0000916a      0xd13 debug/FuseAPI_register.os
+ .debug_info    0x00009e7d      0x1cf debug/cfu.os
+ .debug_info    0x0000a04c     0x103e debug/cfuconf.os
+ .debug_info    0x0000b08a     0x175b debug/cfuhash.os
+ .debug_info    0x0000c7e5      0xd70 debug/cfulist.os
+ .debug_info    0x0000d555      0xc41 debug/cfuopt.os
+ .debug_info    0x0000e196      0xb6d debug/cfustring.os
+ .debug_info    0x0000ed03      0x444 debug/cfuthread_queue.os
+ .debug_info    0x0000f147      0x262 debug/cfutime.os
+ .debug_info    0x0000f3a9        0x0 debug/libcfu-config.os
+ .debug_info    0x0000f3a9       0xf3 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivsi3.o)
+ .debug_info    0x0000f49c       0xed /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_aeabi_ldivmod.o)
+ .debug_info    0x0000f589       0xf3 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_dvmd_lnx.o)
+ .debug_info    0x0000f67c       0xde /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
+ .debug_info    0x0000f75a     0x1424 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
+ .debug_info    0x00010b7e       0xf1 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(libunwind.o)
+ .debug_info    0x00010c6f      0x636 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
+ .debug_info    0x000112a5      0x606 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
+ .debug_info    0x000118ab      0x5cb /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
 
 .debug_abbrev   0x00000000     0x1eff
  *(.debug_abbrev)
@@ -1125,39 +1125,39 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
  .debug_frame   0x00003114       0x44 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
  .debug_frame   0x00003158       0x48 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
 
-.debug_str      0x00000000     0x9d3d
+.debug_str      0x00000000     0x9d98
  *(.debug_str)
- .debug_str     0x00000000     0x7054 debug/FuseAPI_platform.os
-                               0x720d (size before relaxing)
- .debug_str     0x00007054      0x186 debug/FuseAPI.os
-                                0x913 (size before relaxing)
- .debug_str     0x000071da      0x6fb debug/FuseAPI_register.os
-                                0xd32 (size before relaxing)
- .debug_str     0x000078d5      0x11b debug/cfu.os
+ .debug_str     0x00000000     0x70af debug/FuseAPI_platform.os
+                               0x7268 (size before relaxing)
+ .debug_str     0x000070af      0x186 debug/FuseAPI.os
+                                0x961 (size before relaxing)
+ .debug_str     0x00007235      0x6fb debug/FuseAPI_register.os
+                                0xd80 (size before relaxing)
+ .debug_str     0x00007930      0x11b debug/cfu.os
                                 0x20c (size before relaxing)
- .debug_str     0x000079f0      0x496 debug/cfuconf.os
+ .debug_str     0x00007a4b      0x496 debug/cfuconf.os
                                 0x6dc (size before relaxing)
- .debug_str     0x00007e86      0x569 debug/cfuhash.os
+ .debug_str     0x00007ee1      0x569 debug/cfuhash.os
                                 0x849 (size before relaxing)
- .debug_str     0x000083ef      0x3a4 debug/cfulist.os
+ .debug_str     0x0000844a      0x3a4 debug/cfulist.os
                                 0x5b8 (size before relaxing)
- .debug_str     0x00008793      0x43c debug/cfuopt.os
+ .debug_str     0x000087ee      0x43c debug/cfuopt.os
                                 0x68f (size before relaxing)
- .debug_str     0x00008bcf      0x2b4 debug/cfustring.os
+ .debug_str     0x00008c2a      0x2b4 debug/cfustring.os
                                 0x4cc (size before relaxing)
- .debug_str     0x00008e83      0x23e debug/cfuthread_queue.os
+ .debug_str     0x00008ede      0x23e debug/cfuthread_queue.os
                                 0x37e (size before relaxing)
- .debug_str     0x000090c1      0x128 debug/cfutime.os
+ .debug_str     0x0000911c      0x128 debug/cfutime.os
                                 0x2a7 (size before relaxing)
- .debug_str     0x000091e9       0xb1 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
+ .debug_str     0x00009244       0xb1 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(bpabi.o)
                                  0xe2 (size before relaxing)
- .debug_str     0x0000929a      0x800 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
+ .debug_str     0x000092f5      0x800 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(unwind-arm.o)
                                 0x8f8 (size before relaxing)
- .debug_str     0x00009a9a      0x141 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
+ .debug_str     0x00009af5      0x141 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(pr-support.o)
                                 0x45e (size before relaxing)
- .debug_str     0x00009bdb      0x158 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
+ .debug_str     0x00009c36      0x158 /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_divdi3.o)
                                 0x20d (size before relaxing)
- .debug_str     0x00009d33        0xa /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
+ .debug_str     0x00009d8e        0xa /Developer/android-ndk-r8/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86/bin/../lib/gcc/arm-linux-androideabi/4.4.3/libgcc.a(_udivdi3.o)
                                 0x20e (size before relaxing)
 
 .debug_loc      0x00000000     0x6483

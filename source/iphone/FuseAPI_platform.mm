@@ -171,19 +171,20 @@ void FuseAPIRegisterEventWithDictionary_platform(const char* message, cfuhash_ta
     FuseSafeRelease(values);    
 }
 
-void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+void FuseAPIRegisterInAppPurchaseAndroid_platform(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
     // Android only
 }
 
-void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+void FuseAPIRegisterInAppPurchaseiOS_platform(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
     NSData* receipt = [[NSData marmaladeDataFromBase64String:[NSString stringWithUTF8String:receiptData]] retain]; 
     [FuseAPI registerInAppPurchase:receipt
                            TxState:purchaseState
                              Price:[NSString stringWithFormat:@"%.2f", *price]
                           Currency:[NSString stringWithUTF8String:currency]
-                         ProductID:[NSString stringWithUTF8String:productID]];
+                         ProductID:[NSString stringWithUTF8String:productID]
+                     TransactionID:[NSString stringWithUTF8String:transactionID]];
     FuseSafeRelease(receipt);
 }
 

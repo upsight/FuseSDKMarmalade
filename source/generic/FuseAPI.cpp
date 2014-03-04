@@ -69,14 +69,14 @@ void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* ev
 	FuseAPIRegisterEventWithDictionary_platform(message, eventData);
 }
 
-void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
 	FuseAPIRegisterInAppPurchaseAndroid_platform(purchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload, price, currency);
 }
 
-void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
-    FuseAPIRegisterInAppPurchaseiOS_platform(purchaseState, receiptData, recieptDataLength, price, currency, productID);
+    FuseAPIRegisterInAppPurchaseiOS_platform(purchaseState, receiptData, recieptDataLength, price, currency, productID, transactionID);
 }
 
 void FuseAPICheckAdAvailable()

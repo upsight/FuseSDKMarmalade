@@ -33,8 +33,8 @@ typedef       void(*FuseAPIRegisterEvent_t)(const char* message);
 typedef        int(*FuseAPIRegisterEventWithParam_t)(const char* name, const char* param_name, const char* param_value, const char* variable_name, const double* variable_value);
 typedef        int(*FuseAPIRegisterEventWithEventData_t)(const char* name, const char* paramName, const char* paramValue, cfuhash_table_t* eventData);
 typedef       void(*FuseAPIRegisterEventWithDictionary_t)(const char* message, cfuhash_table_t* eventData);
-typedef       void(*FuseAPIRegisterInAppPurchaseAndroid_t)(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
-typedef       void(*FuseAPIRegisterInAppPurchaseiOS_t)(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID);
+typedef       void(*FuseAPIRegisterInAppPurchaseAndroid_t)(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency);
+typedef       void(*FuseAPIRegisterInAppPurchaseiOS_t)(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID);
 typedef       void(*FuseAPICheckAdAvailable_t)();
 typedef       void(*FuseAPIShowAd_t)();
 typedef       void(*FuseAPIDisplayNotifications_t)();
@@ -405,7 +405,7 @@ void FuseAPIRegisterEventWithDictionary(const char* message, cfuhash_table_t* ev
     return;
 }
 
-void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseState purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
+void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[11] func: FuseAPIRegisterInAppPurchaseAndroid"));
 
@@ -425,7 +425,7 @@ void FuseAPIRegisterInAppPurchaseAndroid(FusePurchaseState purchaseState, const 
     return;
 }
 
-void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseState purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID)
+void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
     IwTrace(FUSEAPI_VERBOSE, ("calling FuseAPI[12] func: FuseAPIRegisterInAppPurchaseiOS"));
 
@@ -436,7 +436,7 @@ void FuseAPIRegisterInAppPurchaseiOS(FusePurchaseState purchaseState, const char
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
-    g_Ext.m_FuseAPIRegisterInAppPurchaseiOS(purchaseState, receiptData, recieptDataLength, price, currency, productID);
+    g_Ext.m_FuseAPIRegisterInAppPurchaseiOS(purchaseState, receiptData, recieptDataLength, price, currency, productID, transactionID);
 
 #ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);

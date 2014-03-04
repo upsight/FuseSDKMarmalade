@@ -191,6 +191,7 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x00001eb4                _Z26FuseAPIEnableData_platformb
                 0x00001bd8                _Z27FuseAPISessionStartReceivedP7_JNIEnvP8_jobject
                 0x00001d28                _Z29FuseAPIFriendsListUpdateStartP7_JNIEnvP8_jobjecti
+                0x00001308                _Z40FuseAPIRegisterInAppPurchaseiOS_platform20FusePurchaseStateiOSPKciPdS1_S1_S1_
                 0x000024dc                _Z38FuseAPIGetOriginalAccountType_platformv
                 0x0000161c                _Z17FuseMailListErrorP7_JNIEnvP8_jobjecti
                 0x00001980                _Z17FuseGameDataErrorP7_JNIEnvP8_jobjectii
@@ -203,13 +204,13 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x00002b34                _Z43FuseAPIGetMailListFriendFromServer_platformPKc
                 0x0000130c                _Z31FuseAPIGameCenterLogin_platformv
                 0x00002ba4                _Z28FuseAPIRemoveFriend_platformPKc
-                0x00001308                _Z40FuseAPIRegisterInAppPurchaseiOS_platform17FusePurchaseStatePKciPdS1_S1_
                 0x00002584                _Z30FuseAPILibraryVersion_platformv
                 0x00002f68                _Z29FuseAPIFacebookLogin_platformPKcS0_S0_
                 0x00001a9c                _Z16FuseAPIAdClickedP7_JNIEnvP8_jobject
                 0x00002744                _Z28FuseAPIStartSession_platformPKc
                 0x000027b4                _Z28FuseAPIAcceptFriend_platformPKc
                 0x000029e4                _Z39FuseAPIFriendsPushNotification_platformPKc
+                0x000032b0                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform24FusePurchaseStateAndroidPKcS1_S1_lS1_PKdS1_
                 0x000018f0                _Z15FuseFriendAddedP7_JNIEnvP8_jobjectP8_jstringi
                 0x00001480                _Z30FuseAPIFriendsListUpdatePlayerP7_JNIEnvP8_jobjectP8_jstringS4_S4_S4_iib
                 0x00001dc8                _Z9FusePausePvS_
@@ -266,7 +267,6 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x0000262c                _Z39FuseAPIGetOriginalAccountAlias_platformv
                 0x0000243c                _Z43FuseAPIUpdateFriendsListFromServer_platformv
                 0x000019c4                _Z18FuseAPITimeUpdatedP7_JNIEnvP8_jobjecti
-                0x000032b0                _Z44FuseAPIRegisterInAppPurchaseAndroid_platform17FusePurchaseStatePKcS1_S1_lS1_PKdS1_
  .text._ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
                 0x00004420       0x14 release/FuseAPI_platform.os
                 0x00004420                _ZN7_JNIEnv11GetMethodIDEP7_jclassPKcS3_
@@ -342,134 +342,133 @@ LOAD /Developer/android-ndk-r8/platforms/android-9/arch-arm/usr/lib/crtend_so.o
                 0x00004608                FuseAPIPauseSession
                 0x00004540                FuseAPIRegisterFlurryView
                 0x00004580                FuseAPIAcceptFriend
- .text          0x00004618     0x13f0 release/FuseAPI_register.os
-                0x000052e8                FuseAPIUnRegister
-                0x00005318                FuseAPIRegister
-                0x0000534c                RegisterExt
+ .text          0x00004618     0x13f4 release/FuseAPI_register.os
+                0x000052ec                FuseAPIUnRegister
+                0x0000531c                FuseAPIRegister
+                0x00005350                RegisterExt
                 0x00004618                _Z18FuseAPIRegisterExtv
- .text          0x00005a08       0x98 release/cfu.os
-                0x00005a08                cfu_get_type
-                0x00005a84                cfu_is_conf
-                0x00005a30                cfu_is_list
-                0x00005a68                cfu_is_time
-                0x00005a4c                cfu_is_string
-                0x00005a14                cfu_is_hash
- .text          0x00005aa0     0x101c release/cfuconf.os
-                0x00005aac                cfuconf_get_directives
-                0x000066e8                cfuconf_parse_buffer
-                0x00005dec                cfuconf_destroy
-                0x000067b8                cfuconf_parse_file
-                0x00006920                cfuconf_get_directive_one_arg
-                0x00005aa0                cfuconf_get_containers
-                0x00005dcc                cfuconf_get_directive_two_args
-                0x000069c4                cfuconf_pretty_print_conf
-                0x00005cd0                cfuconf_get_directive_n_args
- .text          0x00006abc     0x3e8c release/cfuhash.os
-                0x00007e0c                cfuhash_new_with_free_fn
-                0x00007338                cfuhash_pretty_print
-                0x00006d04                cfuhash_each
-                0x000076bc                cfuhash_rehash
-                0x00006ec8                cfuhash_destroy_with_free_fn
-                0x0000858c                cfuhash_keys
-                0x00006bb0                cfuhash_next_data
-                0x00009a84                cfuhash_delete_data
-                0x00009750                cfuhash_clear
-                0x00006b18                cfuhash_clear_flag
-                0x00007994                cfuhash_get_data
-                0x00007ec4                cfuhash_bencode_strings
-                0x00006b2c                cfuhash_set_thresholds
-                0x000078e8                cfuhash_each_data
-                0x00006c98                cfuhash_num_buckets
-                0x00008aa8                cfuhash_get
-                0x00006b04                cfuhash_set_flag
-                0x00007c88                cfuhash_new_with_flags
-                0x00007428                cfuhash_keys_data
-                0x00006c8c                cfuhash_num_entries
-                0x00008ca8                cfuhash_copy
-                0x00009f58                cfuhash_put_data
-                0x0000a47c                cfuhash_put
-                0x00007170                cfuhash_foreach
-                0x000088b8                cfuhash_exists_data
-                0x00007d38                cfuhash_new_with_initial_size
-                0x00006e44                cfuhash_num_buckets_used
-                0x00006ff4                cfuhash_foreach_remove
-                0x00007240                cfuhash_destroy
-                0x000086d8                cfuhash_exists
-                0x00006d8c                cfuhash_next
-                0x00006afc                cfuhash_get_flags
-                0x000082e8                cfuhash_delete
-                0x00007bdc                cfuhash_new
-                0x00006ba0                cfuhash_set_free_function
-                0x00006b68                cfuhash_set_hash_function
-                0x00006cb8                cfuhash_unlock
-                0x00009644                cfuhash_merge
-                0x00006ca4                cfuhash_lock
- .text          0x0000a948     0x10d4 release/cfulist.os
-                0x0000b574                cfulist_push_string
-                0x0000b454                cfulist_enqueue
-                0x0000ac70                cfulist_nth_data
-                0x0000ab94                cfulist_last_data
-                0x0000af00                cfulist_pop_data
-                0x0000b2d8                cfulist_unshift_string
-                0x0000b3d8                cfulist_enqueue_string
-                0x0000ad2c                cfulist_destroy_with_free_fn
-                0x0000b6dc                cfulist_shift
-                0x0000a948                cfulist_num_entries
-                0x0000b7d4                cfulist_unshift
-                0x0000aa20                cfulist_unshift_data
-                0x0000b350                cfulist_enqueue_data
-                0x0000b224                cfulist_join
-                0x0000adc0                cfulist_shift_data
-                0x0000afdc                cfulist_each_data
-                0x0000b4c8                cfulist_dequeue_data
-                0x0000a9f0                cfulist_new
-                0x0000a950                cfulist_reset_each
-                0x0000a960                cfulist_next_data
-                0x0000b844                cfulist_dequeue_string
-                0x0000b02c                cfulist_new_with_free_fn
-                0x0000b064                cfulist_pop_string
-                0x0000abfc                cfulist_foreach
-                0x0000aaa4                cfulist_push_data
-                0x0000ae6c                cfulist_pop
-                0x0000b5f0                cfulist_push
-                0x0000b0fc                cfulist_map
-                0x0000b96c                cfulist_destroy
-                0x0000b758                cfulist_dequeue
-                0x0000ab2c                cfulist_first_data
-                0x0000b664                cfulist_shift_string
- .text          0x0000ba1c      0xb48 release/cfuopt.os
-                0x0000bd00                cfuopt_pretty_print
-                0x0000be0c                cfuopt_destroy
-                0x0000ba38                cfuopt_get_help_str
-                0x0000c100                cfuopt_parse
-                0x0000bc38                _param_map_fn
-                0x0000c0cc                cfuopt_new
-                0x0000be50                cfuopt_add_entry
- .text          0x0000c564     0x1e74 release/cfustring.os
-                0x0000d4b8                cfustring_c_str_split
-                0x0000c664                cfustring_append_n
-                0x0000c80c                cfustring_dup_c_str_n
-                0x0000cfb8                cfustring_dup
-                0x0000d0dc                cfustring_split_to_c_str
-                0x0000c564                cfustring_clear
-                0x0000e350                cfustring_sprintf_c_str
-                0x0000c5f8                cfustring_dup_c_str
-                0x0000cde0                cfustring_append
-                0x0000c84c                cfustring_new
-                0x0000c868                cfustring_split
-                0x0000e320                cfustring_sprintf
-                0x0000c62c                cfustring_get_buffer_copy
-                0x0000c584                cfustring_get_buffer
-                0x0000ceb8                cfustring_new_from_string
-                0x0000c58c                cfustring_new_with_initial_size
-                0x0000c5d8                cfustring_destroy
-                0x0000d9dc                cfustring_vsprintf
- .text          0x0000e3d8      0x284 release/cfuthread_queue.os
-                0x0000e5e4                cfuthread_queue_new
-                0x0000e4bc                cfuthread_queue_new_with_cleanup
-                0x0000e3d8                cfuthread_queue_destroy
-                0x0000e420                cfuthread_queue_make_request
- *fill*         0x0000e65c        0x4 00000000
+ .text          0x00005a0c       0x98 release/cfu.os
+                0x00005a0c                cfu_get_type
+                0x00005a88                cfu_is_conf
+                0x00005a34                cfu_is_list
+                0x00005a6c                cfu_is_time
+                0x00005a50                cfu_is_string
+                0x00005a18                cfu_is_hash
+ .text          0x00005aa4     0x101c release/cfuconf.os
+                0x00005ab0                cfuconf_get_directives
+                0x000066ec                cfuconf_parse_buffer
+                0x00005df0                cfuconf_destroy
+                0x000067bc                cfuconf_parse_file
+                0x00006924                cfuconf_get_directive_one_arg
+                0x00005aa4                cfuconf_get_containers
+                0x00005dd0                cfuconf_get_directive_two_args
+                0x000069c8                cfuconf_pretty_print_conf
+                0x00005cd4                cfuconf_get_directive_n_args
+ .text          0x00006ac0     0x3e8c release/cfuhash.os
+                0x00007e10                cfuhash_new_with_free_fn
+                0x0000733c                cfuhash_pretty_print
+                0x00006d08                cfuhash_each
+                0x000076c0                cfuhash_rehash
+                0x00006ecc                cfuhash_destroy_with_free_fn
+                0x00008590                cfuhash_keys
+                0x00006bb4                cfuhash_next_data
+                0x00009a88                cfuhash_delete_data
+                0x00009754                cfuhash_clear
+                0x00006b1c                cfuhash_clear_flag
+                0x00007998                cfuhash_get_data
+                0x00007ec8                cfuhash_bencode_strings
+                0x00006b30                cfuhash_set_thresholds
+                0x000078ec                cfuhash_each_data
+                0x00006c9c                cfuhash_num_buckets
+                0x00008aac                cfuhash_get
+                0x00006b08                cfuhash_set_flag
+                0x00007c8c                cfuhash_new_with_flags
+                0x0000742c                cfuhash_keys_data
+                0x00006c90                cfuhash_num_entries
+                0x00008cac                cfuhash_copy
+                0x00009f5c                cfuhash_put_data
+                0x0000a480                cfuhash_put
+                0x00007174                cfuhash_foreach
+                0x000088bc                cfuhash_exists_data
+                0x00007d3c                cfuhash_new_with_initial_size
+                0x00006e48                cfuhash_num_buckets_used
+                0x00006ff8                cfuhash_foreach_remove
+                0x00007244                cfuhash_destroy
+                0x000086dc                cfuhash_exists
+                0x00006d90                cfuhash_next
+                0x00006b00                cfuhash_get_flags
+                0x000082ec                cfuhash_delete
+                0x00007be0                cfuhash_new
+                0x00006ba4                cfuhash_set_free_function
+                0x00006b6c                cfuhash_set_hash_function
+                0x00006cbc                cfuhash_unlock
+                0x00009648                cfuhash_merge
+                0x00006ca8                cfuhash_lock
+ .text          0x0000a94c     0x10d4 release/cfulist.os
+                0x0000b578                cfulist_push_string
+                0x0000b458                cfulist_enqueue
+                0x0000ac74                cfulist_nth_data
+                0x0000ab98                cfulist_last_data
+                0x0000af04                cfulist_pop_data
+                0x0000b2dc                cfulist_unshift_string
+                0x0000b3dc                cfulist_enqueue_string
+                0x0000ad30                cfulist_destroy_with_free_fn
+                0x0000b6e0                cfulist_shift
+                0x0000a94c                cfulist_num_entries
+                0x0000b7d8                cfulist_unshift
+                0x0000aa24                cfulist_unshift_data
+                0x0000b354                cfulist_enqueue_data
+                0x0000b228                cfulist_join
+                0x0000adc4                cfulist_shift_data
+                0x0000afe0                cfulist_each_data
+                0x0000b4cc                cfulist_dequeue_data
+                0x0000a9f4                cfulist_new
+                0x0000a954                cfulist_reset_each
+                0x0000a964                cfulist_next_data
+                0x0000b848                cfulist_dequeue_string
+                0x0000b030                cfulist_new_with_free_fn
+                0x0000b068                cfulist_pop_string
+                0x0000ac00                cfulist_foreach
+                0x0000aaa8                cfulist_push_data
+                0x0000ae70                cfulist_pop
+                0x0000b5f4                cfulist_push
+                0x0000b100                cfulist_map
+                0x0000b970                cfulist_destroy
+                0x0000b75c                cfulist_dequeue
+                0x0000ab30                cfulist_first_data
+                0x0000b668                cfulist_shift_string
+ .text          0x0000ba20      0xb48 release/cfuopt.os
+                0x0000bd04                cfuopt_pretty_print
+                0x0000be10                cfuopt_destroy
+                0x0000ba3c                cfuopt_get_help_str
+                0x0000c104                cfuopt_parse
+                0x0000bc3c                _param_map_fn
+                0x0000c0d0                cfuopt_new
+                0x0000be54                cfuopt_add_entry
+ .text          0x0000c568     0x1e74 release/cfustring.os
+                0x0000d4bc                cfustring_c_str_split
+                0x0000c668                cfustring_append_n
+                0x0000c810                cfustring_dup_c_str_n
+                0x0000cfbc                cfustring_dup
+                0x0000d0e0                cfustring_split_to_c_str
+                0x0000c568                cfustring_clear
+                0x0000e354                cfustring_sprintf_c_str
+                0x0000c5fc                cfustring_dup_c_str
+                0x0000cde4                cfustring_append
+                0x0000c850                cfustring_new
+                0x0000c86c                cfustring_split
+                0x0000e324                cfustring_sprintf
+                0x0000c630                cfustring_get_buffer_copy
+                0x0000c588                cfustring_get_buffer
+                0x0000cebc                cfustring_new_from_string
+                0x0000c590                cfustring_new_with_initial_size
+                0x0000c5dc                cfustring_destroy
+                0x0000d9e0                cfustring_vsprintf
+ .text          0x0000e3dc      0x284 release/cfuthread_queue.os
+                0x0000e5e8                cfuthread_queue_new
+                0x0000e4c0                cfuthread_queue_new_with_cleanup
+                0x0000e3dc                cfuthread_queue_destroy
+                0x0000e424                cfuthread_queue_make_request
  .text          0x0000e660       0x80 release/cfutime.os
                 0x0000e6c4                cfutime_new
                 0x0000e6ac                cfutime_end
