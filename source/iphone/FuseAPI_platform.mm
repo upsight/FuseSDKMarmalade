@@ -1053,54 +1053,89 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
     return [m_appDelegate application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
-//- (void) application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame
-//{
-//    [m_appDelegate application:application didChangeStatusBarFrame:oldStatusBarFrame];
-//}
+- (void) application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame
+{
+    if( [m_appDelegate respondsToSelector:@selector(application:didChangeStatusBarFrame:)] )
+    {
+        [m_appDelegate application:application didChangeStatusBarFrame:oldStatusBarFrame];
+    }
+}
 
-//- (void) application:(UIApplication *)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation
-//{
-//    [m_appDelegate application:application didChangeStatusBarOrientation:oldStatusBarOrientation];
-//}
+- (void) application:(UIApplication *)application didChangeStatusBarOrientation:(UIInterfaceOrientation)oldStatusBarOrientation
+{
+    if( [m_appDelegate respondsToSelector:@selector(application:didChangeStatusBarOrientation:)] )
+    {
+        [m_appDelegate application:application didChangeStatusBarOrientation:oldStatusBarOrientation];
+    }
+}
 
 - (void) application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    [m_appDelegate application:application didDecodeRestorableStateWithCoder:coder];
+    if( [m_appDelegate respondsToSelector:@selector(application:didDecodeRestorableStateWithCoder:)] )
+    {
+        [m_appDelegate application:application didDecodeRestorableStateWithCoder:coder];
+    }
 }
 
 - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    [m_appDelegate application:application didReceiveLocalNotification:notification];
+    if( [m_appDelegate respondsToSelector:@selector(application:didReceiveLocalNotification:)] )
+    {
+        [m_appDelegate application:application didReceiveLocalNotification:notification];
+    }
 }
 
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [m_appDelegate application:application didReceiveRemoteNotification:userInfo];
+    if( [m_appDelegate respondsToSelector:@selector(application:didReceiveRemoteNotification:)] )
+    {
+        [m_appDelegate application:application didReceiveRemoteNotification:userInfo];
+    }
 }
 
 - (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    if( [m_appDelegate respondsToSelector:@selector(application:sourceApplication:annotation:)] )
+    {
+        return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    }
+    return NO;
 }
 
 //- (BOOL) application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
 //{
-//    return [m_appDelegate application:application shouldRestoreApplicationState:coder];
+//    if( [m_appDelegate respondsToSelector:@selector(application:shouldRestoreApplicationState:)] )
+//    {
+//        return [m_appDelegate application:application shouldRestoreApplicationState:coder];
+//    }
+//    return NO;
 //}
-//
+
 //- (BOOL) application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
 //{
-//    return [m_appDelegate application:application shouldSaveApplicationState:coder];
+//    if( [m_appDelegate respondsToSelector:@selector(application:shouldSaveApplicationState:)] )
+//    {
+//        return [m_appDelegate application:application shouldSaveApplicationState:coder];
+//    }
+//    return NO;
 //}
 
 //- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 //{
-//    return [m_appDelegate application:application supportedInterfaceOrientationsForWindow:window];
+//    if( [m_appDelegate respondsToSelector:@selector(application:supportedInterfaceOrientationsForWindow:)] )
+//    {
+//        return [m_appDelegate application:application supportedInterfaceOrientationsForWindow:window];
+//    }
+//    return NO;
 //}
 
 - (UIViewController*) application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
 {
-    return [m_appDelegate application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
+    if( [m_appDelegate respondsToSelector:@selector(application:viewControllerWithRestorationIdentifierPath:coder:)] )
+    {
+        return [m_appDelegate application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
+    }
+    return nil;
 }
 
 //- (void) application:(UIApplication *)application willChangeStatusBarFrame:(CGRect)newStatusBarFrame
@@ -1115,7 +1150,10 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 
 - (void) application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    [m_appDelegate application:application willEncodeRestorableStateWithCoder:coder];
+    if( [m_appDelegate respondsToSelector:@selector(application:willEncodeRestorableStateWithCoder:)] )
+    {
+        [m_appDelegate application:application willEncodeRestorableStateWithCoder:coder];
+    }
 }
 
 - (BOOL) application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -1125,52 +1163,82 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 
 - (void) applicationDidBecomeActive:(UIApplication *)application
 {
-    [m_appDelegate applicationDidBecomeActive:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationDidBecomeActive:)] )
+    {
+        [m_appDelegate applicationDidBecomeActive:application];
+    }
 }
 
 - (void) applicationDidEnterBackground:(UIApplication *)application
 {
-    [m_appDelegate applicationDidEnterBackground:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationDidEnterBackground:)] )
+    {
+        [m_appDelegate applicationDidEnterBackground:application];
+    }
 }
 
 - (void) applicationDidFinishLaunching:(UIApplication *)application
 {
-    [m_appDelegate applicationDidFinishLaunching:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationDidFinishLaunching:)] )
+    {
+        [m_appDelegate applicationDidFinishLaunching:application];
+    }
 }
 
 - (void) applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-    [m_appDelegate applicationDidReceiveMemoryWarning:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationDidReceiveMemoryWarning:)] )
+    {
+        [m_appDelegate applicationDidReceiveMemoryWarning:application];
+    }
 }
 
 - (void) applicationProtectedDataDidBecomeAvailable:(UIApplication *)application
 {
-    [m_appDelegate applicationProtectedDataDidBecomeAvailable:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationProtectedDataDidBecomeAvailable:)] )
+    {
+        [m_appDelegate applicationProtectedDataDidBecomeAvailable:application];
+    }
 }
 
 - (void) applicationProtectedDataWillBecomeUnavailable:(UIApplication *)application
 {
-    [m_appDelegate applicationProtectedDataWillBecomeUnavailable:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationProtectedDataWillBecomeUnavailable:)] )
+    {
+        [m_appDelegate applicationProtectedDataWillBecomeUnavailable:application];
+    }
 }
 
 - (void) applicationSignificantTimeChange:(UIApplication *)application
 {
-    [m_appDelegate applicationSignificantTimeChange:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationSignificantTimeChange:)] )
+    {
+        [m_appDelegate applicationSignificantTimeChange:application];
+    }
 }
 
 - (void) applicationWillEnterForeground:(UIApplication *)application
 {
-    [m_appDelegate applicationWillEnterForeground:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationWillEnterForeground:)] )
+    {
+        [m_appDelegate applicationWillEnterForeground:application];
+    }
 }
 
 - (void) applicationWillResignActive:(UIApplication *)application
 {
-    [m_appDelegate applicationWillResignActive:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationWillResignActive:)] )
+    {
+        [m_appDelegate applicationWillResignActive:application];
+    }
 }
 
 - (void) applicationWillTerminate:(UIApplication *)application
 {
-    [m_appDelegate applicationWillTerminate:application];
+    if( [m_appDelegate respondsToSelector:@selector(applicationWillTerminate:)] )
+    {
+        [m_appDelegate applicationWillTerminate:application];
+    }
 }
 
 
