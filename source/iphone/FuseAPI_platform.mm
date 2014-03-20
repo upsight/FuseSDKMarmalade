@@ -1093,14 +1093,14 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
     }
 }
 
-- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    if( [m_appDelegate respondsToSelector:@selector(application:sourceApplication:annotation:)] )
-    {
-        return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-    }
-    return NO;
-}
+//- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+//{
+//    if( [m_appDelegate respondsToSelector:@selector(application:sourceApplication:annotation:)] )
+//    {
+//        return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+//    }
+//    return YES;
+//}
 
 //- (BOOL) application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
 //{
@@ -1129,14 +1129,14 @@ void FuseAPIRegisterTapjoyReward_platform(int amount)
 //    return NO;
 //}
 
-- (UIViewController*) application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
-{
-    if( [m_appDelegate respondsToSelector:@selector(application:viewControllerWithRestorationIdentifierPath:coder:)] )
-    {
-        return [m_appDelegate application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
-    }
-    return nil;
-}
+//- (UIViewController*) application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+//{
+//   if( [m_appDelegate respondsToSelector:@selector(application:viewControllerWithRestorationIdentifierPath:coder:)] )
+//    {
+//        return [m_appDelegate application:application viewControllerWithRestorationIdentifierPath:identifierComponents coder:coder];
+//    }
+//    return nil;
+//}
 
 //- (void) application:(UIApplication *)application willChangeStatusBarFrame:(CGRect)newStatusBarFrame
 //{

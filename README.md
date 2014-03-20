@@ -42,7 +42,7 @@ Getting Started
 	Replace notification_large.png and notification_small.png in FuseAPI/res/drawable with your own icons<br>
 		The names must be the same.<br>
 		notification_large.png is a 72x72 24-bit png<br>
-		notification_small.png is a 36x26 24-bit png<br>
+		notification_small.png is a 36x36 24-bit png<br>
 
 2. To use the FuseAPI extension in your project, first include the FuseAPI header:
 ```
@@ -67,7 +67,7 @@ Getting Started
    The Fuse API key can be found in your dashboard view for the app your are integrating by navigating to Admin->Integrate SDK in the [Fuseboxx](https://www.fuseboxx.com) dashboard.
 
 
-5. UnRegister Callbacks when application terminates<br>
+4. UnRegister Callbacks when application terminates<br>
 	eg)
 ```
     FuseAPIUnRegister(FUSEAPI_SESSION_STARTED, &GotSessionReceived);
