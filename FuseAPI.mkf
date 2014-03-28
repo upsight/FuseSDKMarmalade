@@ -66,6 +66,7 @@ if {{ not defined IW_MKF_IWCRT}}
 #Include the extension's jar file during deployment
 deployments
 {
+	android-external-jars="lib/android/google-play-services.jar"
 	android-external-jars="lib/android/android-support-v4.jar"
     android-external-jars="lib/android/FuseAPI.jar"
 	android-external-jars="lib/android/libFuseAPI.jar"

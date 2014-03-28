@@ -100,7 +100,7 @@ public class FuseWrapper
 	public void FuseAPIResumeSession()
 	{
 		Log.i(_logTag, "FuseAPIResumeSession");
-		FuseAPI.resumeSession(_gameDataCallback);
+		FuseAPI.resumeSession(_activity, _gameDataCallback);
 	}
 
 	public void FuseAPITerminateSession()
