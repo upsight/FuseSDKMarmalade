@@ -89,6 +89,11 @@ deployments
 #lines will cause the extension builder to re-output this section.
 deployments
 {
+	iphone-link-opts="-weak_framework MediaPlayer"
+	iphone-link-opts="-weak_framework Twitter"
+	iphone-link-opts="-weak_framework Social"
+	iphone-link-opts="-weak_framework CoreLocation"
+	iphone-link-opts="-weak_framework Security"
     iphone-link-opts="-weak_framework StoreKit"
 	iphone-link-opts="-weak_framework CoreTelephony"
 	iphone-link-opts="-weak_framework AdSupport"

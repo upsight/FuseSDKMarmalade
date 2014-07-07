@@ -238,7 +238,7 @@ public class FuseWrapper
 
 		Log.d(_logTag, "FuseAPIRegisterInAppPurchase(" + purchaseState + "," + purchaseToken + "," + productId + "," + orderId + "," + purchaseTime + "," + developerPayload + "," + price + "," + currency + ")");
 		VerifiedPurchase purchase = new VerifiedPurchase(szPurchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload);
-		FuseAPI.registerInAppPurchase(purchase, price, currency);
+		FuseAPI.registerInAppPurchase(purchase, price, currency, null);
 	}
 
 	/**+-----------------------+
@@ -513,7 +513,14 @@ public class FuseWrapper
 	public void FuseAPIMigrateFriends(String fuseId)
 	{
 		Log.d(_logTag, "FuseAPIMigrateFriends(" + fuseId + ")");
-		FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+        if( FuseAPIGetOriginalAccountId().equals("") )
+        {
+            Log.w(_logTag, "Cannot migrate friends unless the user is logged into an account");
+        }
+        else
+        {
+            FuseAPI.migrateFriends(fuseId, _gameDataCallback);
+        }
 	}
 
 	public void FuseAPIUpdateFriendsListFromServer()

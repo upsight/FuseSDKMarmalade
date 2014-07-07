@@ -83,6 +83,8 @@ void FuseAPITerminate_platform()
 void FuseAPIStartSession_platform(const char* key)
 {
     [FuseAPI startSession:[NSString stringWithUTF8String:key] Delegate:_FuseAPI_delegate];
+    [FuseAPI setPlatform:@"marmalade-ios"];
+    
 }
 
 void FuseAPIPauseSession_platform()
