@@ -1,0 +1,173 @@
+Fuse SDK Callback Documentation
+
+In order to receive callbacks from the FuseSDK extension, you must register for callbacks, using 
+s3eResult FuseSDKRegister(FuseSDKCallback cbid, s3eCallback fn, void* userData);
+
+For example:
+FuseSDKRegister(FUSESDK_ACCOUNT_LOGIN_COMPLETE, &LoginComplete, NULL);
+
+Note that userData is always NULL.
+
+To unregister callbacks, use:
+s3eResult FuseSDKUnRegister(FuseSDKCallback cbid, s3eCallback fn);
+
+For example:
+FuseSDKUnRegister(FUSESDK_ACCOUNT_LOGIN_COMPLETE, &LoginComplete);
+
+You can register or unregister callbacks at any time during the execution of your program, 
+but registration is commonly handled on application initialization and unregistering at termination.
+
+Callback functions are s3eCallbacks, so they have the following structure:
+int32 FunctionName(void* systemData, void* userData)
+
+Any extra data from the callback is stored in systemData.  These values are always stored as a struct, according to the definitions listed below.
+Here is an example of retrieving parameter info from a FUSESDK_ACCOUNT_LOGIN_COMPLETE callback:
+int32 LoginComplete(void* systemData, void* userData)
+{
+	// param list as defined in FuseSDK/docs/Callbacks.txt
+	struct paramList
+	{
+		int accountType;
+		const char* accountID;
+	};
+	const paramList* params;
+	params = (paramList*)systemData;
+	
+	// handle results of login
+
+	return 1;
+}
+
+Below is the list of callback IDs, how they are triggered, and their parameters:
+
+//-------------------------------------
+FUSESDK_SESSION_STARTED
+Response to: a successful FuseSDKStartSession
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_SESSION_LOGIN_ERROR
+Response to: a successful FuseSDKStartSession.  See FuseLoginError in FuseSDK.h for error code values.
+Params: 
+struct paramList
+{
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_AD_AVAILABILITY_RESPONSE
+Response to: FuseSDKPreloadAdForZoneID See FuseAdErrors in FuseSDK.h for error code values.
+Params:
+struct paramList
+{
+	int available;
+	int error;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_AD_WILL_CLOSE
+Response to: User pressing the 'X' close button on an ad
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_REWARDED_AD_COMPLETED
+Response to: sent when a rewarded video was viewed completely
+Params:
+struct paramList
+{
+    const char* preMessage;
+    const char* rewardMessage;
+    const char* rewardItem;
+    int rewardAmount;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_VIRTUALGOODSOFFER_ACCEPTED
+Response to: received when a user interacts with a virtual goods offer ad
+Params: 
+struct paramList
+{
+    const char* purchaseCurrency;
+    float purchasePrice;
+    const char* itemName;
+    int itemAmount;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_IAPOFFER_ACCEPTED
+Response to: received when a user interacts with an IAP offer ad
+Params:
+struct paramList
+{
+    float productPrice;
+    int itemAmount;
+    const char* itemName;
+    const char* productID;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_OVERLAY_WILL_CLOSE
+Response to: More games overlay closing. Only on iOS
+Params: none
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_PURCHASE_VERIFIED
+Response to: FuseSDKRegisterInAppPurchase for iOS or Android.  The varified parameter is 1 for verified, 0 for not verified, or -1 for could not verify
+Params:
+struct paramList
+{
+    int verified;
+    const char* transaction_id,
+    const char* original_transaction_id;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_NOTIFICATION_ACTION
+Response to: Pressing a button on an action.  
+You can specify button names and their associated actions through the Dashboard and handle them in this callback.
+Params:
+struct paramList
+{
+	const char* action;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_ACCOUNT_LOGIN_COMPLETE
+Response to: Logging in to any account (Facebook, Twitter, etc.).  See FuseAccountType in FuseSDK.h for the enumeration of account types
+Params: 
+struct paramList
+{
+	int accountType;
+	const char* accountID;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_TIME_UPDATED
+Response to: FuseSDKTimeFromServer
+Params:
+struct paramList
+{
+	int timestamp;
+};
+//-------------------------------------
+
+//-------------------------------------
+FUSESDK_GAME_CONFIGURATION_RECEIVED
+Response to: Successful session start, once game configuration key-value pairs have been retrieved from the server
+Params: 
+struct paramList
+{
+	cfuhash_table_t* gameConfig;
+};
+//-------------------------------------

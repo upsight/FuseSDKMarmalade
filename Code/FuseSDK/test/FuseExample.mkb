@@ -1,0 +1,25 @@
+#!/usr/bin/env mkb
+files
+{
+    FuseExample.cpp
+}
+
+
+subprojects
+{
+	../FuseSDK
+}
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
+	caption='FuseMarmaladeSampleApp'
+	copyright='2014'
+	iphone-enable-4inch-retina='1'
+	name='FuseMarmaladeSampleApp'
+	provider='Fuse Powered, Inc'
+	version-major=1
+	version-minor=0
+	version-revision=0
+	version-string='1.0.0'
+}

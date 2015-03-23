@@ -1,0 +1,18 @@
+#!/usr/bin/env mkb
+# Builder mkb file for the java portion of the FuseAPI extension on android
+platform JAVA
+
+files
+{
+    (source/android)
+    FuseWrapper.java
+	FuseSDKListenerImpl.java
+}
+
+librarypath "$MARMALADE_ROOT/s3e/deploy/plugins/android/android.jar"
+librarypath "$MARMALADE_ROOT/s3e/loader/android/s3e_release.jar"
+librarypath "lib/android/FuseSDK.jar"
+librarypath "lib/android/classes.jar"
+librarypath "lib/android/android-support-v4.jar"
+
+option output-name=lib/android/libFuseSDK.jar

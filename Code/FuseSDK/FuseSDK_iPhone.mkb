@@ -1,0 +1,19 @@
+#!/usr/bin/env mkb
+# Builder mkb file for the FuseSDK extension on iOS
+platform IPHONE
+
+options
+{
+    lib
+    output-name="lib/iphone/libFuseSDKWrapper.a"
+    output-name-debug="lib/iphone/libFuseSDKWrapper_d.a"
+}
+define S3E_BUILD_EXT
+
+subproject FuseSDK_build
+
+#run a post build step to fix return statements in FuseSDK_interface.cpp after it is generated/modified
+command
+{
+	"python ./tools/fix_interface.py"
+}
