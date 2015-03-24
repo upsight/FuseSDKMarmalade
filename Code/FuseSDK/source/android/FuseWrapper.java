@@ -61,6 +61,7 @@ public class FuseWrapper
     {
 		Log.i(_logTag, "Session Start for key " + key);
 		FuseSDK.startSession(key, _activity, _listener, null);
+        FuseSDK.setPlatform("marmalade-android");
     }
 
 	public void FuseSDKPauseSession()

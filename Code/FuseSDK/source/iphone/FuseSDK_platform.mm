@@ -460,14 +460,25 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         const char* productID;
     };
 
-    // copy the strings
-    const char* string = _offer.productID.UTF8String;
-    char* productid_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(productid_copy, string);
+    IwTrace(FuseSDK, ("IAPOfferAcceptedWithObject was called!"));
 
-    string = _offer.itemName.UTF8String;
-    char* itemname_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(itemname_copy, string);
+    // copy the strings
+    const char* string = NULL;
+    char* productid_copy = NULL;
+    if( _offer.productID )
+    {
+        string = _offer.productID.UTF8String;
+        productid_copy = (char*)malloc(strlen(string) + 1);
+        strcpy(productid_copy, string);
+    }
+
+    char* itemname_copy = NULL;
+    if( _offer.itemName )
+    {
+        string = _offer.itemName.UTF8String;
+        itemname_copy =  (char*)malloc(strlen(string) + 1);
+        strcpy(itemname_copy, string);
+    }
 
     // set the params
     paramList params;
@@ -491,13 +502,23 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     };
 
     // copy the strings
-    const char* string = _offer.purchaseCurrency.UTF8String;
-    char* currency_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(currency_copy, string);
+    const char* string = NULL;
+    char* currency_copy = NULL;
 
-    string = _offer.itemName.UTF8String;
-    char* itemname_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(itemname_copy, string);
+    if( _offer.purchaseCurrency )
+    {
+        string = _offer.purchaseCurrency.UTF8String;
+        currency_copy = (char*)malloc(strlen(string) + 1);
+        strcpy(currency_copy, string);
+    }
+
+    char* itemname_copy = NULL;
+    if( _offer.itemName )
+    {
+        string = _offer.itemName.UTF8String;
+        itemname_copy =  (char*)malloc(strlen(string) + 1);
+        strcpy(itemname_copy, string);
+    }
 
     // set the params
     paramList params;
