@@ -12,6 +12,7 @@
 #include "s3eEdk_android.h"
 #include <jni.h>
 #include "IwDebug.h"
+#include "s3eTimer.h"
 
 #include "cfuhash.h"
 
@@ -313,7 +314,12 @@ void FuseGameConfigurationReceived(JNIEnv* env, jobject obj)
 	s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_GAME_CONFIGURATION_RECEIVED, &params, sizeof(paramList));
 }
 
+int32 DelayedPause(void* systemData, void* userData)
+{
+    FuseSDKPauseSession_platform();
 
+    return 1;
+}
 
 int32 FusePause(void* systemData, void* userData)
 {
@@ -323,7 +329,7 @@ int32 FusePause(void* systemData, void* userData)
 		gameConfig = NULL;
 	}
 
-    FuseSDKPauseSession_platform();
+    s3eTimerSetTimer(100, &DelayedPause, NULL);
 
     return 1;
 }

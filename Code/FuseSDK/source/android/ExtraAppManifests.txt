@@ -1,13 +1,234 @@
 <!-- FuseAPI -->
-<meta-data    android:name="com.google.android.gms.version"    android:value="@integer/google_play_services_version" /><!--<meta-data android:name="com.fusepowered.usessl" android:value="true" />--><activity    android:name="com.fusepowered.fuseactivities.FuseApiMoregamesBrowser"    android:label="FuseApiMoregamesBrowser">    <intent-filter>        <action android:name="com.fusepowered.fuseactivities.FuseApiMoregamesBrowser" />        <action android:name="android.intent.action.VIEW" />        <category android:name="android.intent.category.DEFAULT" />    </intent-filter></activity>
+<meta-data
+    android:name="com.google.android.gms.version"
+    android:value="@integer/google_play_services_version" />
+
+<!--<meta-data android:name="com.fusepowered.usessl" android:value="true" />-->
+
+<activity
+    android:name="com.fusepowered.fuseactivities.FuseApiMoregamesBrowser"
+    android:label="FuseApiMoregamesBrowser">
+    <intent-filter>
+        <action android:name="com.fusepowered.fuseactivities.FuseApiMoregamesBrowser" />
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+    </intent-filter>
+</activity>
 
 
-<!--  BroadcastReceiver that will receive intents from GCM  services and handle them to the custom IntentService.  The com.google.android.c2dm.permission.SEND permission is necessary  so only GCM services can send data messages for the app.--><receiver    android:name="com.fusepowered.push.FusePushNotificationReceiver"    android:permission="com.google.android.c2dm.permission.SEND">    <intent-filter>        <action android:name="com.google.android.c2dm.intent.RECEIVE" />        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />        <category android:name="com.acme" />    </intent-filter></receiver><service android:name="com.fusepowered.push.FuseIntentService" /><activity    android:name="com.fusepowered.push.FuseRecordGCMResponse"    android:configChanges="keyboardHidden|orientation"    android:label="FuseRecordGCMResponse">    <intent-filter>        <action android:name="com.acme.FuseAndroidGame.fusepowered.push.FuseRecordGCMResponse" />        <category android:name="android.intent.category.DEFAULT" />    </intent-filter></activity>
+<!--
+  BroadcastReceiver that will receive intents from GCM
+  services and handle them to the custom IntentService.
+
+  The com.google.android.c2dm.permission.SEND permission is necessary
+  so only GCM services can send data messages for the app.
+-->
+<receiver
+    android:name="com.fusepowered.push.FusePushNotificationReceiver"
+    android:permission="com.google.android.c2dm.permission.SEND">
+    <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+        <category android:name="com.acme" />
+    </intent-filter>
+</receiver>
+
+<service android:name="com.fusepowered.push.FuseIntentService" />
+
+<activity
+    android:name="com.fusepowered.push.FuseRecordGCMResponse"
+    android:configChanges="keyboardHidden|orientation"
+    android:label="FuseRecordGCMResponse">
+    <intent-filter>
+        <action android:name="com.acme.FuseAndroidGame.fusepowered.push.FuseRecordGCMResponse" />
+        <category android:name="android.intent.category.DEFAULT" />
+    </intent-filter>
+</activity>
+
+
+
 <!-- Ad Mediation -->
-<activity    android:name="com.fusepowered.m2.mobileads.M2Activity"    android:configChanges="keyboardHidden|orientation|screenSize" /><activity    android:name="com.fusepowered.m2.mobileads.M2RActivity"    android:configChanges="keyboardHidden|orientation|screenSize" /><activity    android:name="com.fusepowered.m2.common.M2Browser"    android:configChanges="keyboardHidden|orientation|screenSize" /><activity    android:name="com.fusepowered.m2.mobileads.M2RvpActivity"    android:configChanges="keyboardHidden|orientation|screenSize" /><activity    android:name="com.fusepowered.m1.android.MMActivity"    android:configChanges="keyboardHidden|orientation|keyboard"    android:theme="@android:style/Theme.Translucent.NoTitleBar" /><activity    android:name="com.fusepowered.m1.android.VideoPlayer"    android:configChanges="keyboardHidden|orientation|keyboard" /><activity    android:name="com.fusepowered.u1.U1InterstitialActivity"    android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"    android:hardwareAccelerated="true"    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /><activity    android:name="com.vungle.sdk.VungleAdvert"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /><service android:name="com.vungle.sdk.VungleIntentService" />
+<activity
+    android:name="com.fusepowered.m2.mobileads.M2Activity"
+    android:configChanges="keyboardHidden|orientation|screenSize" />
+<activity
+    android:name="com.fusepowered.m2.mobileads.M2RActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize" />
+<activity
+    android:name="com.fusepowered.m2.common.M2Browser"
+    android:configChanges="keyboardHidden|orientation|screenSize" />
+<activity
+    android:name="com.fusepowered.m2.mobileads.M2RvpActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize" />
+<activity
+    android:name="com.fusepowered.m1.android.MMActivity"
+    android:configChanges="keyboardHidden|orientation|keyboard"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.m1.android.VideoPlayer"
+    android:configChanges="keyboardHidden|orientation|keyboard" />
+<activity
+    android:name="com.fusepowered.u1.U1InterstitialActivity"
+    android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
+    android:hardwareAccelerated="true"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.vungle.sdk.VungleAdvert"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
-<activity    android:name="com.fusepowered.ads.adapters.FuseInterstitialActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:noHistory="true"    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" /><activity    android:name="com.fusepowered.l1.AdActivity"    android:configChanges="orientation|keyboardHidden|screenSize"    android:hardwareAccelerated="true" /><activity    android:name="com.fusepowered.l1.AdBrowserActivity" /><activity    android:name="com.fusepowered.l1.PlayerActivity"    android:configChanges="orientation|keyboardHidden|screenSize"    android:hardwareAccelerated="true" /><activity    android:name="com.fusepowered.ac.ACOActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" /><activity    android:name="com.fusepowered.ac.ACFActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" /><activity    android:name="com.fusepowered.ac.ACBActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" /><activity    android:name="com.fusepowered.ads.adapters.LRActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-<activity    android:name="com.fusepowered.ads.adapters.MRaidActivity"    android:hardwareAccelerated="true"    android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|screenSize"    android:theme="@android:style/Theme.Translucent.NoTitleBar"    android:windowSoftInputMode="adjustResize" /><activity    android:name="com.fusepowered.ads.adapters.MRaidVideoActivity"    android:hardwareAccelerated="true"    android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|screenSize"    android:theme="@android:style/Theme.Black.NoTitleBar"    android:windowSoftInputMode="adjustResize" /><activity    android:name="com.fusepowered.sa.android.publish.list3d.List3DActivity"    android:theme="@android:style/Theme" /><activity    android:name="com.fusepowered.sa.android.publish.AppWallActivity"    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"    android:configChanges="orientation|keyboardHidden|screenSize" /><!-- AerServ activities --><activity    android:name="com.fusepowered.as.view.ASVastInterstitialActivity"    android:theme="@android:style/Theme.Translucent"    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" /><activity    android:name="com.fusepowered.as.view.ASWebviewInterstitialActivity"    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" /><!-- AirPush Activities --><activity    android:exported="false" android:name="com.fusepowered.ap.MainActivity"    android:configChanges="orientation|screenSize"    android:theme="@android:style/Theme.Translucent" />
-<activity    android:name="com.fusepowered.ap.BrowserActivity"    android:configChanges="orientation|screenSize" /><activity    android:name="com.fusepowered.ap.VDActivity"    android:configChanges="orientation|screenSize" android:screenOrientation="landscape"    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" /><!-- AppLovin Activities --><activity    android:name="com.fusepowered.al.ALInterstitialActivity"    android:configChanges="orientation|screenSize" /><activity    android:name="com.fusepowered.al.ALConfirmationActivity"    android:configChanges="orientation|screenSize" /><activity    android:name="com.fusepowered.ads.adapters.ALActivity"    android:configChanges="keyboardHidden|orientation|screenSize"    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" /><!-- Inmobi Activities. --><activity    android:name="com.fusepowered.im.androidsdk.IMBrowserActivity"    android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"    android:theme="@android:style/Theme.Translucent.NoTitleBar"    android:hardwareAccelerated="true" /><!-- AdMob Activity --><activity    android:name="com.google.android.gms.ads.AdActivity"    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"    android:theme="@android:style/Theme.Translucent" />	<!-- AppFlood --><activity    android:name="com.fusepowered.af.mraid.MraidBrowserActivity"    android:configChanges="keyboardHidden"    android:launchMode="singleTask"    android:theme="@android:style/Theme.Translucent" /><activity    android:name="com.fusepowered.af.AFPanelActivity"    android:configChanges="keyboardHidden"    android:launchMode="singleTask"    android:theme="@android:style/Theme.Translucent" /><activity    android:name="com.fusepowered.af.AFFullScreenActivity"    android:configChanges="keyboardHidden|orientation"    android:launchMode="singleTask"    android:theme="@android:style/Theme.Translucent" /><activity    android:name="com.fusepowered.af.AFListActivity"    android:configChanges="keyboardHidden|orientation"    android:launchMode="singleTask"    android:theme="@android:style/Theme.Translucent" /><activity    android:name="com.fusepowered.af.AFInterstitialActivity"    android:configChanges="keyboardHidden|orientation"    android:launchMode="singleTask"    android:screenOrientation="portrait"    android:theme="@android:style/Theme.Translucent" /><receiver    android:name="com.fusepowered.af.AFReferralReceiver"    android:exported="true">    <intent-filter>        <action android:name="com.android.vending.INSTALL_REFERRER" />    </intent-filter></receiver>
+<service android:name="com.vungle.sdk.VungleIntentService" />
 
-<!-- Bookface --><activity    android:name="com.facebook.ads.InterstitialAdActivity"    android:configChanges="keyboardHidden|orientation|screenSize" /><!-- Chartboost --><activity    android:name="com.chartboost.sdk.CBImpressionActivity"    android:theme="@android:style/Theme.Translucent.NoTitleBar"    android:configChanges="orientation|screenSize|keyboardHidden"    android:excludeFromRecents="true" /><activity    android:name="com.fusepowered.ads.adapters.CBActivity"    android:theme="@android:style/Theme.Translucent.NoTitleBar"    android:configChanges="orientation|screenSize|keyboardHidden" />
+<activity
+    android:name="com.fusepowered.ads.adapters.FuseInterstitialActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:noHistory="true"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.l1.AdActivity"
+    android:configChanges="orientation|keyboardHidden|screenSize"
+    android:hardwareAccelerated="true" />
+<activity
+    android:name="com.fusepowered.l1.AdBrowserActivity" />
+<activity
+    android:name="com.fusepowered.l1.PlayerActivity"
+    android:configChanges="orientation|keyboardHidden|screenSize"
+    android:hardwareAccelerated="true" />
+<activity
+    android:name="com.fusepowered.ac.ACOActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.ac.ACFActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.ac.ACBActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.ads.adapters.LRActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.ads.adapters.MRaidActivity"
+    android:hardwareAccelerated="true"
+    android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:windowSoftInputMode="adjustResize" />
+<activity
+    android:name="com.fusepowered.ads.adapters.MRaidVideoActivity"
+    android:hardwareAccelerated="true"
+    android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|screenSize"
+    android:theme="@android:style/Theme.Black.NoTitleBar"
+    android:windowSoftInputMode="adjustResize" />
+<activity
+    android:name="com.fusepowered.sa.android.publish.list3d.List3DActivity"
+    android:theme="@android:style/Theme" />
+<activity
+    android:name="com.fusepowered.sa.android.publish.AppWallActivity"
+    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+    android:configChanges="orientation|keyboardHidden|screenSize" />
+
+<!-- AerServ activities -->
+<activity
+    android:name="com.fusepowered.as.view.ASVastInterstitialActivity"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+<activity
+    android:name="com.fusepowered.as.view.ASWebviewInterstitialActivity"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
+
+<!-- AirPush Activities -->
+<activity
+    android:exported="false" android:name="com.fusepowered.ap.MainActivity"
+    android:configChanges="orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.ap.BrowserActivity"
+    android:configChanges="orientation|screenSize" />
+<activity
+    android:name="com.fusepowered.ap.VDActivity"
+    android:configChanges="orientation|screenSize" android:screenOrientation="landscape"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+<!-- AppLovin Activities -->
+<activity
+	android:name="com.fusepowered.al.adview.ALInterstitialActivity"
+	android:configChanges="orientation|screenSize" />
+<activity
+	android:name="com.fusepowered.al.adview.ALConfirmationActivity"
+	android:configChanges="orientation|screenSize" />
+
+<activity
+    android:name="com.fusepowered.ads.adapters.ALActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+<!-- Inmobi Activities. -->
+<activity
+    android:name="com.fusepowered.im.androidsdk.IMBrowserActivity"
+    android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:hardwareAccelerated="true" />
+
+<!-- AdMob Activity -->
+<activity
+    android:name="com.google.android.gms.ads.AdActivity"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+	
+<!-- AppFlood -->
+<activity
+    android:name="com.fusepowered.af.mraid.MraidBrowserActivity"
+    android:configChanges="keyboardHidden"
+    android:launchMode="singleTask"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.af.AFPanelActivity"
+    android:configChanges="keyboardHidden"
+    android:launchMode="singleTask"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.af.AFFullScreenActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:launchMode="singleTask"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.af.AFListActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:launchMode="singleTask"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+<activity
+    android:name="com.fusepowered.af.AFInterstitialActivity"
+    android:configChanges="keyboardHidden|orientation"
+    android:launchMode="singleTask"
+    android:screenOrientation="portrait"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+<receiver
+    android:name="com.fusepowered.af.AFReferralReceiver"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="com.android.vending.INSTALL_REFERRER" />
+    </intent-filter>
+</receiver>
+
+<!-- Bookface -->
+<activity
+    android:name="com.facebook.ads.InterstitialAdActivity"
+    android:configChanges="keyboardHidden|orientation|screenSize" />
+
+<!-- Chartboost -->
+<activity
+    android:name="com.chartboost.sdk.CBImpressionActivity"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:configChanges="orientation|screenSize|keyboardHidden"
+    android:excludeFromRecents="true" />
+<activity
+    android:name="com.fusepowered.ads.adapters.CBActivity"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+    android:configChanges="orientation|screenSize|keyboardHidden" />

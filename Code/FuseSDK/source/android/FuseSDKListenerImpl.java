@@ -60,7 +60,7 @@ public class FuseSDKListenerImpl implements FuseSDKListener
 	{
         _wrapper.FuseSDKAccountLoginComplete(type, accountId);
 	}
-    public void accountLoginError(String error, String accountId)
+    public void accountLoginError(String accountId, FuseError error)
 	{
         _wrapper.FuseSDKLoginError(1);
 	}
@@ -142,6 +142,11 @@ public class FuseSDKListenerImpl implements FuseSDKListener
 	{
         _wrapper.FuseSDKAdWillClose();
 	}
+
+    public void adFailedToDisplay()
+    {
+        //TODO
+    }
 
     // ------------------------------------ Rewarded Ads
 
