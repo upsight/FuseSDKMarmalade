@@ -1,6 +1,6 @@
 FuseSDK for Marmalade
 ========================
-FuseSDK  Version v2.0.0-Beta
+FuseSDK  Version v2.0.0
 
 This Extension currently supports
       
