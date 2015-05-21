@@ -427,21 +427,22 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     };
 
     // copy the strings
-    const char* string = reward.preRollMessage.UTF8String;
+
+    const char* string = reward.preRollMessage ? reward.preRollMessage.UTF8String : "";
     char* preroll_copy = (char*)malloc(strlen(string) + 1);
     strcpy(preroll_copy, string);
 
-    string = reward.rewardMessage.UTF8String;
+    string =  reward.rewardMessage ? reward.rewardMessage.UTF8String  : "";
     char* rewardmsg_copy = (char*)malloc(strlen(string) + 1);
     strcpy(rewardmsg_copy, string);
 
-    string = reward.rewardItem.UTF8String;
+    string = reward.rewardItem ?  reward.rewardItem.UTF8String : "";
     char* rewarditem_copy = (char*)malloc(strlen(string) + 1);
     strcpy(rewarditem_copy, string);
 
     // set the params
     paramList params;
-    params.rewardAmount = reward.rewardAmount.intValue;
+    params.rewardAmount = reward.rewardAmount ? reward.rewardAmount.intValue : 0;
     params.preMessage = preroll_copy;
     params.rewardMessage = rewardmsg_copy;
     params.rewardItem = rewarditem_copy;
@@ -687,14 +688,14 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     }
 }
 
-//- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    if( [m_appDelegate respondsToSelector:@selector(application:sourceApplication:annotation:)] )
-//    {
-//        return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
-//    }
-//    return YES;
-//}
+- (BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if( [m_appDelegate respondsToSelector:@selector(application:openURL:sourceApplication:annotation:)] )
+    {
+        return [m_appDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+    }
+    return YES;
+}
 
 //- (BOOL) application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
 //{
