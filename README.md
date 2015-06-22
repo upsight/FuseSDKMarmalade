@@ -1,25 +1,19 @@
-FuseSDK for Marmalade
-========================
-FuseSDK  Version v2.0.5
+# FuseSDK for Marmalade
+
+## Current Version
+
+Version: 2.0.5
+
+## Description
+
+Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseSDK](http://www.fuseboxx.com) for Android and iOS.
 
 This Extension currently supports
       
     ANDROID 
 	IOS
 
-Description
-========================
-
-Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseSDK](http://www.fuseboxx.com) for Android.
-
-Version: 2.0.5
-
-Platform: Android, iOS<br>
-Extension Developer: Fuse Powered<br>
-Library Developer: www.fusepowered.com
-
-Installation
------------------
+## Installation
 1. Copy the FuseSDK directory into your extensions folder.
 
 2. Subproject the FuseSDK Extension in your Marmalade Project's MKB file
@@ -30,8 +24,7 @@ Installation
     }
 ```
 
-Getting Started
------------------
+## Getting Started
 1. Enable Push Notifications<br><br>
 	Edit FuseSDK/source/ExtraAppManifests.txt<br>
 		Replace com.fusepowered.marmaladesample with your application bundle ID in the two activities
@@ -76,10 +69,16 @@ Getting Started
 
 See the test project in FuseSDK/test for a very simple example of registering and unregistering callbacks, starting a session, and displaying an ad. 
 
-### Features ####
+## Features
 See FuseSDK/docs/FuseSDK.txt for a list of function calls supported by the extension
 
-### Callbacks ####
+## Callbacks
 Many FuseSDK callbacks send information as structs through the systemData parameter.  
 Information about callbacks and the structures they pass can be found in FuseSDK/docs/Callbacks.txt
 The test project gives some examples of retrieving callback data from these structs.
+
+## Legal Requirements
+By downloading the Fuse Powered SDK, you are granted a limited, non-commercial license to use and review the SDK solely for evaluation purposes.  If you wish to integrate the SDK into any commercial applications, you must register an account with [Fuse Powered](https://www.fusepowered.com) and accept the terms and conditions on the Fuse Powered website.
+
+## Contact Us
+For more information, please visit [http://www.fusepowered.com](http://www.fusepowered.com). For questions or assistance, please email us at [support@fusepowered.com](mailto:support@fusepowered.com).
