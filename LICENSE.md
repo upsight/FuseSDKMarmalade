@@ -1,6 +1,5 @@
 The Fuse Powered SDK makes use of certain open source software pursuant to the license agreements included below.
 
----
 # Nexage
 
 Copyright (c) 2013, Nexage, Inc.
@@ -31,15 +30,6 @@ AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
----
-# MoPub
-
-You may obtain a copy of the License at
-
-http://www.mopub.com/legal/sdk-license-agreement/
-
-
----
 # Affiliate Redirection
 
 Copyright (c) 2013 Javier Venegas
