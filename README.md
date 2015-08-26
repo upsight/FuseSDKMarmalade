@@ -6,9 +6,9 @@ Version: 2.2.2
 
 ## If Updating
 Please note that extra parameters have been added to the following callbacks:
-FUSESDK_REWARDED_AD_COMPLETED
-FUSESDK_VIRTUALGOODSOFFER_ACCEPTED
-FUSESDK_IAPOFFER_ACCEPTED
+FUSESDK_REWARDED_AD_COMPLETED<br>
+FUSESDK_VIRTUALGOODSOFFER_ACCEPTED<br>
+FUSESDK_IAPOFFER_ACCEPTED<br>
 The updated callback structs are available in docs/Callbacks.txt
 
 ## Description
