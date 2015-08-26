@@ -56,6 +56,8 @@ void FuseSDKRegisterInAppPurchaseAndroid_platform(FusePurchaseStateAndroid purch
 
 void FuseSDKRegisterInAppPurchaseiOS_platform(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID);
 
+void FuseSDKRegisterVirtualGoodsPurchase_platform(int virtualGoodsID, int purchaseAmount, int currencyID);
+
 void FuseSDKPreloadAdForZoneID_platform(const char* zoneID);
 
 bool FuseSDKIsAdAvailableForZoneID_platform(const char* zoneID);
@@ -103,5 +105,13 @@ const char* FuseSDKGetGameConfigurationValue_platform(const char* key);
 void FuseSDKRegisterLevel_platform(int level);
 
 void FuseSDKRegisterCurrency_platform(int type, int balance);
+
+void FuseSDKRegisterParentalConsent_platform(bool enabled);
+
+bool FuseSDKRegisterCustomEventInt_platform(int eventID, int eventValue);
+
+bool FuseSDKRegisterCustomEventString_platform(int eventID, const char* eventValue);
+
+void FuseSDKSetRewardedVideoUserID_platform(const char* userID);
 
 #endif /* !FUSESDK_INTERNAL_H */

@@ -346,6 +346,8 @@
  * @param _verified [NSSNumber*] This is the _verified bit: 1 indicates that the transaction was valid.  0 indicates that the transaction should be treated with suspicion.
  * @param _tx_id [NSString*] The transaction ID specified by Apple
  * @param _o_tx_id [NSString*] The original transaction ID specified by Apple (can be different than the transaction ID because the transaction could be a reinstatement of a previous purchase)
+ 
+ @see https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html For information how to collect Receipt when registering in app purchases
  * @see FuseSDK::registerInAppPurchase: for more information on how to invoke this process
  */
 -(void) purchaseVerification:(NSNumber*)_verified TransactionID:(NSString*)_tx_id OriginalTransactionID:(NSString*)_o_tx_id;
@@ -417,20 +419,62 @@
 -(void) virtualGoodsOfferAcceptedWithObject:(FuseVirtualGoodsOfferObject*) _offer;
 
 /*!
+ * @brief Callback to acknowledge an News Ad was clicked and the app should react to _message
+ @param _message Dashboard set token for the application to respond to. Ex. 'openStore'
+
+ 
+ @code
+ 
+ -(void) onAdClickedWithMessage:(NSString*) _message
+ {
+    if([_message isEqualToString:@"openStore"])
+    {
+        [game OpenCoinStore];
+    }
+ 
+ }
+ 
+ @endcode
+ 
+ @since Fuse SDK version 2.1.0
+ */
+-(void) onAdClickedWithMessage:(NSString*) _message;
+
+/*!
  * @brief Callback to inform no ad was displayed from showAdForZoneID:withOptions: call.
 
  
- @see FshowAdForZoneID:withOptions:
- @since Fuse SDK version 2.0.0
+ * @see FshowAdForZoneID:withOptions:
+ * @since Fuse SDK version 2.0.0
  */
 -(void) adFailedToDisplay;
+
+
+/*!
+ * @brief If implemented, AdRally ads will pass this callback including the click-through URL back to the application.
+    It is then the application's responsibility to present an age gate and continue with the click-through if appropriate
+ 
+ * In Order to use this Delegate Call, The option kFuseSDKOptionKey_HandleAdURLs must be passed with the value @YES
+ * @since Fuse SDK version 2.1.0
+ */
+
+-(void) handleAdClickWithURL:(NSURL*)_url;
+
+/*!
+* @brief Callback to inform ad Did show
+ 
+ * @see FuseSDK::showAdForZoneID:withOptions:
+ * @since Fuse SDK version 2.2.1
+*/
+-(void) adDidShow:(NSNumber *)_networkID mediaType:(NSNumber *)_mediaType;
+
 
 @required
 /*!
  * @brief Callback to indicates when control is being returned to the application
  
  * @details When an ad is being dismissed by the user and control is to be returned to the application, this method will be called.  Once called, the application can continue execution of the user flow or application.
- * @see FuseSDK::showAdWithDelegate: for more information on displaying an ad with a \<FuseDelegate\>
+ * @see FuseSDK::showAdForZoneID:withOptions: for more information on displaying an ad with a \<FuseDelegate\>
  * @since FuseSDK version 1.12
  */
 -(void) adWillClose;
@@ -819,6 +863,7 @@
  @see FuseDelegate::purchaseVerification:TransactionID:OriginalTransactionID: for more information on the \<FuseDelegate\> callback indicating whether the transaction was verified by Apple's servers
  @see http://en.wikipedia.org/wiki/ISO_4217 for more information on ISO 4217 currency codes.
  @see registerInAppPurchase: for more information on calling this function with the SKPaymentTransaction object.
+ @see https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html For information how to collect Receipt Data
  @since Fuse SDK version 1.29
  */
 +(void) registerInAppPurchase:(NSData*)_receipt_data TxState:(NSInteger)_tx_state Price:(NSString*)_price Currency:(NSString*)_currency ProductID:(NSString*)_product_id __attribute__((deprecated));
@@ -846,12 +891,39 @@
  @see FuseDelegate::purchaseVerification:TransactionID:OriginalTransactionID: for more information on the \<FuseDelegate\> callback indicating whether the transaction was verified by Apple's servers
  @see http://en.wikipedia.org/wiki/ISO_4217 for more information on ISO 4217 currency codes.
  @see registerInAppPurchase: for more information on calling this function with the SKPaymentTransaction object.
+ @see https://developer.apple.com/library/ios/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html For information how to collect Receipt Data
  @since Fuse SDK version 1.29
  */
 +(void) registerInAppPurchase:(NSData*)_receipt_data TxState:(NSInteger)_tx_state Price:(NSString*)_price Currency:(NSString*)_currency ProductID:(NSString*)_product_id TransactionID:(NSString*)_tx_id;
 
 
+/*!
+ @brief This method records purchases of virtual goods.
+
+ @details Call this method directly after a virtual good has been purchased successfully.
+
+ @param _virtualGoodsID [int] The ID of the virtual good as defined in the Fuse Dashboard.
+ @param _purchaseAmount [int] The amount of currency spent on the virtual good.
+ @param _currencyID [int] The ID of the currency used as defined on the Fuse Dashboard.
+ @since Fuse SDK version 2.1.0
+ */
++(void) registerVirtualGoodsPurchase:(int)_virtualGoodsID Amount:(int)_purchaseAmount CurrencyID:(int)_currencyID;
+
+
+
 #pragma mark Interstitial Ads
+/*
+ 
+ * @brief This method sets the user ID string for rewarded video server verification
+ * @details To allow server side verificiation. A user id registered with this function is passed to the server when a rewarded video has been completed. The server then transmits faithfully this id 
+    to the 3rd Party server registered on the FusePowered Dashboard. The value is only cached for the duration of the session, and can be changed at any time.
+ 
+ @code
+ [FuseSDK setRewardedVideoUserID:@"bobSmith1994"];
+ 
+ */
+
++(void) setRewardedVideoUserID:(NSString *) _userID;
 
 
 /*!
@@ -1051,11 +1123,13 @@
  // The enumerated type definition is as follows:
  enum kFuseGender
  {
-    FUSE_GENDER_UNKNOWN = 0,
-    FUSE_GENDER_MALE,
-    FUSE_GENDER_FEMALE,
+     FUSE_GENDER_UNKNOWN = 0,
+     FUSE_GENDER_MALE,
+     FUSE_GENDER_FEMALE,
+     FUSE_GENDER_UNDECIDED,
+     FUSE_GENDER_WITHHELD
  };
- 
+
  @endcode
  
  @param _gender [int] The enumerated gender of the user
@@ -1910,7 +1984,61 @@
 #pragma mark Specific Event Registration
 
 /*!
- * @brief Register the user's current level after they level-up
+ * @brief Register the if the user has parental consent
+ * @details This method tracks if parental consent has been obtained
+ *
+ * @code
+
+ [FuseSDK registerParentalConsent:YES];
+
+ * @endcode
+ *
+ * @param _consent [BOOL] If the user has parental consent
+ * @since Fuse SDK version 2.1.0
+ */
++(void) registerParentalConsent:(BOOL)_consent;
+
+/*!
+ * @brief Register an integer value for a custom event that was defined on the Fuse Dashboard
+ * @details Tracks integer values for custom events.  
+    Note: Custom events can only accept integer values or string values, but not both. If you pass an integer value 
+      to an event that only accepts strings, then the value will not be stored on the server.
+ *
+ * @code
+
+ BOOL succeeded = [FuseSDK registerCustomEvent:1 withInt:42];
+
+ * @endcode
+ *
+ * @param _eventNumber [int] The ID for the custom event as defined on the Fuse Dashboard
+ * @param _value [int] The integer value to set for this custom event
+ * @retval [BOOL] Returns YES if the custom event accepts integer values
+ * @since Fuse SDK version 2.1.0
+ */
++(BOOL) registerCustomEvent:(int)_eventNumber withInt:(int)_value;
+
+/*!
+ * @brief Register a string value for a custom event that was defined on the Fuse Dashboard
+ * @details Tracks string values for custom events.
+    Note: Custom events can only accept integer values or string values, but not both. If you pass a string value
+      to an event that only accepts integers, then the value will not be stored on the server.
+ *
+ * @code
+
+ BOOL succeeded = [FuseSDK registerCustomEvent:3 withString:@"This is a custom event"];
+
+ * @endcode
+ *
+ * @param _eventNumber [int] The ID for the custom event as defined on the Fuse Dashboard
+ * @param _value [NSString*] A string value for the custom event.  The string can have a maximum of 255 characters
+ * @retval [BOOL] Returns YES if the custom event accepts string values
+ * @since Fuse SDK version 2.1.0
+ */
++(BOOL) registerCustomEvent:(int)_eventNumber withString:(NSString*)_value;
+
+
+/*!
+ * @brief Register a custom event with an integer value
  * @details This method can specifically track user levels to more accurately measure application penetration
  *
  * @code
@@ -1936,9 +2064,10 @@
  *
  * @param _currencyType [int] Enter 1-4, representing up to four different in-app resources.  These values can be set specific to the application.
  * @param _balance [int] The updated balance of the user
+ * @retval [BOOL] Returns YES if the _currencyType is within the valid range
  * @since Fuse SDK version 1.25
  */
-+(void) registerCurrency:(int)_currencyType Balance:(int)_balance;
++(BOOL) registerCurrency:(int)_currencyType Balance:(int)_balance;
 
 
 

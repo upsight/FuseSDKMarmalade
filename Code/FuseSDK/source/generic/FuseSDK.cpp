@@ -59,6 +59,10 @@ void FuseSDKRegisterInAppPurchaseiOS(FusePurchaseStateiOS purchaseState, const c
     FuseSDKRegisterInAppPurchaseiOS_platform(purchaseState, receiptData, recieptDataLength, price, currency, productID, transactionID);
 }
 
+void FuseSDKRegisterVirtualGoodsPurchase(int virtualGoodsID, int purchaseAmount, int currencyID)
+{
+    FuseSDKRegisterVirtualGoodsPurchase_platform(virtualGoodsID, purchaseAmount, currencyID);
+}
 
 void FuseSDKPreloadAdForZoneID(const char* zoneID)
 {
@@ -179,3 +183,24 @@ void FuseSDKRegisterCurrency(int type, int balance)
 {
 	FuseSDKRegisterCurrency_platform(type, balance);
 }
+
+void FuseSDKRegisterParentalConsent(bool enabled)
+{
+    FuseSDKRegisterParentalConsent_platform(enabled);
+}
+
+bool FuseSDKRegisterCustomEventInt(int eventID, int eventValue)
+{
+    return FuseSDKRegisterCustomEventInt_platform(eventID, eventValue);
+}
+
+bool FuseSDKRegisterCustomEventString(int eventID, const char* eventValue)
+{
+    return FuseSDKRegisterCustomEventString_platform(eventID, eventValue);
+}
+
+void FuseSDKSetRewardedVideoUserID(const char* userID)
+{
+    FuseSDKSetRewardedVideoUserID_platform(userID);
+}
+

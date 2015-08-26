@@ -12,7 +12,9 @@ enum FuseSDKCallback
 	FUSESDK_SESSION_STARTED,
 	FUSESDK_SESSION_LOGIN_ERROR,
 	FUSESDK_AD_AVAILABILITY_RESPONSE,
+	FUSESDK_AD_DID_SHOW,
 	FUSESDK_AD_WILL_CLOSE,
+	FUSESDK_AD_FAILED_TO_DISPLAY,
     FUSESDK_OVERLAY_WILL_CLOSE,
 	FUSESDK_REWARDED_AD_COMPLETED,
 	FUSESDK_IAPOFFER_ACCEPTED,
@@ -75,12 +77,13 @@ enum FuseEvent
 	FUSE_EVENT_NULL_PARAMETER = 2,
 };
 
-// used to register gender
-enum FuseGender 
+enum kFuseGender
 {
-    FUSE_GENDER_UNKNOWN = 0,
-    FUSE_GENDER_MALE = 1,
-    FUSE_GENDER_FEMALE = 2,
+    FUSE_GENDER_UNKNOWN = 0,        /// gender unknown
+    FUSE_GENDER_MALE,               /// gender male
+    FUSE_GENDER_FEMALE,             /// gender female
+    FUSE_GENDER_UNDECIDED,          /// gender undecided
+    FUSE_GENDER_WITHHELD            /// gender withheld
 };
 
 // error codes:
@@ -197,13 +200,26 @@ cfuhash_put(options, kFuseSDKRewardedAdOptionKey_ShowPostRoll, "1");
 FuseSDKShowAdForZoneID("Rewarded Video", options);
 
 * @endcode
-* The following callbacks are available with this function: FUSESDK_AD_WILL_CLOSE, FUSESDK_REWARDED_AD_COMPLETED, FUSESDK_IAPOFFER_ACCEPTED, FUSESDK_VIRTUALGOODSOFFER_ACCEPTED
+* The following callbacks are available with this function: FUSESDK_AD_DID_SHOW, FUSESDK_AD_WILL_CLOSE, FUSESDK_REWARDED_AD_COMPLETED, FUSESDK_IAPOFFER_ACCEPTED, FUSESDK_VIRTUALGOODSOFFER_ACCEPTED
 * See FuseSDK/docs/Callbacks.txt for more details
 *
 * @param zoneID [const char*] The name of the ad zone to display.  You can configure different zones via the Fuse Dashboard. Will use the default ad zone if set to null.
 * @param options [cfuhash_table_t*] Options for showing the ad, like showing the preroll and postroll for rewarded videos. May be null.  See the Ad Option Keys list for available options
 */
 void FuseSDKShowAdForZoneID(const char* zoneID, cfuhash_table_t* options) run_on_os_thread
+
+/*
+ 
+ * @brief This method sets the user ID string for rewarded video server verification
+ *
+ * @details To allow server side verificiation. A user id registered with this function is passed to the server when a rewarded video has been completed. The server then transmits faithfully this id 
+    to the 3rd Party server registered on the FusePowered Dashboard. The value is only cached for the duration of the session, and can be changed at any time.
+ 
+ @code
+ FuseSDKSetRewardedVideoUserID("bobSmith1994");
+ 
+ */
+void FuseSDKSetRewardedVideoUserID(const char* userID) run_on_os_thread
 
 
 /**+-------------------------+
@@ -241,7 +257,17 @@ void FuseSDKRegisterInAppPurchaseAndroid(FusePurchaseStateAndroid purchaseState,
 */
 void FuseSDKRegisterInAppPurchaseiOS(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID) run_on_os_thread
 
+/*!
+ @brief This method records purchases of virtual goods.
 
+ @details Call this method directly after a virtual good has been purchased successfully.
+
+ @param virtualGoodsID [int] The ID of the virtual good as defined in the Fuse Dashboard.
+ @param purchaseAmount [int] The amount of currency spent on the virtual good.
+ @param currencyID [int] The ID of the currency used as defined on the Fuse Dashboard.
+ @since Fuse SDK version 2.1.0
+ */
+void FuseSDKRegisterVirtualGoodsPurchase(int virtualGoodsID, int purchaseAmount, int currencyID) run_on_os_thread
 
 /**+---------------+
 // | Notifications |
@@ -600,6 +626,54 @@ void FuseSDKRegisterLevel(int level) run_on_os_thread
 * @param balance [int] The updated balance of the user
 */ 
 void FuseSDKRegisterCurrency(int type, int balance) run_on_os_thread
+
+/*!
+ * @brief Register the if the user has parental consent
+ * @details This method tracks if parental consent has been obtained
+ *
+ *
+ * @param _consent [bool] If the user has parental consent
+ * @since Fuse SDK version 2.1.0
+ */
+void FuseSDKRegisterParentalConsent(bool enabled) run_on_os_thread
+
+/*!
+ * @brief Register an integer value for a custom event that was defined on the Fuse Dashboard
+ * @details Tracks integer values for custom events.  
+    Note: Custom events can only accept integer values or string values, but not both. If you pass an integer value 
+      to an event that only accepts strings, then the value will not be stored on the server.
+ *
+ * @code
+
+ bool succeeded = FuseSDKRegisterCustomEventInt(1, 42);
+
+ * @endcode
+ *
+ * @param eventID [int] The ID for the custom event as defined on the Fuse Dashboard
+ * @param eventValue [int] The integer value to set for this custom event
+ * @retval [bool] Returns true if the custom event accepts integer values
+ * @since Fuse SDK version 2.1.0
+ */
+bool FuseSDKRegisterCustomEventInt(int eventID, int eventValue) run_on_os_thread
+
+/*!
+ * @brief Register a string value for a custom event that was defined on the Fuse Dashboard
+ * @details Tracks string values for custom events.
+    Note: Custom events can only accept integer values or string values, but not both. If you pass a string value
+      to an event that only accepts integers, then the value will not be stored on the server.
+ *
+ * @code
+
+ bool succeeded = FuseSDKRegisterCustomEventString(3, "This is a custom event");
+
+ * @endcode
+ *
+ * @param eventID [int] The ID for the custom event as defined on the Fuse Dashboard
+ * @param eventValue [const char*] A string value for the custom event.  The string can have a maximum of 255 characters
+ * @retval [bool] Returns true if the custom event accepts string values
+ * @since Fuse SDK version 2.1.0
+ */
+bool FuseSDKRegisterCustomEventString(int eventID, const char* eventValue) run_on_os_thread
 
 
 

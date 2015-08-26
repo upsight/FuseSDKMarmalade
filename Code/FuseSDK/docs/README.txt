@@ -1,6 +1,6 @@
 FuseSDK for Marmalade
 ========================
-FuseSDK  Version v2.0.0
+FuseSDK  Version v2.2.2
 
 This Extension currently supports
       
@@ -12,7 +12,7 @@ Description
 
 Provides a [Marmalade](http://www.madewithmarmalade.com) wrapper around [FuseSDK](http://www.fuseboxx.com) for Android.
 
-Version: 2.0.0
+Version: 2.2.2
 
 Platform: Android, iOS
 Extension Developer: Fuse Powered

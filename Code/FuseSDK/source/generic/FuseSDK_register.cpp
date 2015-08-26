@@ -72,6 +72,12 @@ static void FuseSDKShowAdForZoneID_wrap(const char* zoneID, cfuhash_table_t* opt
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKShowAdForZoneID, 2, zoneID, options);
 }
 
+static void FuseSDKSetRewardedVideoUserID_wrap(const char* userID)
+{
+    IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKSetRewardedVideoUserID"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKSetRewardedVideoUserID, 1, userID);
+}
+
 static void FuseSDKRegisterInAppPurchaseAndroid_wrap(FusePurchaseStateAndroid purchaseState, const char* purchaseToken, const char* productId, const char* orderId, long purchaseTime, const char* developerPayload, const double* price, const char* currency)
 {
     IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterInAppPurchaseAndroid"));
@@ -82,6 +88,12 @@ static void FuseSDKRegisterInAppPurchaseiOS_wrap(FusePurchaseStateiOS purchaseSt
 {
     IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterInAppPurchaseiOS"));
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterInAppPurchaseiOS, 7, purchaseState, receiptData, recieptDataLength, price, currency, productID, transactionID);
+}
+
+static void FuseSDKRegisterVirtualGoodsPurchase_wrap(int virtualGoodsID, int purchaseAmount, int currencyID)
+{
+    IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterVirtualGoodsPurchase"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterVirtualGoodsPurchase, 3, virtualGoodsID, purchaseAmount, currencyID);
 }
 
 static void FuseSDKDisplayNotifications_wrap()
@@ -210,6 +222,24 @@ static void FuseSDKRegisterCurrency_wrap(int type, int balance)
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterCurrency, 2, type, balance);
 }
 
+static void FuseSDKRegisterParentalConsent_wrap(bool enabled)
+{
+    IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterParentalConsent"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterParentalConsent, 1, enabled);
+}
+
+static bool FuseSDKRegisterCustomEventInt_wrap(int eventID, int eventValue)
+{
+    IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterCustomEventInt"));
+    return (bool)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterCustomEventInt, 2, eventID, eventValue);
+}
+
+static bool FuseSDKRegisterCustomEventString_wrap(int eventID, const char* eventValue)
+{
+    IwTrace(FUSESDK_VERBOSE, ("calling FuseSDK func on main thread: FuseSDKRegisterCustomEventString"));
+    return (bool)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)FuseSDKRegisterCustomEventString, 2, eventID, eventValue);
+}
+
 #define FuseSDKStartSession FuseSDKStartSession_wrap
 #define FuseSDKPauseSession FuseSDKPauseSession_wrap
 #define FuseSDKResumeSession FuseSDKResumeSession_wrap
@@ -218,8 +248,10 @@ static void FuseSDKRegisterCurrency_wrap(int type, int balance)
 #define FuseSDKPreloadAdForZoneID FuseSDKPreloadAdForZoneID_wrap
 #define FuseSDKIsAdAvailableForZoneID FuseSDKIsAdAvailableForZoneID_wrap
 #define FuseSDKShowAdForZoneID FuseSDKShowAdForZoneID_wrap
+#define FuseSDKSetRewardedVideoUserID FuseSDKSetRewardedVideoUserID_wrap
 #define FuseSDKRegisterInAppPurchaseAndroid FuseSDKRegisterInAppPurchaseAndroid_wrap
 #define FuseSDKRegisterInAppPurchaseiOS FuseSDKRegisterInAppPurchaseiOS_wrap
+#define FuseSDKRegisterVirtualGoodsPurchase FuseSDKRegisterVirtualGoodsPurchase_wrap
 #define FuseSDKDisplayNotifications FuseSDKDisplayNotifications_wrap
 #define FuseSDKDisplayMoreGames FuseSDKDisplayMoreGames_wrap
 #define FuseSDKRegisterGender FuseSDKRegisterGender_wrap
@@ -241,6 +273,9 @@ static void FuseSDKRegisterCurrency_wrap(int type, int balance)
 #define FuseSDKGetGameConfigurationValue FuseSDKGetGameConfigurationValue_wrap
 #define FuseSDKRegisterLevel FuseSDKRegisterLevel_wrap
 #define FuseSDKRegisterCurrency FuseSDKRegisterCurrency_wrap
+#define FuseSDKRegisterParentalConsent FuseSDKRegisterParentalConsent_wrap
+#define FuseSDKRegisterCustomEventInt FuseSDKRegisterCustomEventInt_wrap
+#define FuseSDKRegisterCustomEventString FuseSDKRegisterCustomEventString_wrap
 
 #endif
 
@@ -257,7 +292,7 @@ s3eResult FuseSDKUnRegister(FuseSDKCallback cbid, s3eCallback fn)
 void FuseSDKRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[33];
+    void* funcPtrs[38];
     funcPtrs[0] = (void*)FuseSDKRegister;
     funcPtrs[1] = (void*)FuseSDKUnRegister;
     funcPtrs[2] = (void*)FuseSDKStartSession;
@@ -268,34 +303,39 @@ void FuseSDKRegisterExt()
     funcPtrs[7] = (void*)FuseSDKPreloadAdForZoneID;
     funcPtrs[8] = (void*)FuseSDKIsAdAvailableForZoneID;
     funcPtrs[9] = (void*)FuseSDKShowAdForZoneID;
-    funcPtrs[10] = (void*)FuseSDKRegisterInAppPurchaseAndroid;
-    funcPtrs[11] = (void*)FuseSDKRegisterInAppPurchaseiOS;
-    funcPtrs[12] = (void*)FuseSDKDisplayNotifications;
-    funcPtrs[13] = (void*)FuseSDKDisplayMoreGames;
-    funcPtrs[14] = (void*)FuseSDKRegisterGender;
-    funcPtrs[15] = (void*)FuseSDKFacebookLogin;
-    funcPtrs[16] = (void*)FuseSDKTwitterLogin;
-    funcPtrs[17] = (void*)FuseSDKDeviceLogin;
-    funcPtrs[18] = (void*)FuseSDKFuseLogin;
-    funcPtrs[19] = (void*)FuseSDKGameCenterLogin;
-    funcPtrs[20] = (void*)FuseSDKGooglePlayLogin;
-    funcPtrs[21] = (void*)FuseSDKGetOriginalAccountId;
-    funcPtrs[22] = (void*)FuseSDKGetOriginalAccountAlias;
-    funcPtrs[23] = (void*)FuseSDKGetOriginalAccountType;
-    funcPtrs[24] = (void*)FuseSDKGetFuseID;
-    funcPtrs[25] = (void*)FuseSDKgamesPlayed;
-    funcPtrs[26] = (void*)FuseSDKLibraryVersion;
-    funcPtrs[27] = (void*)FuseSDKConnected;
-    funcPtrs[28] = (void*)FuseSDKTimeFromServer;
-    funcPtrs[29] = (void*)FuseSDKEnableData;
-    funcPtrs[30] = (void*)FuseSDKGetGameConfigurationValue;
-    funcPtrs[31] = (void*)FuseSDKRegisterLevel;
-    funcPtrs[32] = (void*)FuseSDKRegisterCurrency;
+    funcPtrs[10] = (void*)FuseSDKSetRewardedVideoUserID;
+    funcPtrs[11] = (void*)FuseSDKRegisterInAppPurchaseAndroid;
+    funcPtrs[12] = (void*)FuseSDKRegisterInAppPurchaseiOS;
+    funcPtrs[13] = (void*)FuseSDKRegisterVirtualGoodsPurchase;
+    funcPtrs[14] = (void*)FuseSDKDisplayNotifications;
+    funcPtrs[15] = (void*)FuseSDKDisplayMoreGames;
+    funcPtrs[16] = (void*)FuseSDKRegisterGender;
+    funcPtrs[17] = (void*)FuseSDKFacebookLogin;
+    funcPtrs[18] = (void*)FuseSDKTwitterLogin;
+    funcPtrs[19] = (void*)FuseSDKDeviceLogin;
+    funcPtrs[20] = (void*)FuseSDKFuseLogin;
+    funcPtrs[21] = (void*)FuseSDKGameCenterLogin;
+    funcPtrs[22] = (void*)FuseSDKGooglePlayLogin;
+    funcPtrs[23] = (void*)FuseSDKGetOriginalAccountId;
+    funcPtrs[24] = (void*)FuseSDKGetOriginalAccountAlias;
+    funcPtrs[25] = (void*)FuseSDKGetOriginalAccountType;
+    funcPtrs[26] = (void*)FuseSDKGetFuseID;
+    funcPtrs[27] = (void*)FuseSDKgamesPlayed;
+    funcPtrs[28] = (void*)FuseSDKLibraryVersion;
+    funcPtrs[29] = (void*)FuseSDKConnected;
+    funcPtrs[30] = (void*)FuseSDKTimeFromServer;
+    funcPtrs[31] = (void*)FuseSDKEnableData;
+    funcPtrs[32] = (void*)FuseSDKGetGameConfigurationValue;
+    funcPtrs[33] = (void*)FuseSDKRegisterLevel;
+    funcPtrs[34] = (void*)FuseSDKRegisterCurrency;
+    funcPtrs[35] = (void*)FuseSDKRegisterParentalConsent;
+    funcPtrs[36] = (void*)FuseSDKRegisterCustomEventInt;
+    funcPtrs[37] = (void*)FuseSDKRegisterCustomEventString;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[33] = { 0 };
+    int flags[38] = { 0 };
 
     /*
      * Register the extension

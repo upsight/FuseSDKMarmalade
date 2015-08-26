@@ -37,6 +37,8 @@ if {{defined I3D_OS_IPHONE}}
 		libFuseAdapterAdcolony.a
 		libFuseAdapterAppLovin.a
 		libFuseAdapterHyprMX.a
+		libFuseAdapterLeadBolt.a
+		libFuseAdapterNativeX.a
         ["source"]
         (h)
         FuseSDK.h

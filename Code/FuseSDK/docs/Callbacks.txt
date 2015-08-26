@@ -68,8 +68,21 @@ struct paramList
 //-------------------------------------
 
 //-------------------------------------
+FUSESDK_AD_DID_SHOW
+Response to: FuseSDKShowAdForZoneID(). Called only when an ad is successfully displayed.
+Params:
+struct paramList
+{
+	// both parameters are used for debugging purposes only
+	int networkID; 
+	int mediaType; 
+}
+//-------------------------------------
+
+//-------------------------------------
 FUSESDK_AD_WILL_CLOSE
-Response to: User pressing the 'X' close button on an ad
+Response to: FuseSDKShowAdForZoneID().  This is called any time an ad display attempt is made, either when an ad is closed, or if an ad view attempt failed. 
+Receiving this callback signifies that control should return to the application.
 Params: none
 //-------------------------------------
 
@@ -83,6 +96,7 @@ struct paramList
     const char* rewardMessage;
     const char* rewardItem;
     int rewardAmount;
+    int itemID; // the rewarded item ID as specified on the Fuse Dashboard
 };
 //-------------------------------------
 
@@ -96,6 +110,10 @@ struct paramList
     float purchasePrice;
     const char* itemName;
     int itemAmount;
+    int startTime;
+    int endTime;
+    int currencyID;
+    int virtualGoodsID;
 };
 //-------------------------------------
 
@@ -109,6 +127,8 @@ struct paramList
     int itemAmount;
     const char* itemName;
     const char* productID;
+    int startTime;
+    int endTime;
 };
 //-------------------------------------
 

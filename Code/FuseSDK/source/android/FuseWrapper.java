@@ -26,15 +26,14 @@ public class FuseWrapper
 	private static FuseWrapper _this = null;
 	private static Activity _activity = null;
     private static FuseSDKListener _listener = null;
-
-	public static final int notification_large=0x7f020002;
-    public static final int notification_small=0x7f020003;
     
     // Native JNI functions used for EDK Callback
     public native void FuseSDKSessionStartReceived();
     public native void FuseSDKLoginError(int error);
     public native void FuseSDKAdAvailabilityResponse(int available, int error);
     public native void FuseSDKAdWillClose();
+    public native void FuseSDKAdFailedToDisplay();
+    public native void FuseSDKAdDidShow(int networkID, int mediaType);
 	public native void FuseSDKNotificationAction(String action);
 	public native void FuseSDKAccountLoginComplete(int accountType, String accountID);
 	public native void FuseSDKTimeUpdated(int timestamp);	
@@ -42,9 +41,9 @@ public class FuseWrapper
 	public native void FuseGameConfigurationKeyValue(String key, String value);
 	public native void FuseGameConfigurationReceived();
     public native void FuseSDKPurchaseVerification(int verified, String transaction_id,  String originalTransactionID);
-    public native void FuseSDKRewardedAdComplete(String preRollMessage, String rewardMessage, String rewardItem, int rewardAmount);
-    public native void FuseSDKVirtualGoodsOfferAccepted(String purchaseCurrency, float purchasePrice, String itemName, int itemAmount);
-    public native void FuseSDKIAPOfferAccepted(float productPrice, int itemAmount, String itemName, String productID);
+    public native void FuseSDKRewardedAdComplete(String preRollMessage, String rewardMessage, String rewardItem, int rewardAmount, int itemID);
+    public native void FuseSDKVirtualGoodsOfferAccepted(String purchaseCurrency, float purchasePrice, String itemName, int itemAmount, int startTime, int endTime, int currencyID, int virtualGoodsID);    
+    public native void FuseSDKIAPOfferAccepted(float productPrice, int itemAmount, String itemName, String productID, int startTime, int endTime);
 
 	/**+------------------+
 	// | Session Creation |
@@ -60,8 +59,8 @@ public class FuseWrapper
 	public void FuseSDKStartSession(String key)
     {
 		Log.i(_logTag, "Session Start for key " + key);
-		FuseSDK.startSession(key, _activity, _listener, null);
         FuseSDK.setPlatform("marmalade-android");
+		FuseSDK.startSession(key, _activity, _listener, null);
     }
 
 	public void FuseSDKPauseSession()
@@ -85,17 +84,26 @@ public class FuseWrapper
 	public void FuseSDKRegisterForPushNotifications(String projectID)
 	{
 		Log.i(_logTag, "Register for push notifications: " + projectID);
+        Context context = _activity.getApplicationContext();
 		String packageName = LoaderAPI.getActivity().getPackageName();
 		Intent notificationIntent = null;
 		try 
 		{
-			notificationIntent = new Intent(_activity.getApplicationContext(), Class.forName(packageName + ".Main"));
+			notificationIntent = new Intent(context, Class.forName(packageName + ".Main"));
 		} 
 		catch (ClassNotFoundException e) 
 		{
 			Log.e(_logTag, "Main activity class not found: " + packageName);
 			e.printStackTrace();
 		}
+        
+        int notification_small = context.getResources().getIdentifier("notification_small.png", "drawable", context.getPackageName());
+        int notification_large = context.getResources().getIdentifier("notification_large.png", "drawable", context.getPackageName());
+        if( notification_small == 0 || notification_large == 0 )
+        {
+            Log.e(_logTag, "Push Notification icons are missing!  Please ensure that you have the following icons in FuseSDK/res/drawable\n notification_small.png - 36x36 24-bit PNG\n notification_large.png - 72x72 24-bit PNG");
+        }
+        
 		FuseSDK.setupPushNotifications(projectID, notificationIntent, notification_small, notification_large);
 	}
 
@@ -104,7 +112,7 @@ public class FuseWrapper
 	/**+-------------------------+
 	// | In-App Purchase Logging |
 	// +-------------------------*/
-		public void FuseSDKRegisterInAppPurchase(int purchaseState, String purchaseToken, String productId, String orderId, long purchaseTime, String developerPayload, double price, String currency)
+    public void FuseSDKRegisterInAppPurchase(int purchaseState, String purchaseToken, String productId, String orderId, long purchaseTime, String developerPayload, double price, String currency)
 	{
 		// If we haven't been passed a currency string, make a guess based on the current locale
 		if( TextUtils.isEmpty(currency) ) 
@@ -135,6 +143,12 @@ public class FuseWrapper
 		VerifiedPurchase purchase = new VerifiedPurchase(szPurchaseState, purchaseToken, productId, orderId, purchaseTime, developerPayload);
 		FuseSDK.registerInAppPurchase(purchase, price, currency);
 	}
+    
+    public void FuseSDKRegisterVirtualGoodsPurchase(int virtualGoodsID, int purchaseAmount, int currencyID)
+    {
+        Log.d(_logTag, "FuseSDKRegisterVirtualGoodsPurchase(" + virtualGoodsID + ", " + purchaseAmount + ", " + currencyID + ")");
+        FuseSDK.registerVirtualGoodsPurchase(virtualGoodsID, purchaseAmount, currencyID);
+    }
 
 	/**+-----------------------+
 	// | Fuse Interstitial Ads |
@@ -355,5 +369,25 @@ public class FuseWrapper
 		Log.d(_logTag, "FuseSDKRegisterCurrency(" + type + "," + balance + ")");
 		FuseSDK.registerCurrency(type, balance);
 	}
+    
+    public void FuseSDKRegisterParentalConsent(boolean enabled)
+    {
+        FuseSDK.registerParentalConsent(enabled);
+    }
+    
+    public boolean FuseSDKRegisterCustomEventInt(int eventID, int eventValue)
+    {
+        return FuseSDK.registerCustomEvent(eventID, eventValue);
+    }
+    
+    public boolean FuseSDKRegisterCustomEventString(int eventID, String eventValue)
+    {
+        return FuseSDK.registerCustomEvent(eventID, eventValue);
+    }
+    
+    public void FuseSDKSetRewardedVideoUserID(String userID)
+    {
+        FuseSDK.setRewardedVideoUserID(userID);
+    }
 }
 

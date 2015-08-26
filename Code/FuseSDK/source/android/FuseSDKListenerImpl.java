@@ -4,6 +4,7 @@ import com.fusepowered.*;
 import com.fusepowered.util.Player;
 import java.util.ArrayList;
 import android.util.Log;
+import java.util.Date;
 
 /**
  * Created by Brennan on 2/17/15.
@@ -145,7 +146,13 @@ public class FuseSDKListenerImpl implements FuseSDKListener
 
     public void adFailedToDisplay()
     {
-        //TODO
+        _wrapper.FuseSDKAdFailedToDisplay();
+    }
+    
+    public void adDidShow(int networkID, int mediaType)
+    {
+//        Log.d(_logTag, "adDidShow()");
+        _wrapper.FuseSDKAdDidShow(networkID, mediaType);
     }
 
     // ------------------------------------ Rewarded Ads
@@ -157,7 +164,8 @@ public class FuseSDKListenerImpl implements FuseSDKListener
      */
     public void rewardedAdCompleteWithObject(RewardedInfo rewardInfo)
 	{
-        _wrapper.FuseSDKRewardedAdComplete(rewardInfo.preRollMessage, rewardInfo.rewardMessage, rewardInfo.rewardItem, rewardInfo.rewardAmount);
+//        Log.d(_logTag, "rewardedAdCompleteWithObject(" + rewardInfo.preRollMessage + ", " + rewardInfo.rewardMessage + ", " + rewardInfo.rewardItem + ", " + rewardInfo.rewardAmount + ", " + rewardInfo.rewardItemId + ")");
+        _wrapper.FuseSDKRewardedAdComplete(rewardInfo.preRollMessage, rewardInfo.rewardMessage, rewardInfo.rewardItem, rewardInfo.rewardAmount, rewardInfo.rewardItemId);
 	}
 
     // ------------------------------------ Offers
@@ -169,7 +177,8 @@ public class FuseSDKListenerImpl implements FuseSDKListener
      */
     public void IAPOfferAcceptedWithObject(IAPOfferInfo offer)
 	{
-        _wrapper.FuseSDKIAPOfferAccepted(offer.productPrice, offer.itemAmount, offer.itemName, offer.productID);
+//        Log.d(_logTag, "IAPOfferAcceptedWithObject(" + offer.productPrice + ", " + offer.itemAmount + ", " + offer.itemName + ", " + offer.productID + ", " + (int)(offer.startTime.getTime()/1000) + ", " + (int)(offer.endTime.getTime()/1000) + ")");
+        _wrapper.FuseSDKIAPOfferAccepted(offer.productPrice, offer.itemAmount, offer.itemName, offer.productID, (int)(offer.startTime.getTime()/1000), (int)(offer.endTime.getTime()/1000));
 	}
 
     /**
@@ -179,7 +188,8 @@ public class FuseSDKListenerImpl implements FuseSDKListener
      */
     public void virtualGoodsOfferAcceptedWithObject(VGOfferInfo offer)
 	{
-        _wrapper.FuseSDKVirtualGoodsOfferAccepted(offer.purchaseCurrency, offer.purchasePrice, offer.itemName, offer.itemAmount);
+//        Log.d(_logTag, "virtualGoodsOfferAcceptedWithObject(" + offer.purchaseCurrency + ", " + offer.purchasePrice + ", " + offer.itemName + ", " + offer.itemAmount + ", " + (int)(offer.startTime.getTime()/1000) + ", " + (int)(offer.endTime.getTime()/1000) + ", " + offer.currencyID + ", " + offer.virtualGoodID + ")");
+        _wrapper.FuseSDKVirtualGoodsOfferAccepted(offer.purchaseCurrency, offer.purchasePrice, offer.itemName, offer.itemAmount, (int)(offer.startTime.getTime()/1000), (int)(offer.endTime.getTime()/1000), offer.currencyID, offer.virtualGoodID);
 	}
 
     // ------------------------------------ Misc
@@ -188,9 +198,9 @@ public class FuseSDKListenerImpl implements FuseSDKListener
      * @brief Called after the current timestamp is received from the server
      * @param timestamp
      */
-    public void timeUpdated(int timestamp)
+    public void timeUpdated(Date timestamp)
 	{
-        _wrapper.FuseSDKTimeUpdated(timestamp);
+        _wrapper.FuseSDKTimeUpdated((int)(timestamp.getTime()/1000));
 	}
 
     public void didRecieveGCMRegistrationToken(String newRegistrationID)

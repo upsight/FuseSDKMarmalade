@@ -77,7 +77,7 @@ void FuseSDKTerminate_platform()
     }
 }
 
-void FuseSDKStartSession_platform(const char* key, cfuhash_table_t* options)
+void FuseSDKStartSession_platform(const char* apikey, cfuhash_table_t* options)
 {
 	int numOptions = cfuhash_num_entries(options);
 	NSMutableDictionary* sessionOptions = nil;
@@ -91,14 +91,16 @@ void FuseSDKStartSession_platform(const char* key, cfuhash_table_t* options)
 		{
 			do
 			{
-				[sessionOptions setValue:[NSString stringWithUTF8String:(const char*)data] forKey:[NSString stringWithUTF8String:key]];
+                NSString* valueString = data ? [NSString stringWithUTF8String:(const char*)data] : @"";
+                NSString* keyString = key ? [NSString stringWithUTF8String:key] : @"";
+				[sessionOptions setValue:valueString forKey:keyString];
 			}
 			while( cfuhash_next(options, &key, &data) );
 		}
 	}
-
-    [FuseSDK startSession:[NSString stringWithUTF8String:key] delegate:_FuseSDK_delegate withOptions:sessionOptions];
-    [FuseSDK setPlatform:@"marmalade-ios"];   
+    
+    [FuseSDK setPlatform:@"marmalade-ios"]; 
+    [FuseSDK startSession:[NSString stringWithUTF8String:apikey] delegate:_FuseSDK_delegate withOptions:sessionOptions];
 }
 
 void FuseSDKPauseSession_platform()
@@ -125,7 +127,7 @@ void FuseSDKRegisterInAppPurchaseAndroid_platform(FusePurchaseStateAndroid purch
 
 void FuseSDKRegisterInAppPurchaseiOS_platform(FusePurchaseStateiOS purchaseState, const char* receiptData, int recieptDataLength, double* price, const char* currency, const char* productID, const char* transactionID)
 {
-    NSData* receipt = [[NSData marmaladeDataFromBase64String:[NSString stringWithUTF8String:receiptData]] retain]; 
+    NSData* receipt = receiptData ? [[NSData marmaladeDataFromBase64String:[NSString stringWithUTF8String:receiptData]] retain] : nil;
     [FuseSDK registerInAppPurchase:receipt
                            TxState:purchaseState
                              Price:[NSString stringWithFormat:@"%.2f", *price]
@@ -133,6 +135,11 @@ void FuseSDKRegisterInAppPurchaseiOS_platform(FusePurchaseStateiOS purchaseState
                          ProductID:[NSString stringWithUTF8String:productID]
                      TransactionID:[NSString stringWithUTF8String:transactionID]];
     FuseSafeRelease(receipt);
+}
+
+void FuseSDKRegisterVirtualGoodsPurchase_platform(int virtualGoodsID, int purchaseAmount, int currencyID)
+{
+    [FuseSDK registerVirtualGoodsPurchase:virtualGoodsID Amount:purchaseAmount CurrencyID:currencyID];
 }
 
 void FuseSDKPreloadAdForZoneID_platform(const char* zoneID)
@@ -159,7 +166,9 @@ void FuseSDKShowAdForZoneID_platform(const char* zoneID, cfuhash_table_t* option
 		{
 			do
 			{
-				[adOptions setValue:[NSString stringWithUTF8String:(const char*)data] forKey:[NSString stringWithUTF8String:key]];
+                NSString* keyString = key ? [NSString stringWithUTF8String:key] : @"";
+                NSString* valueString = data ? [NSString stringWithUTF8String:(const char*)data] : @"";
+				[adOptions setValue:valueString forKey:keyString];
 			}
 			while( cfuhash_next(options, &key, &data) );
 		}
@@ -192,7 +201,7 @@ void FuseSDKFacebookLogin_platform(const char* facebookId, const char* name, con
 
 void FuseSDKTwitterLogin_platform(const char* twitterId)
 {
-    [FuseSDK twitterLogin:[NSString stringWithUTF8String:twitterId]];
+    [FuseSDK twitterLogin:twitterId ? [NSString stringWithUTF8String:twitterId] : @""];
 }
 
 void FuseSDKGameCenterLogin_platform()
@@ -202,17 +211,17 @@ void FuseSDKGameCenterLogin_platform()
 
 void FuseSDKDeviceLogin_platform(const char* alias)
 {
-    [FuseSDK deviceLogin:[NSString stringWithUTF8String:alias]];
+    [FuseSDK deviceLogin:alias ? [NSString stringWithUTF8String:alias] : @""];
 }
 
 void FuseSDKFuseLogin_platform(const char* fuseId, const char* alias)
 {
-    [FuseSDK fuseLogin:[NSString stringWithUTF8String:fuseId] Alias:[NSString stringWithUTF8String:alias]];
+    [FuseSDK fuseLogin:fuseId ? [NSString stringWithUTF8String:fuseId] : @"" Alias:alias ? [NSString stringWithUTF8String:alias] : @""];
 }
 
 void FuseSDKGooglePlayLogin_platform(const char* alias, const char* token)
 {
-    [FuseSDK googlePlayLogin:[NSString stringWithUTF8String:alias] AccessToken:[NSString stringWithUTF8String:token]];
+    [FuseSDK googlePlayLogin:alias ? [NSString stringWithUTF8String:alias] : @"" AccessToken:token ? [NSString stringWithUTF8String:token] : @""];
 }
 
 const char* FuseSDKGetOriginalAccountId_platform()
@@ -266,7 +275,11 @@ int FuseSDKgamesPlayed_platform()
 
 const char* FuseSDKLibraryVersion_platform()
 {
-    NSString* ver = [FuseSDK libraryVersion];    
+    NSString* ver = [FuseSDK libraryVersion];
+    if( ver == nil )
+    {
+        return "n/a";
+    }
     const char* string = ver.UTF8String;
 	char* copy = (char*)malloc(strlen(string) + 1);
 	strcpy(copy, string);
@@ -298,7 +311,14 @@ void FuseSDKEnableData_platform(bool enable)
 
 const char* FuseSDKGetGameConfigurationValue_platform(const char* key)
 {
-    const char* string = [FuseSDK getGameConfigurationValue:[NSString stringWithUTF8String:key]].UTF8String;
+    NSString* keyString = key ? [NSString stringWithUTF8String:key] : @"";
+    NSString* valueString = [FuseSDK getGameConfigurationValue:keyString];
+    if( valueString == nil )
+    {
+        return "";
+    }
+    
+    const char* string = valueString.UTF8String;
 	char* copy = (char*)malloc(strlen(string) + 1);
 	strcpy(copy, string);
     
@@ -313,6 +333,28 @@ void FuseSDKRegisterLevel_platform(int level)
 void FuseSDKRegisterCurrency_platform(int type, int balance)
 {
     [FuseSDK registerCurrency:type Balance:balance];
+}
+
+void FuseSDKRegisterParentalConsent_platform(bool enabled)
+{
+    [FuseSDK registerParentalConsent:enabled];
+}
+
+bool FuseSDKRegisterCustomEventInt_platform(int eventID, int eventValue)
+{
+    return [FuseSDK registerCustomEvent:eventID withInt:eventValue];
+}
+
+bool FuseSDKRegisterCustomEventString_platform(int eventID, const char* eventValue)
+{
+    NSString* eventString = eventValue ? [NSString stringWithUTF8String:eventValue] : @"";
+    return [FuseSDK registerCustomEvent:eventID withString:eventString];
+}
+
+void FuseSDKSetRewardedVideoUserID_platform(const char* userID)
+{
+    NSString* userIDString = userID ? [NSString stringWithUTF8String:userID] : @"";
+    [FuseSDK setRewardedVideoUserID:userIDString];
 }
 
 #pragma mark - Callback
@@ -379,16 +421,27 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
 	};
 	paramList params;
     params.verified = _verified.intValue;
+    const char* string = NULL;
+    char* copy = NULL;
+    char* copy_otxid = NULL;
     
-    const char* string = _tx_id.UTF8String;
-	char* copy = (char*)malloc(strlen(string) + 1);
-	strcpy(copy, string);
-    params.transactionID = copy;
+    if( _tx_id )
+    {
+        string = _tx_id.UTF8String;
+        copy = (char*)malloc(strlen(string) + 1);
+        strcpy(copy, string);
+    }
     
-    string = _o_tx_id.UTF8String;
-    char* copy_otxid = (char*)malloc(strlen(string) + 1);
-	strcpy(copy_otxid, string);
-    params.originalTransactionID = copy_otxid;
+    if( _o_tx_id )
+    {
+        string = _o_tx_id.UTF8String;
+        copy_otxid = (char*)malloc(strlen(string) + 1);
+        strcpy(copy_otxid, string);
+    }
+    
+    params.transactionID = copy ?: "";
+    params.originalTransactionID = copy_otxid ?: "";
+    
     
     IwTrace(FuseSDK, ("FuseSDKPurchaseVerified(%i, %s, %s)", params.verified, params.transactionID, params.originalTransactionID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_PURCHASE_VERIFIED, &params, sizeof(paramList));
@@ -416,6 +469,26 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_AD_WILL_CLOSE, 0, 0);
 }
 
+-(void) adDidShow:(NSNumber *)_networkID mediaType:(NSNumber *)_mediaType
+{
+    struct paramList
+    {
+        int networkID;
+        int mediaType;
+    };
+    paramList params;
+    params.networkID = _networkID ? _networkID.intValue : 0;
+    params.mediaType = _mediaType ? _mediaType.intValue : 0;
+    IwTrace(FuseSDK, ("FuseSDKAdDidShow(%i, %i)", params.networkID, params.mediaType));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_AD_DID_SHOW, &params, sizeof(paramList));
+}
+
+-(void) adFailedToDisplay
+{
+    IwTrace(FuseSDK, ("FuseSDKAdFailedToDisplay()"));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_AD_FAILED_TO_DISPLAY, 0, 0);
+}
+
 -(void) rewardedAdCompleteWithObject:(FuseRewardedObject*) reward
 {
     struct paramList
@@ -424,29 +497,59 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         const char* rewardMessage;
         const char* rewardItem;
         int rewardAmount;
+        int itemID; // the rewarded item ID as specified on the Fuse Dashboard
     };
 
     // copy the strings
+    const char* string = NULL;
+    char* preroll_copy = NULL;
+    char* rewardmsg_copy = NULL;
+    char* rewarditem_copy = NULL;
+    
+    if( reward.preRollMessage )
+    {
+        string = reward.preRollMessage.UTF8String;
+        preroll_copy = (char*)malloc(strlen(string) + 1);
+        strcpy(preroll_copy, string);
+    }
 
-    const char* string = reward.preRollMessage ? reward.preRollMessage.UTF8String : "";
-    char* preroll_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(preroll_copy, string);
+    if( reward.rewardMessage )
+    {
+        string =  reward.rewardMessage.UTF8String;
+        rewardmsg_copy = (char*)malloc(strlen(string) + 1);
+        strcpy(rewardmsg_copy, string);
+    }
 
-    string =  reward.rewardMessage ? reward.rewardMessage.UTF8String  : "";
-    char* rewardmsg_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(rewardmsg_copy, string);
-
-    string = reward.rewardItem ?  reward.rewardItem.UTF8String : "";
-    char* rewarditem_copy = (char*)malloc(strlen(string) + 1);
-    strcpy(rewarditem_copy, string);
+    if( reward.rewardItem )
+    {
+        string = reward.rewardItem ?  reward.rewardItem.UTF8String : "";
+        rewarditem_copy = (char*)malloc(strlen(string) + 1);
+        strcpy(rewarditem_copy, string);
+    }
+    
+    // set the int values
+    int rewardAmountInt = 0;
+    int itemIDInt = 0;
+    if( reward )
+    {
+        if( reward.rewardAmount )
+        {
+            rewardAmountInt = reward.rewardAmount.intValue;
+        }
+        
+        itemIDInt = reward.itemID;
+    }    
 
     // set the params
     paramList params;
-    params.rewardAmount = reward.rewardAmount ? reward.rewardAmount.intValue : 0;
-    params.preMessage = preroll_copy;
-    params.rewardMessage = rewardmsg_copy;
-    params.rewardItem = rewarditem_copy;
-    IwTrace(FuseSDK, ("FuseSDKRewardedAdComplete(%s, %s, %s, %i)", params.preMessage, params.rewardMessage, params.rewardItem, params.rewardAmount));
+    params.rewardAmount = rewardAmountInt;
+    params.preMessage = preroll_copy ?: "";
+    params.rewardMessage = rewardmsg_copy ?: "";
+    params.rewardItem = rewarditem_copy ?: "";
+    params.itemID = itemIDInt;
+    
+    
+    IwTrace(FuseSDK, ("FuseSDKRewardedAdComplete(%s, %s, %s, %i, %i)", params.preMessage, params.rewardMessage, params.rewardItem, params.rewardAmount, params.itemID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_REWARDED_AD_COMPLETED, &params, sizeof(paramList));
 }
 
@@ -459,6 +562,8 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         int itemAmount;
         const char* itemName;
         const char* productID;
+        int startTime;
+        int endTime;
     };
 
     IwTrace(FuseSDK, ("IAPOfferAcceptedWithObject was called!"));
@@ -466,29 +571,45 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     // copy the strings
     const char* string = NULL;
     char* productid_copy = NULL;
-    if( _offer.productID )
+    char* itemname_copy = NULL;
+    
+    if( _offer && _offer.productID )
     {
         string = _offer.productID.UTF8String;
         productid_copy = (char*)malloc(strlen(string) + 1);
         strcpy(productid_copy, string);
     }
-
-    char* itemname_copy = NULL;
-    if( _offer.itemName )
+    
+    if( _offer && _offer.itemName )
     {
         string = _offer.itemName.UTF8String;
         itemname_copy =  (char*)malloc(strlen(string) + 1);
         strcpy(itemname_copy, string);
     }
+    
+    // set the number values
+    float productPriceFloat = 0;
+    int itemAmountInt = 0;
+    int startTimeInt = 0;
+    int endTimeInt = 0;
+    if( _offer )
+    {
+        productPriceFloat = _offer.productPrice ? _offer.productPrice.floatValue : 0;
+        itemAmountInt = _offer.itemAmount ? _offer.itemAmount.intValue : 0;
+        startTimeInt = _offer.startTime ? _offer.startTime.intValue : 0;
+        endTimeInt = _offer.endTime ? _offer.endTime.intValue : 0;
+    }
 
     // set the params
     paramList params;
-    params.productPrice = _offer.productPrice.floatValue;
-    params.itemAmount = _offer.itemAmount.intValue;
-    params.itemName = itemname_copy;
-    params.productID = productid_copy;
+    params.productPrice = productPriceFloat;
+    params.itemAmount = itemAmountInt;
+    params.itemName = itemname_copy ?: "";
+    params.productID = productid_copy ?: "";
+    params.startTime = startTimeInt;
+    params.endTime = endTimeInt;
 
-    IwTrace(FuseSDK, ("FuseSDKIAPOfferAccepted(%f, %i, %s, %s)", params.productPrice, params.itemAmount, params.itemName, params.productID));
+    IwTrace(FuseSDK, ("FuseSDKIAPOfferAccepted(%f, %i, %s, %s, %i, %i)", params.productPrice, params.itemAmount, params.itemName, params.productID, params.startTime, params.endTime));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_IAPOFFER_ACCEPTED, &params, sizeof(paramList));
 }
 
@@ -500,11 +621,16 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         float purchasePrice;
         const char* itemName;
         int itemAmount;
+        int startTime;
+        int endTime;
+        int currencyID;
+        int virtualGoodsID;
     };
 
     // copy the strings
     const char* string = NULL;
     char* currency_copy = NULL;
+    char* itemname_copy = NULL;
 
     if( _offer.purchaseCurrency )
     {
@@ -512,22 +638,43 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         currency_copy = (char*)malloc(strlen(string) + 1);
         strcpy(currency_copy, string);
     }
-
-    char* itemname_copy = NULL;
+    
     if( _offer.itemName )
     {
         string = _offer.itemName.UTF8String;
         itemname_copy =  (char*)malloc(strlen(string) + 1);
         strcpy(itemname_copy, string);
     }
+    
+    // set the number values
+    float purchasePriceFloat = 0;
+    int itemAmountInt = 0;
+    int startTimeInt = 0;
+    int endTimeInt = 0;
+    int currencyIDInt = 0;
+    int virtualGoodIDsInt = 0;
+    if( _offer )
+    {
+        purchasePriceFloat = _offer.purchasePrice ? _offer.purchasePrice.floatValue : 0;
+        itemAmountInt = _offer.itemAmount ? _offer.itemAmount.intValue : 0;
+        startTimeInt = _offer.startTime ? _offer.startTime.intValue : 0;
+        endTimeInt = _offer.endTime ? _offer.endTime.intValue : 0;
+        currencyIDInt = _offer.currencyID ? _offer.currencyID.intValue : 0;
+        virtualGoodIDsInt = _offer.virtualGoodID ? _offer.virtualGoodID.intValue : 0;
+    }
+    
 
     // set the params
     paramList params;
-    params.purchaseCurrency = currency_copy;
-    params.purchasePrice = _offer.purchasePrice.floatValue;
-    params.itemName = itemname_copy;
-    params.itemAmount = _offer.itemAmount.intValue;
-    IwTrace(FuseSDK, ("FuseSDKVirtualGoodsOfferAccepted(%s, %f, %s, %i)", params.purchaseCurrency, params.purchasePrice, params.itemName, params.itemAmount));
+    params.purchaseCurrency = currency_copy ?: "";
+    params.purchasePrice = purchasePriceFloat;
+    params.itemName = itemname_copy ?: "";
+    params.itemAmount = itemAmountInt;
+    params.startTime = startTimeInt;
+    params.endTime = endTimeInt;
+    params.currencyID = currencyIDInt;
+    params.virtualGoodsID = virtualGoodIDsInt;
+    IwTrace(FuseSDK, ("FuseSDKVirtualGoodsOfferAccepted(%s, %f, %s, %i, %i, %i, %i, %i)", params.purchaseCurrency, params.purchasePrice, params.itemName, params.itemAmount, params.startTime, params.endTime, params.currencyID, params.virtualGoodsID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_VIRTUALGOODSOFFER_ACCEPTED, &params, sizeof(paramList));
 }
 
@@ -540,10 +687,14 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
 		const char* action;
 	};
 	paramList params;
-    const char* string = _action.UTF8String;
-	char* copy = (char*)malloc(strlen(string) + 1);
-	strcpy(copy, string);    
-	params.action = copy;
+    char* copy = NULL;
+    if( _action )
+    {
+        const char* string = _action.UTF8String;
+        copy = (char*)malloc(strlen(string) + 1);
+        strcpy(copy, string);
+    }
+	params.action = copy ?: "";
     IwTrace(FuseSDK, ("FuseSDKNotificationAction(%s)", params.action));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_NOTIFICATION_ACTION, &params, sizeof(paramList));
 }
@@ -566,11 +717,17 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
 		const char* accountID;
 	};
 	paramList params;
+    char* copy = NULL;
 	params.accountType = _type.intValue;
-    const char* string = _account_id.UTF8String;
-	char* copy = (char*)malloc(strlen(string) + 1);
-	strcpy(copy, string);    
-	params.accountID = copy;
+    
+    if( _account_id )
+    {
+        const char* string = _account_id.UTF8String;
+        char* copy = (char*)malloc(strlen(string) + 1);
+        strcpy(copy, string);
+    }
+    
+	params.accountID = copy ?: "";
     IwTrace(FuseSDK, ("FuseSDKAccountLoginComplete(%i, %s)", params.accountType, params.accountID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_ACCOUNT_LOGIN_COMPLETE, &params, sizeof(paramList));    
 }
@@ -616,10 +773,15 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
         for (unsigned int i = 0; i < [keys count]; i++)
         {
             NSString *key = [keys objectAtIndex:i];
+            if( key == nil )
+            {
+                continue;
+            }
             NSString *value = [test objectForKey:key];
             
             //NSLog(@"Key: %@, Value: %@", key, value);
-            const char* string = value.UTF8String;
+            
+            const char* string = value ? value.UTF8String : "";
             char* copy = (char*)malloc(strlen(string) + 1);
             strcpy(copy, string);
 

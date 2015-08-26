@@ -65,6 +65,12 @@ static jmethodID g_FuseSDKEnableData;
 static jmethodID g_FuseSDKGetGameConfigurationValue;
 static jmethodID g_FuseSDKRegisterLevel;
 static jmethodID g_FuseSDKRegisterCurrency;
+static jmethodID g_FuseSDKRegisterVirtualGoodsPurchase;
+static jmethodID g_FuseSDKRegisterParentalConsent;
+static jmethodID g_FuseSDKRegisterCustomEventInt;
+static jmethodID g_FuseSDKRegisterCustomEventString;
+static jmethodID g_FuseSDKSetRewardedVideoUserID;
+
 
 //----------------------------------------------------------------------------------------
 /*
@@ -140,10 +146,41 @@ void FuseSDKAdWillClose(JNIEnv* env, jobject obj)
 }
 
 //-------------------------------------
+// FuseSDKAdFailedToDisplay
+// Params: none
+//-------------------------------------
+void FuseSDKAdFailedToDisplay(JNIEnv* env, jobject obj)
+{
+    IwTrace(FuseSDK, ("FuseSDKAdFailedToDisplay()"));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_AD_FAILED_TO_DISPLAY, 0, 0);
+}
+
+
+//-------------------------------------
+// FuseSDKAdDidShow
+// Params: int networkID, int mediaType
+//-------------------------------------
+void FuseSDKAdDidShow(JNIEnv* env, jobject obj, int networkID, int mediaType)
+{
+    struct paramList
+    {
+        int networkID;
+        int mediaType;
+    };
+    paramList params;
+    params.networkID = networkID;
+    params.mediaType = mediaType;
+    
+    IwTrace(FuseSDK, ("FuseSDKAdDidShow(%i, %i)", networkID, mediaType));
+    s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_AD_DID_SHOW, &params, sizeof(paramList));
+}
+
+
+//-------------------------------------
 // FuseSDKRewardedAdComplete
 // Params: string preMessage, string rewardMessage, string rewardItem, int rewardAmount
 //-------------------------------------
-void FuseSDKRewardedAdComplete(JNIEnv* env, jobject obj, jstring preMessage, jstring rewardMessage, jstring rewardItem, int rewardAmount)
+void FuseSDKRewardedAdComplete(JNIEnv* env, jobject obj, jstring preMessage, jstring rewardMessage, jstring rewardItem, int rewardAmount, int itemID)
 {
     struct paramList
     {
@@ -151,13 +188,15 @@ void FuseSDKRewardedAdComplete(JNIEnv* env, jobject obj, jstring preMessage, jst
         const char* rewardMessage;
         const char* rewardItem;
         int rewardAmount;
+        int itemID;
     };
     paramList params;
     params.rewardAmount = rewardAmount;
     params.preMessage = s3eEdkGetStringUTF8Chars(preMessage);
     params.rewardMessage = s3eEdkGetStringUTF8Chars(rewardMessage);
     params.rewardItem = s3eEdkGetStringUTF8Chars(rewardItem);
-    IwTrace(FuseSDK, ("FuseSDKRewardedAdComplete(%s, %s, %s, %i)", params.preMessage, params.rewardMessage, params.rewardItem, params.rewardAmount));
+    params.itemID = itemID;
+    IwTrace(FuseSDK, ("FuseSDKRewardedAdComplete(%s, %s, %s, %i, %i)", params.preMessage, params.rewardMessage, params.rewardItem, params.rewardAmount, params.itemID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_REWARDED_AD_COMPLETED, &params, sizeof(paramList));
 }
 
@@ -165,7 +204,7 @@ void FuseSDKRewardedAdComplete(JNIEnv* env, jobject obj, jstring preMessage, jst
 // FuseSDKVirtualGoodsOfferAccepted
 // Params: string purchaseCurrency, float purchasePrice, string itemName, int itemAmount
 //-------------------------------------
-void FuseSDKVirtualGoodsOfferAccepted(JNIEnv* env, jobject obj, jstring currency, float price, jstring itemName, int amount)
+void FuseSDKVirtualGoodsOfferAccepted(JNIEnv* env, jobject obj, jstring currency, float price, jstring itemName, int amount, int startTime, int endTime, int currencyID, int virtualGoodsID)
 {
     struct paramList
     {
@@ -173,13 +212,21 @@ void FuseSDKVirtualGoodsOfferAccepted(JNIEnv* env, jobject obj, jstring currency
         float purchasePrice;
         const char* itemName;
         int itemAmount;
+        int startTime;
+        int endTime;
+        int currencyID;
+        int virtualGoodsID;
     };
     paramList params;
     params.itemAmount = amount;
     params.purchasePrice = price;
     params.purchaseCurrency = s3eEdkGetStringUTF8Chars(currency);
     params.itemName = s3eEdkGetStringUTF8Chars(itemName);
-    IwTrace(FuseSDK, ("FuseSDKVirtualGoodsOfferAccepted(%s, %f, %s, %i)", params.purchaseCurrency, params.purchasePrice, params.itemName, params.itemAmount));
+    params.startTime = startTime;
+    params.endTime = endTime;
+    params.currencyID = currencyID;
+    params.virtualGoodsID = virtualGoodsID;
+    IwTrace(FuseSDK, ("FuseSDKVirtualGoodsOfferAccepted(%s, %f, %s, %i, %i, %i, %i, %i)", params.purchaseCurrency, params.purchasePrice, params.itemName, params.itemAmount, params.startTime, params.endTime, params.currencyID, params.virtualGoodsID));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_VIRTUALGOODSOFFER_ACCEPTED, &params, sizeof(paramList));
 }
 
@@ -187,7 +234,7 @@ void FuseSDKVirtualGoodsOfferAccepted(JNIEnv* env, jobject obj, jstring currency
 // FuseSDKIAPOfferAccepted
 // Params: float productPrice, int itemAmount, string itemName, string productID
 //-------------------------------------
-void FuseSDKIAPOfferAccepted(JNIEnv* env, jobject obj, float price, int amount, jstring itemName, jstring productID)
+void FuseSDKIAPOfferAccepted(JNIEnv* env, jobject obj, float price, int amount, jstring itemName, jstring productID, int startTime, int endTime)
 {
     struct paramList
     {
@@ -195,13 +242,17 @@ void FuseSDKIAPOfferAccepted(JNIEnv* env, jobject obj, float price, int amount, 
         int itemAmount;
         const char* itemName;
         const char* productID;
+        int startTime;
+        int endTime;
     };
     paramList params;
     params.productPrice = price;
     params.itemAmount = amount;
     params.itemName = s3eEdkGetStringUTF8Chars(itemName);
     params.productID = s3eEdkGetStringUTF8Chars(productID);
-    IwTrace(FuseSDK, ("FuseSDKIAPOfferAccepted(%f, %i, %s, %s)", params.productPrice, params.itemAmount, params.itemName, params.productID));
+    params.startTime = startTime;
+    params.endTime = endTime;
+    IwTrace(FuseSDK, ("FuseSDKIAPOfferAccepted(%f, %i, %s, %s, %i, %i)", params.productPrice, params.itemAmount, params.itemName, params.productID, params.startTime, params.endTime));
     s3eEdkCallbacksEnqueue(S3E_EXT_FUSESDK_HASH, FUSESDK_IAPOFFER_ACCEPTED, &params, sizeof(paramList));
 }
 
@@ -355,6 +406,8 @@ s3eResult FuseSDKInit_platform()
 		{ "FuseSDKLoginError",							"(I)V",                             (void*)&FuseSDKLoginError },
 		{ "FuseSDKAdAvailabilityResponse",				"(II)V",                            (void*)&FuseSDKAdAvailabilityResponse },
 		{ "FuseSDKAdWillClose",							"()V",                              (void*)&FuseSDKAdWillClose },
+        { "FuseSDKAdFailedToDisplay",					"()V",                              (void*)&FuseSDKAdFailedToDisplay },
+        { "FuseSDKAdDidShow",							"(II)V",                            (void*)&FuseSDKAdDidShow },
 		{ "FuseSDKNotificationAction",	"(Ljava/lang/String;)V",                            (void*)&FuseSDKNotificationAction },
 		{ "FuseSDKAccountLoginComplete","(ILjava/lang/String;)V",                           (void*)&FuseSDKAccountLoginComplete },
 		{ "FuseSDKTimeUpdated",							"(I)V",                             (void*)&FuseSDKTimeUpdated },
@@ -362,10 +415,10 @@ s3eResult FuseSDKInit_platform()
 		{ "FuseGameConfigurationKeyValue", "(Ljava/lang/String;Ljava/lang/String;)V",       (void*)&FuseGameConfigurationKeyValue },
 		{ "FuseGameConfigurationReceived",				"()V",                              (void*)&FuseGameConfigurationReceived },
         { "FuseSDKPurchaseVerification", "(ILjava/lang/String;Ljava/lang/String;)V",        (void*)&FuseSDKPurchaseVerification },
-        { "FuseSDKRewardedAdComplete", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V", (void*)&FuseSDKRewardedAdComplete },
-        { "FuseSDKVirtualGoodsOfferAccepted", "(Ljava/lang/String;FLjava/lang/String;I)V",  (void*)&FuseSDKVirtualGoodsOfferAccepted },
-        { "FuseSDKIAPOfferAccepted", "(FILjava/lang/String;Ljava/lang/String;)V",           (void*)&FuseSDKIAPOfferAccepted },
-	};
+        { "FuseSDKRewardedAdComplete", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V", (void*)&FuseSDKRewardedAdComplete },
+        { "FuseSDKVirtualGoodsOfferAccepted", "(Ljava/lang/String;FLjava/lang/String;IIIII)V",  (void*)&FuseSDKVirtualGoodsOfferAccepted },
+        { "FuseSDKIAPOfferAccepted", "(FILjava/lang/String;Ljava/lang/String;II)V",           (void*)&FuseSDKIAPOfferAccepted },
+    };
 
     // Get the extension class
     jclass cls = s3eEdkAndroidFindClass("com/fuseextension/FuseWrapper");
@@ -497,6 +550,26 @@ s3eResult FuseSDKInit_platform()
 
     g_FuseSDKRegisterCurrency = env->GetMethodID(cls, "FuseSDKRegisterCurrency", "(II)V");
     if (!g_FuseSDKRegisterCurrency)
+        goto fail;
+    
+    g_FuseSDKRegisterVirtualGoodsPurchase = env->GetMethodID(cls, "FuseSDKRegisterVirtualGoodsPurchase", "(III)V");
+    if (!g_FuseSDKRegisterVirtualGoodsPurchase)
+        goto fail;
+    
+    g_FuseSDKRegisterParentalConsent = env->GetMethodID(cls, "FuseSDKRegisterParentalConsent", "(Z)V");
+    if (!g_FuseSDKRegisterParentalConsent)
+        goto fail;
+    
+    g_FuseSDKRegisterCustomEventInt = env->GetMethodID(cls, "FuseSDKRegisterCustomEventInt", "(II)Z");
+    if (!g_FuseSDKRegisterCustomEventInt)
+        goto fail;
+    
+    g_FuseSDKRegisterCustomEventString = env->GetMethodID(cls, "FuseSDKRegisterCustomEventString", "(ILjava/lang/String;)Z");
+    if (!g_FuseSDKRegisterCustomEventString)
+        goto fail;
+    
+    g_FuseSDKSetRewardedVideoUserID = env->GetMethodID(cls, "FuseSDKSetRewardedVideoUserID", "(Ljava/lang/String;)V");
+    if (!g_FuseSDKSetRewardedVideoUserID)
         goto fail;
 
 	if(env->RegisterNatives(cls, nativeMethodDefs, sizeof(nativeMethodDefs)/sizeof(nativeMethodDefs[0])))
@@ -802,3 +875,34 @@ void FuseSDKRegisterCurrency_platform(int type, int balance)
     env->CallVoidMethod(g_Obj, g_FuseSDKRegisterCurrency, type, balance);
 }
 
+void FuseSDKRegisterVirtualGoodsPurchase_platform(int virtualGoodsID, int purchaseAmount, int currencyID)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    env->CallVoidMethod(g_Obj, g_FuseSDKRegisterVirtualGoodsPurchase, virtualGoodsID, purchaseAmount, currencyID);
+}
+
+void FuseSDKRegisterParentalConsent_platform(bool enabled)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    env->CallVoidMethod(g_Obj, g_FuseSDKRegisterParentalConsent, enabled);
+}
+
+bool FuseSDKRegisterCustomEventInt_platform(int eventID, int eventValue)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    return (bool)env->CallBooleanMethod(g_Obj, g_FuseSDKRegisterCustomEventInt, eventID, eventValue);
+}
+
+bool FuseSDKRegisterCustomEventString_platform(int eventID, const char* eventValue)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    jstring eventvalue_jstr = env->NewStringUTF(eventValue);
+    return (bool)env->CallBooleanMethod(g_Obj, g_FuseSDKRegisterCustomEventString, eventID, eventvalue_jstr);
+}
+
+void FuseSDKSetRewardedVideoUserID_platform(const char* userID)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    jstring userID_jstr = env->NewStringUTF(userID);
+    env->CallVoidMethod(g_Obj, g_FuseSDKSetRewardedVideoUserID, userID_jstr);
+}
